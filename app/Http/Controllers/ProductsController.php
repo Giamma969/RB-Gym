@@ -203,18 +203,18 @@ class ProductsController extends Controller
         $medium_image_path = 'images/backend_images/products/medium/';
         $small_image_path = 'images/backend_images/products/small/';
 
-        //elimino large image se non esiste nella cartella
+        //delete large image if not exists in directory
         if(file_exists($large_image_path.$productImage->image)){
             unlink($large_image_path.$productImage->image);
         }
 
-        //elimino medium image se non esiste nella cartella
+         //delete medium image if not exists in directory
         if(file_exists($medium_image_path.$productImage->image)){
             unlink($medium_image_path.$productImage->image);
         }
 
 
-        //elimino small image se non esiste nella cartella
+        //delete small image if not exists in directory
         if(file_exists($small_image_path.$productImage->image)){
             unlink($small_image_path.$productImage->image);
         }
