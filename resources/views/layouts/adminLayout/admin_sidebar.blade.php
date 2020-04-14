@@ -1,3 +1,4 @@
+<script src="{{asset('js/backend_js/permissions.js')}}"></script>
 <?php $url = url()->current(); ?>
 <!--sidebar-menu-->
 <div id="sidebar"><a href="#" class="visible-phone"><i class="icon icon-home"></i> Dashboard</a>
@@ -52,36 +53,25 @@
       </ul>
     </li>
 
-  <!--
-    <li class="submenu"> <a href="#"><i class="icon icon-th-list"></i> <span>Utenti</span> </a>
-      <ul>
-        <li><a href="{{url('/admin/add-user')}}">Aggiungi utente</a></li>
-        <li><a href="{{url('/admin/view-users')}}">Visualizza utenti</a></li>
+    <li class="submenu"> <a href="#"><i class="icon icon-th-list"></i> <span>Developers</span> </a>
+      <ul <?php if(preg_match("/developers/i", $url)) { ?> style="display: block;" <?php } ?>>
+        <li <?php if(preg_match("/add-developer/i", $url)) { ?> class="active" <?php } ?>><a href="{{url('/admin/add-developer')}}">Add developer</a></li>
       </ul>
     </li>
 
-    <li class="submenu"> <a href="#"><i class="icon icon-th-list"></i> <span>Gruppi</span> </a>
-      <ul>
-        <li><a href="{{url('/admin/add-role')}}">Aggiungi gruppo</a></li>
-        <li><a href="{{url('/admin/view-roles')}}">Visualizza gruppi</a></li>
+    <li class="submenu"> <a href="#"><i class="icon icon-th-list"></i> <span>Groups</span> </a>
+      <ul <?php if(preg_match("/groups/i", $url)) { ?> style="display: block;" <?php } ?>>
+        <li <?php if(preg_match("/add-group/i", $url)) { ?> class="active" <?php } ?>><a href="{{url('/admin/add-group')}}">Add group</a></li>
       </ul>
     </li>
 
-    <li class="submenu"> <a href="#"><i class="icon icon-th-list"></i> <span>Servizi</span> </a>
-      <ul>
-        <li><a href="{{url('/admin/add-permission')}}">Aggiungi servizio</a></li>
-        <li><a href="{{url('/admin/view-permissions')}}">Visualizza servizi</a></li>
+    <li class="submenu"> <a href="#"><i class="icon icon-th-list"></i> <span>Services</span> </a>
+      <ul <?php if(preg_match("/services/i", $url)) { ?> style="display: block;" <?php } ?>>
+        <li <?php if(preg_match("/add-service/i", $url)) { ?> class="active" <?php } ?>><a href="{{url('/admin/add-service')}}">Add service</a></li>
       </ul>
     </li>
-    
-    <li class="submenu"> <a href="#"><i class="icon icon-th-list"></i> <span>Utenti-Gruppi</span> </a>
-      <ul>
-        <li><a href="{{url('/admin/add-model-has-roles')}}">Assegna gruppo</a></li>
-        <li><a href="{{url('/admin/view-models-has-roles')}}">Visualizza assegnazioni</a></li>
-      </ul>
-    </li>
-    -->
-    
+
+
   </ul>
 </div>
 <!--sidebar-menu-->

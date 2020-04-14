@@ -170,6 +170,14 @@ Route::group(['middleware'=>['auth']],function(){
     //Admin reviews route
     Route::get('/admin/view-reviews','ProductsController@viewReviews');
 
+    //Admin - Developers routes
+    Route::match(['get','post'],'/admin/add-developer','DevelopersController@addDeveloper');
+   
+    //Admin - Groups routes
+    Route::match(['get','post'],'/admin/add-group','GroupsController@addGroup');
+
+    //Admin - Services routes
+    Route::match(['get','post'],'/admin/add-service','ServicesController@addService');
 
 
     /*
