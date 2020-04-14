@@ -14,7 +14,6 @@
 Auth::routes();
 
 Route::match(['get','post'],'/admin','AdminController@login');
-
 Route::get('/logout', 'AdminController@logout');
 Route:: get('/admin/dashboard','AdminController@dashboard');
 
@@ -22,66 +21,42 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 //Home page
 Route::get('/','IndexController@index');
-
 //Category/Listing page
 Route::get('/products/{url}','ProductsController@products');
-
 //Products filter page
 Route::match(['get','post'],'/products-filter', 'ProductsController@filter');
-
 //Product detail page
 Route::get('/product/{id}','ProductsController@product');
-
 //add to cart Route
 Route::match(['get','post'],'/add-cart', 'ProductsController@addtocart');
-
 //cart page
 Route::match(['get','post'],'/cart', 'ProductsController@cart');
-
 //user wishlist
 Route::match(['get','post'],'/wishlist', 'ProductsController@wishlist');
 //user add wishlist
 Route::match(['get','post'],'/add-wishlist/{id}','ProductsController@addWishlist');
-//Route::match(['get','post'],'/add-wishlist','ProductsController@addWishlist'); 
-
+//user remove wishlist
 Route::match(['get','post'],'/remove-wishlist/{id}','ProductsController@removeWishlist');
-//Route::match(['get','post'],'/add-wishlist','ProductsController@addWishlist'); 
-
 //delete product from cart page
 Route::get('/cart/delete-product/{id}','ProductsController@deleteCartProduct');
-
 //update product quantity in cart
 Route::get('/cart/update-quantity/{id}/{quantity}','ProductsController@updateCartQuantity');
-
-//apply coupon 
-Route::post('/cart/apply-coupon','ProductsController@applyCoupon');
-
-Route::get('cart/forget-coupon','ProductsController@forgetCoupon');
-
-
 //users login-register page
 Route::get('/login-register','UsersController@userLoginRegister');
-
 //users forgot password
 Route::match(['get','post'],'/forgot-password','UsersController@forgotPassword');
-
 //users register form submit
 Route::post('/user-register','UsersController@register');
-
+//user confirm account
 Route::get('confirm/{code}','UsersController@confirmAccount');
-
 //check if username already exists
 Route::match(['get','post'],'/check-username','UsersController@checkUsername');
-
 //check if email already exists
 Route::match(['get','post'],'/check-email','UsersController@checkEmail');
-
 //users login
 Route::post('/user-login','UsersController@login');
-
 //users logout
 Route::get('/user-logout','UsersController@logout');
-
 //Search products route
 Route::post('/search-products','ProductsController@searchProducts');
 
@@ -112,7 +87,10 @@ Route::group(['middleware'=>['frontlogin']],function(){
     Route::get('/orders/{id}','ProductsController@userOrderDetails');
     //add review
     Route::post('/add-review','ProductsController@addReview');
-
+    //apply coupon 
+    Route::post('/cart/apply-coupon','ProductsController@applyCoupon');
+    //forget coupon
+    Route::get('cart/forget-coupon','ProductsController@forgetCoupon');
     
 });
 
@@ -179,27 +157,6 @@ Route::group(['middleware'=>['auth']],function(){
     //Admin - Services routes
     Route::match(['get','post'],'/admin/add-service','ServicesController@addService');
 
-
-    /*
-    //Users Routes
-    Route::match(['get','post'],'/admin/add-user', 'UsersController@addUser');
-    Route::match(['get','post'], '/admin/edit-user/{id}', 'UsersController@editUser');
-    Route::get('/admin/delete-user/{id}','UsersController@deleteUser');
-    Route::get('/admin/view-users','UsersController@viewUsers');
-
-    //Roles Routes
-    Route::match(['get','post'],'/admin/add-role', 'RolesController@addRole');
-    Route::match(['get','post'], '/admin/edit-role/{id}', 'RolesController@editRole');
-    Route::get('/admin/delete-role/{id}','RolesController@deleteRole');
-    Route::get('/admin/view-roles','RolesController@viewRoles');
-
-    //ModelHasRoles Routes
-    Route::match(['get','post'],'/admin/add-model-has-roles', 'ModelHasRolesController@addModelHasRoles');
-    Route::match(['get','post'],'/admin/edit-model-has-roles/{role_id}/{model_id}','ModelHasRolesController@editModelHasRoles');
-    Route::get('/admin/delete-model-has-roles/{id}{model_type}{model_id}','ModelHasRolesController@deleteModelHasRoles');
-    Route::get('/admin/view-models-has-roles','ModelHasRolesController@viewModelsHasRoles');
-
-   */
 
 });
 
