@@ -62,6 +62,7 @@
     <li class="submenu"> <a href="#"><i class="icon icon-th-list"></i> <span>Groups</span> </a>
       <ul <?php if(preg_match("/groups/i", $url)) { ?> style="display: block;" <?php } ?>>
         <li <?php if(preg_match("/add-group/i", $url)) { ?> class="active" <?php } ?>><a href="{{url('/admin/add-group')}}">Add group</a></li>
+        <li <?php if(preg_match("/view-groups/i", $url)) { ?> class="active" <?php } ?>><a href="{{url('/admin/view-groups')}}">View groups</a></li>
       </ul>
     </li>
 

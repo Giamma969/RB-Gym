@@ -31,21 +31,21 @@
                             <div class="control-group"> 
                                 <label class="control-label">Name</label>
                                 <div class="controls">
-                                    <input type="text" name="developer_name" id="developer_name">
+                                    <input type="text" name="developer_name" id="developer_name" >
                                 </div>
                             </div>
 
                             <div class="control-group">
                                 <label class="control-label">Surnname</label>
                                 <div class="controls">
-                                    <input type="text" name="developer_surname" id="developer_surname">
+                                    <input type="text" name="developer_surname" id="developer_surname" >
                                 </div>
                             </div>
 
                             <div class="control-group">
                                 <label class="control-label">Email</label>
                                 <div class="controls">
-                                    <input type="email" name="developer_email" id="developer_email">
+                                    <input type="email" name="developer_email" id="developer_email" >
                                 </div>
                             </div>
 

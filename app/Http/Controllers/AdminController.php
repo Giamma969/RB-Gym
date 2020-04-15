@@ -10,23 +10,21 @@ use Illuminate\Support\Facades\Hash;
 
 class AdminController extends Controller
 {
-   public function login(Request $request){
-      if($request-> isMethod ('post')){
-        $data=$request-> input();
-            if (Auth::attempt(['email'=>$data['email'],'password'=>$data['password'],'admin'=>'1'])){
-                //echo "Success"; die;
-                Session::put('admin_session', $data['email']);
-                $new_session=str_random(40);
-                Session::put('admin_session_id',$new_session);
-                return redirect('/admin/dashboard');
-            }
-            else{
-                //echo "Failed"; die;
-                return redirect('/admin')->with('flash_message_error', 'invalid Username or Password');
-            }
-
-       }
-   	return view('admin.admin_login');
+    public function login(Request $request){
+        if($request-> isMethod ('post')){
+            $data=$request-> input();
+                if (Auth::attempt(['email'=>$data['email'],'password'=>$data['password'],'admin'=>'1'])){
+                    //echo "Success"; die;
+                    Session::put('admin_session', $data['email']);
+                    $new_session=str_random(40);
+                    Session::put('admin_session_id',$new_session);
+                    return redirect('/admin/dashboard');
+                }else{
+                    //echo "Failed"; die;
+                    return redirect('/admin')->with('flash_message_error', 'invalid Username or Password');
+                }
+        }
+   	    return view('admin.admin_login');
    }
 
 

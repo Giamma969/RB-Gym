@@ -291,7 +291,47 @@ $(document).ready(function(){
 		}
 	});
 
+	$("#add_developer").validate({
+		rules:{
+			developer_name:{
+				required:true
+			},
+			developer_surname:{
+				required:true
+			},
+			developer_email:{
+				required:true,
+				email:true
+			}
+		},
+		errorClass: "help-inline",
+		errorElement: "span",
+		highlight:function(element, errorClass, validClass) {
+			$(element).parents('.control-group').addClass('error');
+		},
+		unhighlight: function(element, errorClass, validClass) {
+			$(element).parents('.control-group').removeClass('error');
+			$(element).parents('.control-group').addClass('success');
+		}
+	});
 
+	$("#add_group").validate({
+		rules:{
+			group_name:{
+				required:true
+			}
+		},
+		errorClass: "help-inline",
+		errorElement: "span",
+		highlight:function(element, errorClass, validClass) {
+			$(element).parents('.control-group').addClass('error');
+		},
+		unhighlight: function(element, errorClass, validClass) {
+			$(element).parents('.control-group').removeClass('error');
+			$(element).parents('.control-group').addClass('success');
+		}
+	});
+	
 	$("#number_validate").validate({
 		rules:{
 			min:{

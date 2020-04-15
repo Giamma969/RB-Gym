@@ -153,6 +153,10 @@ Route::group(['middleware'=>['auth']],function(){
    
     //Admin - Groups routes
     Route::match(['get','post'],'/admin/add-group','GroupsController@addGroup');
+    Route::match(['get','post'],'/admin/edit-group/{id}','GroupsController@editGroup');
+    Route::get('/admin/view-groups','GroupsController@viewGroups');
+    Route::get('/admin/delete-group/{id}','GroupsController@deleteGroup');
+    
 
     //Admin - Services routes
     Route::match(['get','post'],'/admin/add-service','ServicesController@addService');

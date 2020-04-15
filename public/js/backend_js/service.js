@@ -6,15 +6,15 @@ $(document).ready(function(){
             $("#add_category_permission").prop('checked', true);
             $("#edit_category_permission").prop('checked', true);
             $("#delete_category_permission").prop('checked', true);
-            $("#category_description_permission").prop('checked', true);
-            $("#enable_disable_categories").prop('checked', true);
+            // $("#category_description_permission").prop('checked', true);
+            // $("#enable_disable_categories").prop('checked', true);
         }else{
             $("#view_categories_permission").prop('checked', false);
             $("#add_category_permission").prop('checked', false);
             $("#edit_category_permission").prop('checked', false);
             $("#delete_category_permission").prop('checked', false);
-            $("#category_description_permission").prop('checked', false);
-            $("#enable_disable_categories").prop('checked', false);
+            // $("#category_description_permission").prop('checked', false);
+            // $("#enable_disable_categories").prop('checked', false);
 
         }
     });
@@ -26,11 +26,11 @@ $(document).ready(function(){
             $("#edit_product_permission").prop('checked', true);
             $("#delete_product_permission").prop('checked', true);
             $("#manage_alternative_images").prop('checked', true);
-            $("#product_main_image").prop('checked', true);
-            $("#product_description_permission").prop('checked', true);
-            $("#product_price_permission").prop('checked', true);
-            $("#product_stock_permission").prop('checked', true);
-            $("#enable_disable_product").prop('checked', true);
+            // $("#product_main_image").prop('checked', true);
+            // $("#product_description_permission").prop('checked', true);
+            // $("#product_price_permission").prop('checked', true);
+            // $("#product_stock_permission").prop('checked', true);
+            // $("#enable_disable_product").prop('checked', true);
             
         }else{
             $("#view_products_permission").prop('checked', false);
@@ -38,11 +38,11 @@ $(document).ready(function(){
             $("#edit_product_permission").prop('checked', false);
             $("#delete_product_permission").prop('checked', false);
             $("#manage_alternative_images").prop('checked', false);
-            $("#product_main_image").prop('checked', false);
-            $("#product_description_permission").prop('checked', false);
-            $("#product_price_permission").prop('checked', false);
-            $("#product_stock_permission").prop('checked', false);
-            $("#enable_disable_product").prop('checked', false);
+            // $("#product_main_image").prop('checked', false);
+            // $("#product_description_permission").prop('checked', false);
+            // $("#product_price_permission").prop('checked', false);
+            // $("#product_stock_permission").prop('checked', false);
+            // $("#enable_disable_product").prop('checked', false);
 
         }
     });
