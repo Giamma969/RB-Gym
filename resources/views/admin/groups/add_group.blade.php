@@ -46,7 +46,7 @@
                             
                             <!-- Categories permissions -->
                             <div class="widget-title" style="clear:left; border-top:1px solid #CDCDCD; border-bottom:0px;"> 
-                                <h5>Categories permissions <input type="checkbox" name="full_access_categories" id="full_access_categories" style="margin: 5px 0px 7px 10px;"> </h5>
+                                <h5>Categories permissions</h5>
                             </div>                            
                             <div style="clear:left;">
                                 <div class="control-group" style="float:left;">
@@ -96,7 +96,7 @@
                             
                             <!-- Products permissions -->
                             <div class="widget-title" style="clear:left; border-top:1px solid #CDCDCD; border-bottom:0px;"> 
-                                <h5>Products permissions <input type="checkbox" name="full_access_products" id="full_access_products" style="margin: 5px 0px 7px 10px;"></h5>
+                                <h5>Products permissions</h5>
                             </div>
                             
                             <div style="clear:left;">
@@ -175,7 +175,7 @@
 
                             <!-- Coupons permissions -->
                             <div class="widget-title" style="clear:left; border-top:1px solid #CDCDCD; border-bottom:0px;"> 
-                                <h5>Coupons permissions <input style="margin: 5px 0px 7px 10px;" type="checkbox" name="full_access_coupons" id="full_access_coupons"></h5>        
+                                <h5>Coupons permissions</h5>        
                             </div>
                         
                             <div style="clear:left;">
@@ -211,7 +211,7 @@
 
                             <!-- Orders permissions -->
                             <div class="widget-title" style="clear:left; border-top:1px solid #CDCDCD; border-bottom:0px;"> 
-                                <h5>Orders permissions <input style="margin: 5px 0px 7px 10px;" type="checkbox" name="full_access_orders" id="full_access_orders"></h5>        
+                                <h5>Orders permissions</h5>        
                             </div>
                         
                             <div style="clear:left;">
@@ -232,7 +232,7 @@
 
                             <!-- Banners permissions -->
                             <div class="widget-title" style="clear:left; border-top:1px solid #CDCDCD; border-bottom:0px;"> 
-                                <h5>Banners permissions <input style="margin: 5px 0px 7px 10px;" type="checkbox" name="full_access_banners" id="full_access_banners"></h5>        
+                                <h5>Banners permissions</h5>        
                             </div>
                         
                             <div style="clear:left;">
@@ -270,7 +270,7 @@
 
                             <!-- Users permissions -->
                             <div class="widget-title" style="clear:left; border-top:1px solid #CDCDCD; border-bottom:0px;"> 
-                                <h5>Users permissions <input style="margin: 5px 0px 7px 10px;" type="checkbox" name="full_access_users" id="full_access_users"></h5>        
+                                <h5>Users permissions</h5>        
                             </div>
                         
                             <div style="clear:left;">
@@ -284,7 +284,7 @@
 
                             <!-- Reviews permissions -->
                             <div class="widget-title" style="clear:left; border-top:1px solid #CDCDCD; border-bottom:0px;"> 
-                                <h5>Reviews permissions <input style="margin: 5px 0px 7px 10px;" type="checkbox" name="full_access_reviews" id="full_access_reviews"></h5>        
+                                <h5>Reviews permissions</h5>        
                             </div>
                         
                             <div style="clear:left;">

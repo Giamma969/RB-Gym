@@ -22,204 +22,7 @@ class GroupsController extends Controller
                 return redirect()->back()->with("flash_message_error","Group name not available!");
             }
 
-            if(empty($data['status'])){
-                $status = 0;
-            }else{
-                $status = 1;
-            }
-            //insert group in the database
-            DB::table('groups')->insert([
-                'name'=> $data['group_name'],
-                'status'=>$status,
-            ]);
-            
-            
-            $group_id=DB::getPdo()->lastInsertId();
-            
-            //categories permissions
-            if(!empty($data['view_categories_permission'])){
-                $service_id = DB::table('services')->where('service_name',$data['view_categories_permission'])->first();
-                $service_id=$service_id->id;
-                DB::table('group_service')->insert([
-                    'service_id' => $service_id,
-                    'group_id' => $group_id,
-                ]);
-            }
-            if(!empty($data['add_category_permission'])){
-                $service_id = DB::table('services')->where('service_name',$data['add_category_permission'])->first();
-                $service_id=$service_id->id;
-                DB::table('group_service')->insert([
-                    'service_id'=> $service_id,
-                    'group_id'=>$group_id,
-                ]);
-            }
-            if(!empty($data['edit_category_permission'])){
-                $service_id = DB::table('services')->where('service_name',$data['edit_category_permission'])->first();
-                $service_id=$service_id->id;
-                DB::table('group_service')->insert([
-                    'service_id'=> $service_id,
-                    'group_id'=>$group_id,
-                ]);
-            }
-            if(!empty($data['delete_category_permission'])){
-                $service_id = DB::table('services')->where('service_name',$data['delete_category_permission'])->first();
-                $service_id=$service_id->id;
-                DB::table('group_service')->insert([
-                    'service_id'=> $service_id,
-                    'group_id'=>$group_id,
-                ]);
-            }
-           
-
-            //products permissions
-            if(!empty($data['view_products_permission'])){
-                $service_id = DB::table('services')->where('service_name',$data['view_products_permission'])->first();
-                $service_id=$service_id->id;
-                DB::table('group_service')->insert([
-                    'service_id'=> $service_id,
-                    'group_id'=>$group_id,
-                ]);
-            }
-            if(!empty($data['add_product_permission'])){
-                $service_id = DB::table('services')->where('service_name',$data['add_product_permission'])->first();
-                $service_id=$service_id->id;
-                DB::table('group_service')->insert([
-                    'service_id'=> $service_id,
-                    'group_id'=>$group_id,
-                ]);
-            }
-           
-            if(!empty($data['edit_product_permission'])){
-                $service_id = DB::table('services')->where('service_name',$data['edit_product_permission'])->first();
-                $service_id=$service_id->id;
-                DB::table('group_service')->insert([
-                    'service_id'=> $service_id,
-                    'group_id'=>$group_id,
-                ]);
-            }
-            
-            if(!empty($data['delete_product_permission'])){
-                $service_id = DB::table('services')->where('service_name',$data['delete_product_permission'])->first();
-                $service_id=$service_id->id;
-                DB::table('group_service')->insert([
-                    'service_id'=> $service_id,
-                    'group_id'=>$group_id,
-                ]);
-            }
-            
-            if(!empty($data['manage_alternative_images'])){
-                $service_id = DB::table('services')->where('service_name',$data['manage_alternative_images'])->first();
-                $service_id=$service_id->id;
-                DB::table('group_service')->insert([
-                    'service_id'=> $service_id,
-                    'group_id'=>$group_id,
-                ]);
-            }
-           
-            //coupons permissions
-            if(!empty($data['view_coupons_permission'])){
-                $service_id = DB::table('services')->where('service_name',$data['view_coupons_permission'])->first();
-                $service_id=$service_id->id;
-                DB::table('group_service')->insert([
-                    'service_id'=> $service_id,
-                    'group_id'=>$group_id,
-                ]);
-            }
-            if(!empty($data['add_coupon_permission'])){
-                $service_id = DB::table('services')->where('service_name',$data['add_coupon_permission'])->first();
-                $service_id=$service_id->id;
-                DB::table('group_service')->insert([
-                    'service_id'=> $service_id,
-                    'group_id'=>$group_id,
-                ]);
-            }
-            if(!empty($data['edit_coupon_permission'])){
-                $service_id = DB::table('services')->where('service_name',$data['edit_coupon_permission'])->first();
-                $service_id=$service_id->id;
-                DB::table('group_service')->insert([
-                    'service_id'=> $service_id,
-                    'group_id'=>$group_id,
-                ]);
-            }
-            if(!empty($data['delete_coupon_permission'])){
-                $service_id = DB::table('services')->where('service_name',$data['delete_coupon_permission'])->first();
-                $service_id=$service_id->id;
-                DB::table('group_service')->insert([
-                    'service_id'=> $service_id,
-                    'group_id'=>$group_id,
-                ]);
-            }
-           
-            //orders permissions
-            if(!empty($data['view_orders_permission'])){
-                $service_id = DB::table('services')->where('service_name',$data['view_orders_permission'])->first();
-                $service_id=$service_id->id;
-                DB::table('group_service')->insert([
-                    'service_id'=> $service_id,
-                    'group_id'=>$group_id,
-                ]);
-            }
-            if(!empty($data['update_order_status_permission'])){
-                $service_id = DB::table('services')->where('service_name',$data['update_order_status_permission'])->first();
-                $service_id=$service_id->id;
-                DB::table('group_service')->insert([
-                    'service_id'=> $service_id,
-                    'group_id'=>$group_id,
-                ]);
-            }
-
-            //banners permissions
-            if(!empty($data['view_banners_permission'])){
-                $service_id = DB::table('services')->where('service_name',$data['view_banners_permission'])->first();
-                $service_id=$service_id->id;
-                DB::table('group_service')->insert([
-                    'service_id'=> $service_id,
-                    'group_id'=>$group_id,
-                ]);
-            }
-            if(!empty($data['add_banner_permission'])){
-                $service_id = DB::table('services')->where('service_name',$data['add_banner_permission'])->first();
-                $service_id=$service_id->id;
-                DB::table('group_service')->insert([
-                    'service_id'=> $service_id,
-                    'group_id'=>$group_id,
-                ]);
-            }
-            if(!empty($data['edit_banner_permission'])){
-                $service_id = DB::table('services')->where('service_name',$data['edit_banner_permission'])->first();
-                $service_id=$service_id->id;
-                DB::table('group_service')->insert([
-                    'service_id'=> $service_id,
-                    'group_id'=>$group_id,
-                ]);
-            }
-            if(!empty($data['delete_banner_permission'])){
-                $service_id = DB::table('services')->where('service_name',$data['delete_banner_permission'])->first();
-                $service_id=$service_id->id;
-                DB::table('group_service')->insert([
-                    'service_id'=> $service_id,
-                    'group_id'=>$group_id,
-                ]);
-            }
-    
-            //users permissions
-            if(!empty($data['view_users_permission'])){
-                $service_id = DB::table('services')->where('service_name',$data['view_users_permission'])->first();
-                $service_id=$service_id->id;
-                DB::table('group_service')->insert([
-                    'service_id'=> $service_id,
-                    'group_id'=>$group_id,
-                ]);
-            }
-            //reviews permissions
-            if(!empty($data['view_reviews_permission'])){
-                $service_id = DB::table('services')->where('service_name',$data['view_reviews_permission'])->first();
-                $service_id=$service_id->id;
-                DB::table('group_service')->insert([
-                    'service_id'=> $service_id,
-                    'group_id'=>$group_id,
-                ]);
-            }
+            Group::addGroup($data);
            
             return redirect()->back()->with("flash_message_success","Group created successfully!");
 
@@ -228,31 +31,23 @@ class GroupsController extends Controller
     }
 
     public function viewGroups(){
-        $Details = array();
-        $groupsDetails = DB::table('groups')->get();
-        foreach($groupsDetails as $group){
-            $array = array(
-                "0" => $group->id,
-                "1" => $group->name,
-                "2" => $group->status,
-            );
-            $servicesDetails = DB::table('group_service')->where('group_id',$group->id)
-                ->join('services','services.id','=','group_service.service_id')
-                ->select('services.*')
-                ->get();
-            $count=3;
-            foreach($servicesDetails as $service){
-                $array[$count] = $service->service_name;
-                $count++;
-            }
-            array_push($Details, $array);
-        }
-        //echo'<pre>'; print_r($Details); die;
+        $Details = Group::getAllGroups();
         return view('admin.groups.view_groups')->with(compact('Details'));
     }
 
-    public function editGroup(){
+    public function editGroup(Request $request, $id=null){
+        if($request->isMethod('post')){
+            $data=$request->all();
 
+            $count_groups = DB::table('groups')->where('name',$data['group_name'])->count();
+            if($count_groups > 1){
+                return redirect()->back()->with("flash_message_error","Group name not available!");
+            }
+            Group::editGroup($data,$id);
+            return redirect()->back()->with("flash_message_success","Group successfully updated!");
+        }
+        $groupDetails = Group::getGroupById($id);
+        return view('admin.groups.edit_group')->with(compact('groupDetails'));
     }
 
     public function deleteGroup($id=null){

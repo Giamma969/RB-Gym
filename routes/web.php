@@ -159,7 +159,7 @@ Route::group(['middleware'=>['auth']],function(){
     
 
     //Admin - Services routes
-    Route::match(['get','post'],'/admin/add-service','ServicesController@addService');
+    Route::match(['get','post'],'/admin/view-services','ServicesController@viewServices');
 
 
 });

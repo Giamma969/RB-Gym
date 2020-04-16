@@ -68,7 +68,7 @@
 
     <li class="submenu"> <a href="#"><i class="icon icon-th-list"></i> <span>Services</span> </a>
       <ul <?php if(preg_match("/services/i", $url)) { ?> style="display: block;" <?php } ?>>
-        <li <?php if(preg_match("/add-service/i", $url)) { ?> class="active" <?php } ?>><a href="{{url('/admin/add-service')}}">Add service</a></li>
+      <li <?php if(preg_match("/view-services/i", $url)) { ?> class="active" <?php } ?>><a href="{{url('/admin/view-services')}}">View services</a></li>
       </ul>
     </li>
 
