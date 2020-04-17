@@ -284,7 +284,8 @@
 
                             <!-- Reviews permissions -->
                             <div class="widget-title" style="clear:left; border-top:1px solid #CDCDCD; border-bottom:0px;"> 
-                                <h5>Reviews permissions</h5>        
+                                <h5>Reviews permissions
+                                </h5>        
                             </div>
                         
                             <div style="clear:left;">

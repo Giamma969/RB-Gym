@@ -50,20 +50,30 @@
                             </div>
 
                             <div class="control-group">
-                                <label class="control-label">Assign group</label>
+                                <label class="control-label">Active</label>
                                 <div class="controls">
-                                    <select name="group_id" style="width: 220px;">
-                                        <!-- return all groups-->
-                                    </select>
+                                    <input type="checkbox" name="status" id="status" value="1">
                                 </div>
                             </div>
-                        
-                        
+
+                            <!--<div class="control-group">
+                                <label class="control-label">Assign group</label>
+                                <div class="controls">
+                                    <select name="group_id" style="width: 220px;">  
+                                    </select>
+                                </div>
+                            </div>-->
+                            <div class="widget-title"> <span class="icon"> <i class="icon-info-sign"></i> </span>
+                                <h5>Assign groups</h5>
+                            </div>
+
                             <div class="control-group">
-                                <label class="control-label">Active</label>
-                                    <div class="controls">
-                                        <input type="checkbox" name="status" id="status" value="1">
-                                    </div>
+                            @foreach($groupsDetails as $group)
+                                <label class="control-label">{{$group->name}}</label>
+                                <div class="controls">
+                                    <input type="checkbox" name="{{$group->name}}" id="{{$group->name}}" value="1">
+                                </div>
+                            @endforeach
                             </div>
 
                             <div class="form-actions">

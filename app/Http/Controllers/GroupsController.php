@@ -31,7 +31,7 @@ class GroupsController extends Controller
     }
 
     public function viewGroups(){
-        $Details = Group::getAllGroups();
+        $Details = Group::getAllGroupsWithServices();
         return view('admin.groups.view_groups')->with(compact('Details'));
     }
 

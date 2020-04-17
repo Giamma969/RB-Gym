@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use DB;
+use App\Address;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 class DevelopersController extends Controller
@@ -17,17 +18,59 @@ class DevelopersController extends Controller
                 return redirect()->back()->with("flash_message_error","Please fill all fields!");
             }
 
+            if(empty($data['status'])){
+                $status = 0;
+            }else{
+                $status = 1;
+            }
+
+            $groups_name = DB::table('groups')->select('groups.name')->get();
+            $keys = array_keys($data);
+            for ($x = 4; $x < count($keys); $x++) {
+                $keys[$x] = str_replace("_", " ", $keys[$x]);
+            }
+           
             $password=str_random(15);
             DB::table('users')->insert([
                 'name'=> $data['developer_name'],
                 'surname'=> $data['developer_surname'],
                 'email'=> $data['developer_email'],
                 'password' => bcrypt($password),
-                'status' => 1,
+                'status' => $status,
                 'developer' => 1,
             ]);
-
+            
+            $user_id=DB::getPdo()->lastInsertId();
+            
             //assign groups
+            foreach($groups_name as $group){
+                if(in_array($group->name, $keys)){
+                    //inserisci
+                    $group_id = DB::table('groups')->where('name',$group->name)->first();
+                    $group_id = $group_id->id;
+                    DB::table('group_user')->insert([
+                        'user_id' => $user_id,
+                        'group_id' => $group_id,
+                    ]); 
+                }  
+            }
+            //echo '<pre>'; print_r($keys); die;
+            //echo '<pre>'; print_r($groups); die;
+
+
+            
+            //create billing address
+            $bill_address = new Address;
+            $bill_address->user_id=$user_id;
+            $bill_address->is_billing=1;
+            $bill_address->is_shipping=0;
+            $bill_address->user_name=$data['developer_name'];
+            $bill_address->user_surname=$data['developer_surname'];
+            $bill_address->save();
+
+            //update billing_id field in users table
+            $billing_id=DB::getPdo()->lastInsertId();
+            DB::table('users')->where(['id'=>$user_id])->update(['billing_id'=>$billing_id]);
 
             //send password by email
             $email=$data['developer_email'];
@@ -39,7 +82,9 @@ class DevelopersController extends Controller
 
             return redirect()->back()->with("flash_message_success","Developer added successfully. The password was emailed to him!");
         }
-        
-        return view('admin.developers.add_developer');
+
+        $groupsDetails = DB::table('groups')->get();
+        //echo'<pre>'; print_r($groupsDetails); die;
+        return view('admin.developers.add_developer')->with(compact('groupsDetails'));
     }
 }

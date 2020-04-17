@@ -215,7 +215,7 @@ class Group extends Model
         }
     }
 
-    public static function getAllGroups(){
+    public static function getAllGroupsWithServices(){
         $Details = array();
 
         $groupsDetails = DB::table('groups')->get();
