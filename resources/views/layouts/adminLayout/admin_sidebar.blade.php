@@ -56,6 +56,7 @@
     <li class="submenu"> <a href="#"><i class="icon icon-th-list"></i> <span>Developers</span> </a>
       <ul <?php if(preg_match("/developers/i", $url)) { ?> style="display: block;" <?php } ?>>
         <li <?php if(preg_match("/add-developer/i", $url)) { ?> class="active" <?php } ?>><a href="{{url('/admin/add-developer')}}">Add developer</a></li>
+        <li <?php if(preg_match("/view-developers/i", $url)) { ?> class="active" <?php } ?>><a href="{{url('/admin/view-developers')}}">View developers</a></li>
       </ul>
     </li>
 

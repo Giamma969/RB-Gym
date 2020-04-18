@@ -3,9 +3,10 @@
 namespace App\Http\Middleware;
 
 use Closure;
-use Session;
+use App\User;
 
-class FrontLogin
+
+class AddBanner
 {
     /**
      * Handle an incoming request.
@@ -16,8 +17,10 @@ class FrontLogin
      */
     public function handle($request, Closure $next)
     {
-        if(empty(Session::has('front_session'))){
-            return redirect('/login-register');
+        $services = User::getPermissions();
+        $is_admin = User::checkIfAdmin();
+        if(!(in_array("add_banner", $services)) && $is_admin === false){
+            return redirect('/admin/dashboard')->with('flash_message_error','You do not have permission to access this section');
         }
         return $next($request);
     }
