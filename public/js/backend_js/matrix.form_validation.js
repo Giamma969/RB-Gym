@@ -253,7 +253,6 @@ $(document).ready(function(){
 			},
 			title:{
 				required:true,
-				number:true
 			},
 			link:{
 				required:true
@@ -274,7 +273,6 @@ $(document).ready(function(){
 		rules:{
 			title:{
 				required:true,
-				number:true
 			},
 			link:{
 				required:true

@@ -127,7 +127,7 @@ class ProductsController extends Controller
                 return redirect()->back()->with("flash_message_error","Product code not available!");
             
             if($request->hasfile('image')){
-                //$this->deleteProductImage($id);
+                $this->deleteProductImage($id);
                 $image_tmp= Input::file('image');
                 if($image_tmp->isValid()){
                     $extension= $image_tmp->getClientOriginalExtension();
@@ -208,9 +208,9 @@ class ProductsController extends Controller
     }
 
     public function deleteProduct($id=null){
-        //unlink
+        //unlink image
         $this->deleteProductImage($id);
-        //unlink
+        //unlink all alternative images
         $this->deleteAllAltImage($id);
         Product::where(['id'=>$id])->delete();
         return redirect()->back()->with('flash_message_success','il prodotto è stato eliminato');
@@ -234,7 +234,6 @@ class ProductsController extends Controller
         if(file_exists($medium_image_path.$productImage->image)){
             unlink($medium_image_path.$productImage->image);
         }
-
 
         //delete small image if not exists in directory
         if(file_exists($small_image_path.$productImage->image)){

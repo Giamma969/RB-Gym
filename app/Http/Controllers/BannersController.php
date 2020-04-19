@@ -36,7 +36,7 @@ class BannersController extends Controller {
             $banner->status = $status;
             $banner->save();
           
-            return redirect()->back()->with('flash_message_success','Banner aggiunto con successo!');   
+            return redirect()->back()->with('flash_message_success','Banner successfully added!');   
         }
         return view('admin.banners.add_banner');
     }
@@ -61,6 +61,7 @@ class BannersController extends Controller {
             }
 
             if($request->hasfile('image')){
+                Banner::deleteBannerImage($id);
                 $image_tmp= Input::file('image');
                 if($image_tmp->isValid()) {
                     $extension= $image_tmp->getClientOriginalExtension();
@@ -68,10 +69,8 @@ class BannersController extends Controller {
                     $banner_path= 'images/frontend_images/banners/'.$fileName;                   
                     Image::make($image_tmp)->resize(1140,340)->save($banner_path);
                 }
-            }else if(!empty($data['current_image'])){
-                $fileName=$data['current_image'];
             }else{
-                $fileName='';
+                $fileName=$data['current_image'];
             }
 
             Banner::where('id',$id)->update(['status'=>$status, 'title'=>$data['title'], 'link'=>$data['link'],'image'=>$fileName]);
@@ -87,6 +86,7 @@ class BannersController extends Controller {
     }
 
     public function deleteBanner($id=null){
+        Banner::deleteBannerImage($id);
         Banner::where(['id'=>$id])->delete();
         return redirect()->back()->with('flash_message_success','Banner eliminato con successo!');
     }

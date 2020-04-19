@@ -3,7 +3,7 @@
 namespace App\Http\Middleware;
 
 use Closure;
-use User;
+use App\User;
 
 class DeleteBanner
 {
