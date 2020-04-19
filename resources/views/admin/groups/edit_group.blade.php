@@ -296,6 +296,93 @@
                                 </div>
                             </div>
 
+                            <!-- Developers permissions -->
+                            <div class="widget-title" style="clear:left; border-top:1px solid #CDCDCD; border-bottom:0px;"> 
+                                <h5>Developers permissions
+                                </h5>        
+                            </div>
+                        
+                            <div style="clear:left;">
+                                <div class="control-group" style="float:left;">
+                                    <label class="control-label">View developers</label>
+                                    <div class="controls">
+                                        <input type="checkbox" name="view_developers_permission" id="view_developers_permission" value="view_developers" @if(in_array("view_developers", $groupDetails, true)) checked @endif>
+                                    </div>
+                                </div>
+                           
+                                <div class="control-group" style="float:left;">
+                                    <label class="control-label">Add developer</label>
+                                    <div class="controls">
+                                        <input type="checkbox" name="add_developer_permission" id="add_developer_permission" value="add_developer" @if(in_array("add_developer", $groupDetails, true)) checked @endif>
+                                    </div>
+                                </div>
+                           
+                                <div class="control-group" style="float:left;">
+                                    <label class="control-label">Edit developer</label>
+                                    <div class="controls">
+                                        <input type="checkbox" name="edit_developer_permission" id="edit_developer_permission" value="edit_developer" @if(in_array("edit_developer", $groupDetails, true)) checked @endif>
+                                    </div>
+                                </div>
+                            
+                                <div class="control-group" style="float:left;">
+                                    <label class="control-label">Delete developer</label>
+                                    <div class="controls">
+                                        <input type="checkbox" name="delete_developer_permission" id="delete_developer_permission" value="delete_developer" @if(in_array("delete_developer", $groupDetails, true)) checked @endif>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Groups permissions -->
+                            <div class="widget-title" style="clear:left; border-top:1px solid #CDCDCD; border-bottom:0px;"> 
+                                <h5>Groups permissions
+                                </h5>        
+                            </div>
+                        
+                            <div style="clear:left;">
+                                <div class="control-group" style="float:left;">
+                                    <label class="control-label">View groups</label>
+                                    <div class="controls">
+                                        <input type="checkbox" name="view_groups_permission" id="view_groups_permission" value="view_groups" @if(in_array("view_groups", $groupDetails, true)) checked @endif>
+                                    </div>
+                                </div>
+                           
+                                <div class="control-group" style="float:left;">
+                                    <label class="control-label">Add group</label>
+                                    <div class="controls">
+                                        <input type="checkbox" name="add_group_permission" id="add_group_permission" value="add_group" @if(in_array("add_group", $groupDetails, true)) checked @endif>
+                                    </div>
+                                </div>
+                           
+                                <div class="control-group" style="float:left;">
+                                    <label class="control-label">Edit group</label>
+                                    <div class="controls">
+                                        <input type="checkbox" name="edit_group_permission" id="edit_group_permission" value="edit_group" @if(in_array("edit_group", $groupDetails, true)) checked @endif>
+                                    </div>
+                                </div>
+                            
+                                <div class="control-group" style="float:left;">
+                                    <label class="control-label">Delete group</label>
+                                    <div class="controls">
+                                        <input type="checkbox" name="delete_group_permission" id="delete_group_permission" value="delete_group" @if(in_array("delete_group", $groupDetails, true)) checked @endif>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Services permissions -->
+                            <div class="widget-title" style="clear:left; border-top:1px solid #CDCDCD; border-bottom:0px;"> 
+                                <h5>Services permissions
+                                </h5>        
+                            </div>
+                        
+                            <div style="clear:left;">
+                                <div class="control-group" style="float:left;">
+                                    <label class="control-label">View services</label>
+                                    <div class="controls">
+                                        <input type="checkbox" name="view_services_permission" id="view_services_permission" value="view_services" @if(in_array("view_services", $groupDetails, true)) checked @endif>
+                                    </div>
+                                </div>
+                            </div>
+
                             <div class="form-actions" style="clear:left;">
                                 <input type="submit" value="Edit group" class="btn btn-success">
                             </div>

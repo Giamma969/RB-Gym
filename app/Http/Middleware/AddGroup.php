@@ -5,7 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use App\User;
 
-class AltImagesProduct
+class AddGroup
 {
     /**
      * Handle an incoming request.
@@ -22,7 +22,7 @@ class AltImagesProduct
         if($is_active === false){
             return redirect('/logout');
         }
-        if(!(in_array("alternative_images", $services)) && $is_admin === false){
+        if(!(in_array("add_group", $services)) && $is_admin === false){
             return redirect('/admin/dashboard')->with('flash_message_error','You do not have permission to access this section');
         }
         return $next($request);

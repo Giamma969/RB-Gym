@@ -5,7 +5,7 @@
   <div id="breadcrumb"> <a href="index.html" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a> <a href="#">Categories</a> <a href="#" class="current">View categories</a> </div>
     <h1>Categories</h1>
     @if(Session::has('flash_message_error'))
-    <div class="alert alert-success alert-block">
+    <div class="alert alert-error alert-block">
     	<button type="button" class="close" data-dismiss="alert">×</button>
             <strong> {!! session ('flash_message_error') !!}</strong>
     </div>
@@ -47,8 +47,13 @@
                   <td>{{$category->name}}</td>
                   <td>{{$category->parent_id}}</td>
                   <td>{{$category->url}}</td>
-                  <?php if($category->status == 0) echo '<td>Inactive</td>'?> 
-                  <?php if($category->status == 1) echo '<td>Active</td>'?> 
+                  <td>
+                    @if($category->status == 0)
+                        <span style="color:red">Inactive</span>
+                    @else 
+                        <span style="color:green">Active</span>
+                    @endif
+                  </td>
                   <td class="center"><a href="{{ url('/admin/edit-category/'.$category->id)  }} " class="btn btn-primary btn-mini">Edit</a>  
                   <a <?php /*id="delCat"href="{{ url('/admin/delete-category/'.$category->id)  }} "*/ ?> rel="{{$category->id}}" 
                    rel1="delete-category" haref="javascript:" class="btn btn-danger btn-mini deleteRecord">Delete</a></div></td> 

@@ -66,5 +66,11 @@ class User extends Authenticatable
         return $is_admin;
     }
 
+    public static function checkIfActive(){
+        $user_id=Auth::user()->id; 
+        $is_active = DB::table('users')->where(['id'=>$user_id, 'status'=>1])->exists();
+        return $is_active;
+    }
+
    
 }

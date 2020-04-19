@@ -150,6 +150,7 @@ class DevelopersController extends Controller
             if($count_email > 0 && $data['developer_email']!==$current_email)
                 return redirect()->back()->with("flash_message_error","Email not available!");
 
+            
             if(empty($data['status'])){
                 $status = 0;
             }else{

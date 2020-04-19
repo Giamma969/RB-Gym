@@ -19,6 +19,11 @@ class AddBanner
     {
         $services = User::getPermissions();
         $is_admin = User::checkIfAdmin();
+        $is_active = User::checkIfActive();
+        if($is_active === false){
+            return redirect('/logout');
+        }
+
         if(!(in_array("add_banner", $services)) && $is_admin === false){
             return redirect('/admin/dashboard')->with('flash_message_error','You do not have permission to access this section');
         }

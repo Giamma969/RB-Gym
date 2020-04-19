@@ -10,6 +10,7 @@ class CouponsController extends Controller
     public function addCoupon(Request $request){
         if($request->isMethod('post')){
             $data=$request->all();
+
              //check if product code already exists
              $couponCount=Coupon::where(['coupon_code'=>$data['coupon_code']])->count();
              if($couponCount > 0){
@@ -36,11 +37,13 @@ class CouponsController extends Controller
     public function editCoupon(Request $request, $id=null){
         if($request->isMethod('post')){
             $data = $request->all();
-            //check if product code already exists
-            $couponCount=Coupon::where(['coupon_code'=>$data['coupon_code']])->count();
-            if($couponCount > 1){
-                return redirect()->back()->with('flash_message_error','Coupon code already exists! ');
-            } 
+
+            //check if coupon code already exists
+            $count_code = DB::table('coupons')->where('coupon_code', $data['coupon_code'])->count();
+            $current_code = DB::table('coupons')->where('id', $id)->first();
+            $current_code=$current_code->coupon_code;
+            if($count_code > 0 && $data['coupon_code']!==$current_code)
+                return redirect()->back()->with("flash_message_error","Coupon code not available!");
 
             $coupon = Coupon::find($id);
             $coupon->coupon_code=$data['coupon_code'];

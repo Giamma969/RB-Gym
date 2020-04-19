@@ -31,13 +31,22 @@ use App\Http\Middleware\ViewReviews;
 use App\Http\Middleware\ViewUsers;
 use App\Http\Middleware\ViewOrders;
 use App\Http\Middleware\UpdateOrderStatus;
+use App\Http\Middleware\ViewDevelopers;
+use App\Http\Middleware\AddDeveloper;
+use App\Http\Middleware\EditDeveloper;
+use App\Http\Middleware\DeleteDeveloper;
+use App\Http\Middleware\ViewGroups;
+use App\Http\Middleware\AddGroup;
+use App\Http\Middleware\EditGroup;
+use App\Http\Middleware\DeleteGroup;
+use App\Http\Middleware\ViewServices;
 
 
 Auth::routes();
 
 Route::match(['get','post'],'/admin','AdminController@login');
-Route::get('/logout', 'AdminController@logout');
-Route:: get('/admin/dashboard','AdminController@dashboard');
+
+//Route:: get('/admin/dashboard','AdminController@dashboard');
 
 Route::get('/home', 'HomeController@index')->name('home');
 
@@ -123,6 +132,7 @@ Route::group(['middleware'=>['auth']],function(){
     Route::get('/admin/settings','AdminController@settings');
     Route::get('/admin/check-pwd','AdminController@chkPassword');
     Route::match(['get','post'],'/admin/update-pwd','AdminController@updatePassword');
+    Route::get('/logout', 'AdminController@logout');
    
     //Admin Categories Routes
     Route::match(['get','post'],'/admin/add-category','CategoryController@addCategory')->middleware(AddCategory::class);
@@ -167,20 +177,20 @@ Route::group(['middleware'=>['auth']],function(){
     Route::get('/admin/view-reviews','ProductsController@viewReviews')->middleware(ViewReviews::class);
 
     //Admin - Developers routes
-    Route::match(['get','post'],'/admin/add-developer','DevelopersController@addDeveloper');
-    Route::get('/admin/view-developers','DevelopersController@viewDevelopers');
-    Route::get('/admin/view-dev-groups/{id}','DevelopersController@viewDeveloperGroups');
-    Route::match(['get','post'],'/admin/edit-developer/{id}','DevelopersController@editDeveloper');
-    Route::get('/admin/delete-developer/{id}','DevelopersController@deleteDeveloper');
+    Route::match(['get','post'],'/admin/add-developer','DevelopersController@addDeveloper')->middleware(AddDeveloper::class);
+    Route::get('/admin/view-developers','DevelopersController@viewDevelopers')->middleware(ViewDevelopers::class);
+    Route::get('/admin/view-dev-groups/{id}','DevelopersController@viewDeveloperGroups')->middleware(ViewDevelopers::class);
+    Route::match(['get','post'],'/admin/edit-developer/{id}','DevelopersController@editDeveloper')->middleware(EditDeveloper::class);
+    Route::get('/admin/delete-developer/{id}','DevelopersController@deleteDeveloper')->middleware(DeleteDeveloper::class);
     
     //Admin - Groups routes
-    Route::match(['get','post'],'/admin/add-group','GroupsController@addGroup');
-    Route::match(['get','post'],'/admin/edit-group/{id}','GroupsController@editGroup');
-    Route::get('/admin/view-groups','GroupsController@viewGroups');
-    Route::get('/admin/delete-group/{id}','GroupsController@deleteGroup');
+    Route::match(['get','post'],'/admin/add-group','GroupsController@addGroup')->middleware(AddGroup::class);
+    Route::match(['get','post'],'/admin/edit-group/{id}','GroupsController@editGroup')->middleware(EditGroup::class);
+    Route::get('/admin/view-groups','GroupsController@viewGroups')->middleware(ViewGroups::class);
+    Route::get('/admin/delete-group/{id}','GroupsController@deleteGroup')->middleware(DeleteGroup::class);
     
     //Admin - Services routes
-    Route::match(['get','post'],'/admin/view-services','ServicesController@viewServices');
+    Route::match(['get','post'],'/admin/view-services','ServicesController@viewServices')->middleware(ViewServices::class);
 
 
 });

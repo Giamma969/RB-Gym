@@ -5,7 +5,7 @@
   <div id="breadcrumb"> <a href="index.html" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a> <a href="#">Products</a> <a href="#" class="current">View products</a> </div>
     <h1>Products</h1>
     @if(Session::has('flash_message_error'))
-    <div class="alert alert-success alert-block">
+    <div class="alert alert-error alert-block">
     	<button type="button" class="close" data-dismiss="alert">×</button>
             <strong> {!! session ('flash_message_error') !!}</strong>
     </div>
@@ -16,7 +16,6 @@
     	<button type="button" class="close" data-dismiss="alert">×</button>
             <strong> {!! session ('flash_message_success') !!}</strong>
     </div>
-
     @endif
   </div>
   <div class="container-fluid">
@@ -63,8 +62,13 @@
                        <img src="{{asset('/images/backend_images/products/small/'.$product->image)}}" style="width:50px;">
                        @endif
                   </td>
-                  <?php if($product->status == 0) echo '<td>Inactive</td>'?> 
-                  <?php if($product->status == 1) echo '<td>Active</td>'?>
+                  <td>
+                    @if($product->status == 0)
+                        <span style="color:red">Inactive</span>
+                    @else 
+                        <span style="color:green">Active</span>
+                    @endif
+                  </td>
                   <td class="center">
                     <a href="#myModal{{$product->id}}" data-toggle="modal" class="btn btn-success btn-mini" title="Visualizza">View</a>
                     <a href="{{ url('/admin/edit-product/'.$product->id)  }} " class="btn btn-primary btn-mini" title="Modifica">Edit</a>

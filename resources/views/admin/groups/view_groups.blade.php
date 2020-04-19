@@ -36,7 +36,7 @@
                   <th rowspan="2">Group ID</th>
                   <th rowspan="2">Group name</th>
                   <th rowspan="2">Status</th>
-                  <th colspan="7">Services</th>
+                  <th colspan="10">Services</th>
                   <th rowspan="2">Actions</th>
                 </tr> 
                 
@@ -48,6 +48,10 @@
                   <th>Banners</th>
                   <th>Users</th>
                   <th>Reviews</th>
+                  <th>Developers</th>
+                  <th>Groups</th>
+                  <th>Services</th>
+
                 </tr> 
                 
               </thead>
@@ -59,7 +63,14 @@
                 <tr class="gradeX">
                   <td rowspan="5" > {{$group[0]}} </td>
                   <td rowspan="5">{{$group[1]}} </td>
-                  <td rowspan="5"> @if($group[2] == 1) Active @else Inactive @endif </td>
+                  <td rowspan="5"> 
+                    @if($group[2] == 1) 
+                      <span style="color:green">Active</span> 
+                    @else 
+                      <span style="color:red">Inactive</span>
+                    @endif 
+                  </td>
+                  
                   <td>View products  @if(in_array("view_products", $group, true))<span class="glyphicon icon-ok">@else <span class="glyphicon icon-remove"> @endif </span></td>
                   <td>View categories @if(in_array("view_categories", $group, true))<span class="glyphicon icon-ok">@else <span class="glyphicon icon-remove"> @endif </span></td>
                   <td>View coupons @if(in_array("view_coupons", $group, true))<span class="glyphicon icon-ok">@else <span class="glyphicon icon-remove"> @endif </span></td>
@@ -67,6 +78,9 @@
                   <td>View banners @if(in_array("view_banners", $group, true))<span class="glyphicon icon-ok">@else <span class="glyphicon icon-remove"> @endif </span></td>
                   <td>View users @if(in_array("view_users", $group, true))<span class="glyphicon icon-ok">@else <span class="glyphicon icon-remove"> @endif </span></td>
                   <td>View reviews @if(in_array("view_reviews", $group, true))<span class="glyphicon icon-ok">@else <span class="glyphicon icon-remove"> @endif </span></td>
+                  <td>View developers @if(in_array("view_developers", $group, true))<span class="glyphicon icon-ok">@else <span class="glyphicon icon-remove"> @endif </span></td>
+                  <td>View groups @if(in_array("view_groups", $group, true))<span class="glyphicon icon-ok">@else <span class="glyphicon icon-remove"> @endif </span></td>
+                  <td>View services @if(in_array("view_services", $group, true))<span class="glyphicon icon-ok">@else <span class="glyphicon icon-remove"> @endif </span></td>
                   <td rowspan="5" class="center">
                     <a href="{{ url('/admin/edit-group/'.$group[0])  }} " class="btn btn-primary btn-mini" title="Edit">Edit</a>
                     <a rel="{{$group[0]}}" rel1="delete-group"  href="javascript:" class="btn btn-danger btn-mini deleteRecord">Delete</a>
@@ -81,6 +95,9 @@
                   <td>Add banner @if(in_array("add_banner", $group, true))<span class="glyphicon icon-ok">@else <span class="glyphicon icon-remove"> @endif </span></td>
                   <td></td>
                   <td></td>
+                  <td>Add developer @if(in_array("add_developer", $group, true))<span class="glyphicon icon-ok">@else <span class="glyphicon icon-remove"> @endif </span></td>
+                  <td>Add group @if(in_array("add_group", $group, true))<span class="glyphicon icon-ok">@else <span class="glyphicon icon-remove"> @endif </span></td>
+                  <td></td>
                 </tr>
 
                 <tr class="gradeX"> 
@@ -90,6 +107,9 @@
                   <td></td>
                   <td>Edit banner @if(in_array("edit_banner", $group, true))<span class="glyphicon icon-ok">@else <span class="glyphicon icon-remove"> @endif </span></td>
                   <td></td>
+                  <td></td>
+                  <td>Edit developer @if(in_array("edit_developer", $group, true))<span class="glyphicon icon-ok">@else <span class="glyphicon icon-remove"> @endif </span></td>
+                  <td>Edit group @if(in_array("edit_group", $group, true))<span class="glyphicon icon-ok">@else <span class="glyphicon icon-remove"> @endif </span></td>
                   <td></td>
                 </tr>
 
@@ -101,10 +121,16 @@
                   <td>Delete banner @if(in_array("delete_banner", $group, true))<span class="glyphicon icon-ok">@else <span class="glyphicon icon-remove"> @endif </span></td>
                   <td></td>
                   <td></td>
+                  <td>Delete developer @if(in_array("delete_developer", $group, true))<span class="glyphicon icon-ok">@else <span class="glyphicon icon-remove"> @endif </span></td>
+                  <td>Delete group @if(in_array("delete_group", $group, true))<span class="glyphicon icon-ok">@else <span class="glyphicon icon-remove"> @endif </span></td>
+                  <td></td>
                 </tr>
 
                 <tr class="gradeX"> 
                   <td>Alternative images @if(in_array("alternative_images", $group, true))<span class="glyphicon icon-ok">@else <span class="glyphicon icon-remove"> @endif </span></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
                   <td></td>
                   <td></td>
                   <td></td>

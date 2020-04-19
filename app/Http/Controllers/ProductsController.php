@@ -35,10 +35,17 @@ class ProductsController extends Controller
             if(empty($data['category_id'])){
                 return redirect()->back()->with('flash_message_error','Missed subcategory!');    
             }
+
             //check if product code already exists
-            $productCount=Product::where(['product_code'=>$data['product_code']])->count();
-            if($productCount > 0){
+            $count_code=Product::where(['product_code'=>$data['product_code']])->count();
+            if($count_code > 0){
                 return redirect()->back()->with('flash_message_error','Product code already exists. Try to generate another product code!');
+            }
+
+            //check if product name already exists
+            $count_name=Product::where(['product_name'=>$data['product_name']])->count();
+            if($count_name > 0){
+                return redirect()->back()->with('flash_message_error','Product name not available!');
             }
 
             $product= new Product;
@@ -46,42 +53,43 @@ class ProductsController extends Controller
             $product->product_name= $data['product_name'];
             $product->product_code= $data['product_code'];
             $product->product_color= $data['product_color'];  
+
             if(!empty($data['description'])) {
-            $product->description= $data['description'];
-           }else{
-            $product->description= '';
-           }
-           $product->brand = $data['brand'];
-           $product->price= $data['price']; 
-           // upload image   
-           if($request->hasfile('image')){
-               $image_tmp= Input::file('image');
-               if($image_tmp->isValid()){
-                   $extension= $image_tmp->getClientOriginalExtension();
-                   $filename= rand(111,99999).'.'.$extension;
-                   $large_image_path= 'images/backend_images/products/large/'.$filename;
-                   $medium_image_path= 'images/backend_images/products/medium/'.$filename;
-                   $small_image_path= 'images/backend_images/products/small/'.$filename;
-                    //Resize image code
-                    Image::make($image_tmp)->save($large_image_path);
-                    Image::make($image_tmp)->resize(600,600)->save($medium_image_path);
-                    Image::make($image_tmp)->resize(300,300)->save($small_image_path);
-                    //store image name in product table
-                    $product->image=$filename;
-               }
-           }
-           $product->stock = $data['stock'];
-           if(empty($data['status'])){
-            $status = 0;
-          }else{
-            $status = 1;
-          }
-          $product->status = $status;
-           $product->save();
-          // return redirect()->back()->with('flash_message_success','Prodotto aggiunto con successo!');   
-           return redirect('/admin/view-products')->with('flash_message_success','Prodotto aggiunto con successo!');        
+                $product->description= $data['description'];
+            }else{
+                $product->description= '';
+            }
 
+            $product->brand = $data['brand'];
+            $product->price= $data['price']; 
+            // upload image   
+            if($request->hasfile('image')){
+                $image_tmp= Input::file('image');
+                if($image_tmp->isValid()){
+                    $extension= $image_tmp->getClientOriginalExtension();
+                    $filename= rand(111,99999).'.'.$extension;
+                    $large_image_path= 'images/backend_images/products/large/'.$filename;
+                    $medium_image_path= 'images/backend_images/products/medium/'.$filename;
+                    $small_image_path= 'images/backend_images/products/small/'.$filename;
+                        //Resize image code
+                        Image::make($image_tmp)->save($large_image_path);
+                        Image::make($image_tmp)->resize(600,600)->save($medium_image_path);
+                        Image::make($image_tmp)->resize(300,300)->save($small_image_path);
+                        //store image name in product table
+                        $product->image=$filename;
+                }
+            }
+            $product->stock = $data['stock'];
 
+            if(empty($data['status'])){
+                $status = 0;
+            }else{
+                $status = 1;
+            }
+
+            $product->status = $status;
+            $product->save();  
+            return redirect('/admin/view-products')->with('flash_message_success','Prodotto aggiunto con successo!');        
         }
         //Categories drop down start
         $categories= Category::where(['parent_id'=>0])->get();
@@ -104,6 +112,20 @@ class ProductsController extends Controller
         if($request->isMethod('post')){
             $data=$request->all();
 
+            //check if product name exists
+            $count_name = DB::table('products')->where('product_name', $data['product_name'])->count();
+            $current_name = DB::table('products')->where('id', $id)->first();
+            $current_name=$current_name->product_name;
+            if($count_name > 0 && $data['product_name']!==$current_name)
+                return redirect()->back()->with("flash_message_error","Product name not available!");
+            
+            //check if product code exists
+            $count_code = DB::table('products')->where('product_code', $data['product_code'])->count();
+            $current_code = DB::table('products')->where('id', $id)->first();
+            $current_code=$current_code->product_code;
+            if($count_code > 0 && $data['product_code']!==$current_code)
+                return redirect()->back()->with("flash_message_error","Product code not available!");
+            
             if($request->hasfile('image')){
                 //$this->deleteProductImage($id);
                 $image_tmp= Input::file('image');

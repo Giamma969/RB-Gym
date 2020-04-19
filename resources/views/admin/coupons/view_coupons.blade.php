@@ -55,9 +55,13 @@
                   <td>{{$coupon->used}}</td>
                   <td>{{$coupon->created_at}}</td>
                   
-                  
-                  <?php if($coupon->status == 0) echo '<td>Inactive</td>'?> 
-                  <?php if($coupon->status == 1) echo '<td>Active</td>'?>
+                  <td>
+                    @if($coupon->status == 0)
+                        <span style="color:red">Inactive</span>
+                    @else 
+                        <span style="color:green">Active</span>
+                    @endif
+                  </td>
                   <td class="center">
                     <a href="{{ url('/admin/edit-coupon/'.$coupon->id)  }} " class="btn btn-primary btn-mini" title="Edit">Edit</a>
                     <a rel="{{ $coupon->id }}" rel1="delete-coupon"   <?php /*href="{{ url('/admin/delete-coupon/'.$coupon->id)  }} "  */?> href="javascript:"  class="btn btn-danger btn-mini deleteRecord" title="Delete">Delete</a>

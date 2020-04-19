@@ -39,10 +39,14 @@ class GroupsController extends Controller
         if($request->isMethod('post')){
             $data=$request->all();
 
+            //check if group name exists
             $count_groups = DB::table('groups')->where('name',$data['group_name'])->count();
-            if($count_groups > 1){
-                return redirect()->back()->with("flash_message_error","Group name not available!");
-            }
+            $current_name = DB::table('groups')->where('id', $id)->first();
+            $current_name=$current_name->name;
+            if($count_groups > 0 && $data['group_name']!==$current_name)
+                return redirect()->back()->with("flash_message_error","Group name not available!!");
+
+
             Group::editGroup($data,$id);
             return redirect()->back()->with("flash_message_success","Group successfully updated!");
         }

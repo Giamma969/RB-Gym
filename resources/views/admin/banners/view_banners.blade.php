@@ -51,8 +51,13 @@
                        <img src="{{asset('/images/frontend_images/banners/'.$banner->image)}}" style="width:150px;">
                        @endif
                   </td>
-                  <?php if($banner->status == 0) echo '<td>Inactive</td>'?> 
-                  <?php if($banner->status == 1) echo '<td>Active</td>'?>
+                  <td>
+                    @if($banner->status == 0)
+                        <span style="color:red">Inactive</span>
+                    @else 
+                        <span style="color:green">Active</span>
+                    @endif
+                  </td>
                      
                   <td class="center">
                     <a href="{{ url('/admin/edit-banner/'.$banner->id)  }} " class="btn btn-primary btn-mini" title="Edit">Edit</a>
