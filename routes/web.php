@@ -45,7 +45,7 @@ use App\Http\Middleware\ViewServices;
 Auth::routes();
 
 Route::match(['get','post'],'/admin','AdminController@login');
-
+Route::post('/admin/forgot-password', 'AdminController@forgotPassword');
 //Route:: get('/admin/dashboard','AdminController@dashboard');
 
 Route::get('/home', 'HomeController@index')->name('home');
@@ -90,10 +90,11 @@ Route::post('/user-login','UsersController@login');
 Route::get('/user-logout','UsersController@logout');
 //Search products route
 Route::post('/search-products','ProductsController@searchProducts');
-
+//contact us
+Route::match(['get','post'],'/contact-us','ProductsController@contactUs');
 
 //all routes after login
-Route::group(['middleware'=>['FrontLogin']],function(){
+Route::group(['middleware'=>['frontlogin']],function(){
     //users account page
     Route::match(['get','post'],'account','UsersController@account');
     //check user current password
@@ -122,6 +123,8 @@ Route::group(['middleware'=>['FrontLogin']],function(){
     Route::post('/cart/apply-coupon','ProductsController@applyCoupon');
     //forget coupon
     Route::get('cart/forget-coupon','ProductsController@forgetCoupon');
+   
+    
     
 });
 
@@ -192,6 +195,9 @@ Route::group(['middleware'=>['auth']],function(){
     //Admin - Services routes
     Route::match(['get','post'],'/admin/view-services','ServicesController@viewServices')->middleware(ViewServices::class);
 
+    //Admin - view messages
+    Route::get('/admin/view-messages','MessagesController@viewMessages');
+    Route::match(['get','post'],'/admin/edit-message/{id}','MessagesController@editMessage');
 
 });
 

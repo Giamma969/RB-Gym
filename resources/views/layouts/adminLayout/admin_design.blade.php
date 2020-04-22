@@ -26,7 +26,7 @@
 
 
 <script src="{{asset('js/backend_js/jquery.min.js')}}"></script>
-<script src="{{asset('js/backend_js/jquery.ui.custom.js')}}"></script>
+<script src="{{asset('js/backend_js/jquery.ui.custom.js')}}"></script>  <!-- does not affect on datepicker -->
 <script src="{{asset('js/backend_js/bootstrap.min.js')}}"></script>
 <script src="{{asset('js/backend_js/jquery.uniform.js')}}"></script>
 <script src="{{asset('js/backend_js/select2.min.js')}}"></script>
@@ -45,19 +45,17 @@
 
 <!-- <script src="https://code.jquery.com/jquery-1.12.4.js"></script>  -->
 
-<script src="https://code.jquery.com/ui/1.12.4/jquery-ui.js"></script>
+<script src="https://code.jquery.com/ui/1.12.4/jquery-ui.js"></script> <!-- does not affect on datepicker -->
 <script src="{{asset('js/backend_js/service.js')}}"></script>
 
-
-
-  <script>
+<script>
   $(function(){
     $("#expiry_date").datepicker({ 
         minDate: 0,
-        dateFormat: 'yy/mm/dd' 
-        });
+        dateFormat: 'yyyy/mm/dd' 
     });
-  </script>
+  });
+</script>
 
 </body>
 </html>

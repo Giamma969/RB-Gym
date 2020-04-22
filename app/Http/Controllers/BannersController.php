@@ -29,7 +29,7 @@ class BannersController extends Controller {
                     $extension= $image_tmp->getClientOriginalExtension();
                     $fileName= rand(111,99999).'.'.$extension;
                     $banner_path= 'images/frontend_images/banners/'.$fileName;                   
-                    Image::make($image_tmp)->resize(1140,340)->save($banner_path);
+                    Image::make($image_tmp)->resize(1240,370)->save($banner_path);
                     $banner->image=$fileName;
                 }
             }

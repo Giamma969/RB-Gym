@@ -452,7 +452,10 @@ class ProductsController extends Controller
                         ->orWhere('product_color','like','%'.$search_product.'%')
                         ->orWhere('brand','like','%'.$search_product.'%');
             })->where('status',1)->get();
-            return view('products.listing')->with(compact('categories','productsAll','search_product'));
+            $breadcrumb = "<a style=\"color:#333 !important;\" href='/'>Home</a> /
+            <a  style=\"color:#333 !important;\">". $data['product']."</a>";
+
+            return view('products.listing')->with(compact('categories','productsAll','search_product','breadcrumb'));
         }
     }
 
@@ -625,7 +628,7 @@ class ProductsController extends Controller
 
         Session::forget('coupon_amount');
         Session::forget('coupon_code');
-        Session::forget('coupon_type');
+       
 
         $data = $request->all();
         $couponCount = Coupon::where('coupon_code', $data['coupon_code'])->count();
@@ -634,7 +637,7 @@ class ProductsController extends Controller
         }else{
             //esegui ulteriori controlli
             $couponDetails = Coupon::where('coupon_code', $data['coupon_code'])->first();
-
+            
             //controllo se il coupon è attivo
             if($couponDetails->status == 0){
                 return redirect()->back()->with('flash_message_error','Questo coupon non è attivo!');
@@ -673,16 +676,11 @@ class ProductsController extends Controller
             }
 
             //controllo il tipo del coupon
-            if($couponDetails->amount_type == "Fixed"){
-                $couponAmount = $couponDetails->amount;
-            }
-            else{
-                $couponAmount = $total_amount * ($couponDetails->amount/100);
-            }
-            
+            $couponAmount = $couponDetails->amount;
+            $couponAmount = round($couponAmount, 2);
+
             Session::put('coupon_amount',$couponAmount);
             Session::put('coupon_code',$data['coupon_code']);
-            Session::put('coupon_type',$couponDetails->amount_type);
 
             return redirect()->back()->with('flash_message_success','Codice coupon applicato con successo!');
 
@@ -692,7 +690,6 @@ class ProductsController extends Controller
     public function forgetCoupon(){
         Session::forget('coupon_amount');
         Session::forget('coupon_code');
-        Session::forget('coupon_type');
 
         return redirect()->action('ProductsController@cart');
     }
@@ -836,7 +833,6 @@ class ProductsController extends Controller
 
             if(empty(Session::get('coupon_code'))){
                 $coupon_code= NULL;
-                $coupon_amount= NULL;
                 $coupon_type= NULL;
             }else{
                 $coupon_code=Session::get('coupon_code');
@@ -929,16 +925,7 @@ class ProductsController extends Controller
         //reduce stock product
         $cartDetails=DB::table('cart')->where(['user_id'=>$user_id])->first();
         $cart_id=$cartDetails->id;
-        $productsCart = DB::table('products_carts')->where('cart_id',$cart_id)->get();
-        foreach($productsCart as $product){
-            $get_stock = DB::table('products')->where('id', $product->product_id)->pluck('stock');
-            $quantity = $product->product_quantity;
-            $new_stock = $get_stock - $quantity;
-            if($new_stock < 0){
-                $new_stock = 0;
-            }
-            DB::table('products')->where('id', $product->product_id)->update('stock', $new_stock);
-        }
+        Product::updateStock($cart_id);
 
         //empty cart
         DB::table('products_carts')->where('cart_id',$cart_id)->delete();
@@ -956,42 +943,45 @@ class ProductsController extends Controller
         //empty cart
         $cartDetails=DB::table('cart')->where(['user_id'=>$user_id])->first();
         $cart_id=$cartDetails->id;
+        //update products stock
+        Product::updateStock($cart_id);
+
         DB::table('products_carts')->where('cart_id',$cart_id)->delete();
         
         //mark coupon like used --> toglierli anche dalla sessione
         $coupon_code = Session::get('coupon_code');
         Coupon::where('coupon_code',$coupon_code)->update(['used'=> 1]);
 
-       //send confirm order email
-       $orderDetails = Order::find(\DB::table('orders')->max('id'));
+        //send confirm order email
+        $orderDetails = Order::find(\DB::table('orders')->max('id'));
         $order_id = $orderDetails->id;
-       $user_email=Auth::user()->email;
-       $shippingDetails = Address::where(['user_id'=>$user_id,'is_shipping'=>1])->first();
-       $productDetails = DB::table('orders_products')->where(['order_id'=>$order_id])
-        ->join('products', 'products.id', '=', 'orders_products.product_id')
-        ->select('products.*','orders_products.product_quantity')
-        ->get();
+        $user_email=Auth::user()->email;
+        $shippingDetails = Address::where(['user_id'=>$user_id,'is_shipping'=>1])->first();
+        $productDetails = DB::table('orders_products')->where(['order_id'=>$order_id])
+            ->join('products', 'products.id', '=', 'orders_products.product_id')
+            ->select('products.*','orders_products.product_quantity')
+            ->get();
 
         $coupon_id = $orderDetails->coupon_id;
         $couponDetails= Coupon::find($coupon_id);
         $billingDetails = Address::where(['user_id'=>$user_id,'is_billing'=>1])->first();
 
-       $messageData = [
-           'email' => $user_email,
-           'name' =>$shippingDetails->user_name,
-           'order_id' =>$order_id,
-           'orderDetails' =>$orderDetails,
-           'productDetails' => $productDetails, 
-           'shippingDetails' => $shippingDetails,
-           'billingDetails' =>  $billingDetails,
-           'couponDetails' => $couponDetails     
-       ];
-       
-       Mail::send('emails.order', $messageData, function($message) use ($user_email){
-           $message->to($user_email)->subject('Order placed - RB-Gym');
-       });
-
+        $messageData = [
+            'email' => $user_email,
+            'name' =>$shippingDetails->user_name,
+            'order_id' =>$order_id,
+            'orderDetails' =>$orderDetails,
+            'productDetails' => $productDetails, 
+            'shippingDetails' => $shippingDetails,
+            'billingDetails' =>  $billingDetails,
+            'couponDetails' => $couponDetails     
+        ];
         
+        Mail::send('emails.order', $messageData, function($message) use ($user_email){
+            $message->to($user_email)->subject('Order placed - RB-Gym');
+        });
+
+            
         return view('orders.thanks_payment')->with(compact('order_id'));
     }
 
@@ -1196,7 +1186,21 @@ class ProductsController extends Controller
        // echo '<pre>'; print_r($reviewsDetails); die;
         return view('admin.reviews.view_reviews')->with(compact('reviewsDetails')); 
     }
-   
+    
+    public function contactUs(Request $request){
+        if($request->isMethod('post')){
+            $data=$request->all();
+            DB::table('contact_us')->insert([
+                'name'=>$data['name'],
+                'email'=>$data['email'],
+                'subject'=>$data['subject'],
+                'message'=>$data['message'],
+                'resolved'=>0,
+            ]);
+            return redirect()->back()->with('flash_message_success','Request successfully sent. We will reply as soon as possible!');
+        }
+        return view('help.contact_us');
+    }
 
     
 }

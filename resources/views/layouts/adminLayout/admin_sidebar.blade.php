@@ -73,6 +73,12 @@
       </ul>
     </li>
 
+    <li class="submenu"> <a href="#"><i class="icon icon-th-list"></i> <span>Messages</span> </a>
+      <ul <?php if(preg_match("/messages/i", $url)) { ?> style="display: block;" <?php } ?>>
+      <li <?php if(preg_match("/view-messages/i", $url)) { ?> class="active" <?php } ?>><a href="{{url('/admin/view-messages')}}">View messsages</a></li>
+      </ul>
+    </li>
+
 
   </ul>
 </div>

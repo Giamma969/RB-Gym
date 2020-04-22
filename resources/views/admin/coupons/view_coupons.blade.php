@@ -35,7 +35,6 @@
                   <th>Coupon ID</th>
                   <th>Coupon code</th>
                   <th>Amount</th>
-                  <th>Amount type</th>
                   <th>Expiry date</th>
                   <th>Used</th>
                   <th>Creation date</th>
@@ -48,13 +47,10 @@
                 <tr class="gradeX">
                   <td>{{$coupon->id}}</td>
                   <td>{{$coupon->coupon_code}}</td>
-                    <?php if($coupon->amount_type == "Percentage") echo '<td>' .$coupon->amount. '% </td>' ?> 
-                    <?php if($coupon->amount_type != "Percentage") echo '<td>' .$coupon->amount. '€ </td>'?>
-                  <td>{{$coupon->amount_type}}</td>
+                  <td>{{$coupon->amount}} €</td>
                   <td>{{$coupon->expiry_date}}</td>
                   <td>{{$coupon->used}}</td>
                   <td>{{$coupon->created_at}}</td>
-                  
                   <td>
                     @if($coupon->status == 0)
                         <span style="color:red">Inactive</span>
@@ -62,9 +58,9 @@
                         <span style="color:green">Active</span>
                     @endif
                   </td>
-                  <td class="center">
-                    <a href="{{ url('/admin/edit-coupon/'.$coupon->id)  }} " class="btn btn-primary btn-mini" title="Edit">Edit</a>
-                    <a rel="{{ $coupon->id }}" rel1="delete-coupon"   <?php /*href="{{ url('/admin/delete-coupon/'.$coupon->id)  }} "  */?> href="javascript:"  class="btn btn-danger btn-mini deleteRecord" title="Delete">Delete</a>
+                  <td style="max-width:40px;" class="center">
+                    <a style="width:80%;" href="{{ url('/admin/edit-coupon/'.$coupon->id)  }} " class="btn btn-primary btn-mini" title="Edit">Edit</a>
+                    <a style="width:80%;"rel="{{ $coupon->id }}" rel1="delete-coupon" href="javascript:"  class="btn btn-danger btn-mini deleteRecord" title="Delete">Delete</a>
                   </td> 
                 </tr>
                 

@@ -43,21 +43,11 @@
                   <input type="number" name="amount" min="0" id="amount" >
                 </div>
               </div>
-              
-              <div class="control-group">
-                <label class="control-label">Amount type</label>
-                <div class="controls">
-                  <select name="amount_type" id="amount_type" style="width: 220px;">
-                    <option value="Percentage">Percentage</option>
-                    <option value="Fixed">Fixed</option>
-                   </select>
-                </div>
-              </div>
 
               <div class="control-group">
                 <label class="control-label">Expiry date</label>
                 <div class="controls">
-                  <input type="text" name="expiry_date" id="expiry_date" autocomplete="off">
+                  <input type="text" name="expiry_date" id="expiry_date" autocomplete="off" data-provide="datepicker" data-date-format="yyyy/mm/dd">
                 </div>
               </div>
 

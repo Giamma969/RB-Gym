@@ -67,8 +67,8 @@
                             <input id="shipping_mobile" name="shipping_mobile"  <?php if($shippingCount > 0) { ?> value="{{ $shippingDetails->mobile}}" <?php } ?>  class="form-control" type="text" placeholder="Mobile" required/>
                         </div>
                         <div class="form-check">
-                            <input type="checkbox" class="form-check-input" id="copyAddress" name="copyAddress"> 
-                            <label class="form-check-label" for="copyAddress">Use billing address</label>
+                            <input type="checkbox"  id="copyAddress" name="copyAddress"> 
+                           <label class="form-check-label" for="copyAddress">Use billing address</label>
                         </div>
                         
                         <button type="submit" class="btn btn-success">Checkout</button>

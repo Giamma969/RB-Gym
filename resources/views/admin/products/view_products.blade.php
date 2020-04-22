@@ -40,7 +40,8 @@
                   <th>Brand</th>
                   <th>Price</th>
                   <th>Stock</th>
-                  <th>Image</th>
+                  <th>Description code</th>
+                  <!-- <th>Image</th> -->
                   <th>Active</th>
                   <th>Operations</th>
                 </tr>
@@ -51,17 +52,19 @@
                   <td>{{$product->id}}</td>
                   <td>{{$product->category_id}}</td>
                   <td>{{$product->category_name}}</td>
-                  <td>{{$product->product_name}}</td>
+                  <td style="max-width:20ch;">{{$product->product_name}}</td>
                   <td>{{$product->product_code}}</td>
                   <td>{{$product->product_color}}</td>
                   <td>{{$product->brand}}</td>
                   <td>{{$product->price}}</td>
                   <td>{{$product->stock}}</td>
-                  <td>
+                  <td> <div style="overflow:auto; max-height:100px!important; max-width:25ch;">{{$product->description}}</div></td>
+                 
+                  <?php /* <td>
                       @if(!empty($product->image))
                        <img src="{{asset('/images/backend_images/products/small/'.$product->image)}}" style="width:50px;">
                        @endif
-                  </td>
+                  </td> */?>
                   <td>
                     @if($product->status == 0)
                         <span style="color:red">Inactive</span>
@@ -69,11 +72,11 @@
                         <span style="color:green">Active</span>
                     @endif
                   </td>
-                  <td class="center">
-                    <a href="#myModal{{$product->id}}" data-toggle="modal" class="btn btn-success btn-mini" title="Visualizza">View</a>
-                    <a href="{{ url('/admin/edit-product/'.$product->id)  }} " class="btn btn-primary btn-mini" title="Modifica">Edit</a>
-                    <a href="{{ url('/admin/add-images/'.$product->id)  }} " class="btn btn-info btn-mini" title="Aggiungi immagini">Add images </a>  
-                    <a  rel="{{ $product->id }}" rel1="delete-product" <?php /*href="{{ url('/admin/delete-product/'.$product->id)  }} " */ ?> href="javascript:" class="btn btn-danger btn-mini deleteRecord">Delete</a>
+                  <td style="max-width:50px" class="center">
+                    <a style="width:80%;"  href="#myModal{{$product->id}}" data-toggle="modal" class="btn btn-success btn-mini" title="Visualizza">View</a>
+                    <a style="width:80%;" float="clear" href="{{ url('/admin/edit-product/'.$product->id)  }} " class="btn btn-primary btn-mini" title="Modifica">Edit</a>
+                    <a style="width:80%;" href="{{ url('/admin/add-images/'.$product->id)  }} " class="btn btn-info btn-mini" title="Aggiungi immagini">Add images </a>  
+                    <a style="width:80%; margin-top:-1px;" rel="{{ $product->id }}" rel1="delete-product" <?php /*href="{{ url('/admin/delete-product/'.$product->id)  }} " */ ?> href="javascript:" class="btn btn-danger btn-mini deleteRecord">Delete</a>
                   </td> 
                 </tr>
                 <div id="myModal{{$product->id}}" class="modal hide">

@@ -70,8 +70,8 @@
                                         <td class="center">{{$order->grand_total}}</td>
                                         <td class="center">{{$order->order_status}}</td>
                                         <td class="center">{{$order->payment_method}}</td>
-                                        <td class="center">
-                                            <a target="_blank" href="{{ url('admin/view-order/'.$order->id)}}" class="btn btn-success btn-mini" title="View">View order details</a>
+                                        <td style="max-width:50px;" class="center">
+                                            <a style="max-width:80%;" target="_blank" href="{{ url('admin/view-order/'.$order->id)}}" class="btn btn-success btn-mini" title="View">View order details</a>
                                         </td> 
                                     </tr>
                                 @endforeach

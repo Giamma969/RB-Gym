@@ -7,7 +7,7 @@
             <ol class="breadcrumb">
                 <li><a href="#">Home</a></li>
                 <li class="active">Checkout</li>
-                <li class="active">Order review</li>
+                <li>  <a href="">Order review</a></li>
             </ol>
         </div>
         <div class="row">

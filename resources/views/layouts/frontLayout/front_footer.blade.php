@@ -7,17 +7,15 @@
 					<div class="single-widget">
 						<h2>Service</h2>
 						<ul class="nav nav-pills nav-stacked">
-							<li><a href="#">Online Help</a></li>
-							<li><a href="#">Contact Us</a></li>
+							<li><a href="{{ url('/contact-us') }}">Contact Us</a></li>
 							<li><a href="#">Order Status</a></li>
-							<li><a href="#">Change Location</a></li>
 							<li><a href="#">FAQ’s</a></li>
 						</ul>
 					</div>
 				</div>
 				<div class="col-sm-2">
 					<div class="single-widget">
-						<h2>Quock Shop</h2>
+						<h2>Quick Shop</h2>
 						<ul class="nav nav-pills nav-stacked">
 							<li><a href="#">T-Shirt</a></li>
 							<li><a href="#">Mens</a></li>
@@ -70,7 +68,6 @@
 		<div class="container">
 			<div class="row">
 				<p class="pull-left">Copyright ©2013 E-SHOPPER Inc. All rights reserved.</p>
-				<p class="pull-right">Designed by <span><a target="_blank" href="http://www.themeum.com">Themeum</a></span></p>
 			</div>
 		</div>
 	</div>

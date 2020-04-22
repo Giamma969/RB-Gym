@@ -8,7 +8,7 @@ use App\Country;
 use App\Address;
 use Auth;
 use Session;
-use DB;
+use \DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 
@@ -159,7 +159,7 @@ class UsersController extends Controller
     public function account(Request $request){
         $user_id=Auth::user()->id;
         $userDetails = User::find($user_id);
-        $countries = Country::get();
+        $countries = DB::table('countries')->get(); 
         $bill_address = Address::where(['user_id'=>$user_id, 'is_billing'=>1])->first();
 
         if($request->isMethod('post')){

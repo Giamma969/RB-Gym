@@ -49,7 +49,7 @@
                   <td>{{$review->id}}</td>
                   <td>{{$review->rating}}</td>
                   <td>{{$review->title}}</td>
-                  <td>{{$review->description}}</td>
+                  <td> <div style="max-width:35ch; overflow:auto; max-height:120px!important;">{{$review->description}}</div></td>
                   <td>{{$review->product_id}}</td>
                   <td>{{$review->product_name}}</td>
                   <td>{{$review->user_id}}</td>

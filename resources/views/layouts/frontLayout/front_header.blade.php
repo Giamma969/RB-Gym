@@ -44,6 +44,17 @@
 					<div class="col-sm-8">
 						<div class="shop-menu pull-right">
 							<ul class="nav navbar-nav">
+								<li><a href="{{ url('/') }}"><i class="fa fa-home"></i> Home</a></li>
+								<li class="dropdown"><a href="#"><i class="fa fa-shopping-cart"></i>Shop</a>
+                                    <ul role="menu" class="sub-menu">
+										 @foreach($mainCategories as $cat)
+                                        	@if($cat->status == "1")
+												<li style="display:block !important;"><a style="background-color:rgb(102,102,102); " href="{{asset('products/'.$cat->url)}}">{{$cat->name}}</a></li>
+											@endif
+										@endforeach
+                                    </ul>
+                                </li>
+								<li><a href="{{ url('/contact-us') }}"><i class="fa fa-envelope"></i> Contact</a></li>
 								<li><a href="{{ url('/wishlist') }}"><i class="fa fa-star"></i> Wishlist ({{$wishedProducts}}) </a></li>
 								<li><a href="{{ url('/orders') }}"><i class="fa fa-crosshairs"></i> Orders </a></li>
 								<li><a href="{{ url('/cart') }}"><i class="fa fa-shopping-cart"></i> Cart ({{$cartCount}})</a></li>
@@ -64,15 +75,15 @@
 			<div class="container">
 				<div class="row">
 					<div class="col-sm-9">
-						<div class="navbar-header">
+						<!-- <div class="navbar-header">
 							<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
 								<span class="sr-only">Toggle navigation</span>
 								<span class="icon-bar"></span>
 								<span class="icon-bar"></span>
 								<span class="icon-bar"></span>
 							</button>
-						</div>
-						<div class="mainmenu pull-left">
+						</div> -->
+						<?php /*<div class="mainmenu pull-left">
 							<ul class="nav navbar-nav collapse navbar-collapse">
 								<li><a href="{{ url('/') }}" class="active">Home</a></li>
 								<li class="dropdown"><a href="#">Shop<i class="fa fa-angle-down"></i></a>
@@ -83,22 +94,17 @@
 											@endif
 										@endforeach
                                     </ul>
-                                </li> 
-								<li class="dropdown"><a href="#">Blog<i class="fa fa-angle-down"></i></a>
-                                    <ul role="menu" class="sub-menu">
-                                        <li><a href="blog.html">Blog List</a></li>
-										<li><a href="blog-single.html">Blog Single</a></li>
-                                    </ul>
-                                </li> 
-								<li><a href="contact-us.html">Contact</a></li>
+                                </li>
+								<li><a href="{{ url('/contact-us') }}">Contact</a></li>
 							</ul>
-						</div>
+						</div> */?>
 					</div>
 					<div class="col-sm-3">
 						<div class="search_box pull-right">
 						<form action="{{ url('/search-products') }}" method="post">{{ csrf_field() }}
 							<input type="text" placeholder="Search Products" name="product"/>
-							<button type="submit" style="border:0px; heigth:30px; margin-left:-3px;">Go</button>
+							<button type="submit" style="margin-top:0px;" class="btn btn-primary" >Go</button>
+							<!-- style="border:0px; heigth:30px; margin-left:-3px;" -->
 						</form>
 						</div>
 					</div>

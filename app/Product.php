@@ -148,4 +148,18 @@ class Product extends Model
             ]);
         }
     }
+
+    public static function updateStock($cart_id){
+        $productsCart = DB::table('products_carts')->where('cart_id',$cart_id)->get();
+        foreach($productsCart as $product){
+            $get_stock = DB::table('products')->where('id', $product->product_id)->first();
+            $get_stock=$get_stock->stock;
+            $quantity = $product->product_quantity;
+            $new_stock = $get_stock - $quantity;
+            if($new_stock < 0){
+                $new_stock = 0;
+            }
+            DB::table('products')->where('id', $product->product_id)->update(['stock'=>$new_stock]);
+        }
+    }
 }

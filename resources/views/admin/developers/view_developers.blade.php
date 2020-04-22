@@ -63,10 +63,10 @@
                                                     @endif   
                                                 </td>
                                                 <td class="center">{{$dev->created_at}}</td>
-                                                <td  class="center">
-                                                    <a href="{{ url('/admin/view-dev-groups/'.$dev->user_id) }} " class="btn btn-primary btn-mini" title="Groups">View groups</a>
-                                                    <a href="{{ url('/admin/edit-developer/'.$dev->user_id) }} " class="btn btn-primary btn-mini" title="Edit">Edit</a>
-                                                    <a rel="{{$dev->user_id}}" rel1="delete-developer"  href="javascript:" class="btn btn-danger btn-mini deleteRecord">Delete</a>
+                                                <td style="max-width:80px;" class="center">
+                                                    <a style="width:90%;" href="{{ url('/admin/view-dev-groups/'.$dev->user_id) }} " class="btn btn-success btn-mini" title="Groups">View groups</a>
+                                                    <a style="width:90%;" href="{{ url('/admin/edit-developer/'.$dev->user_id) }} " class="btn btn-primary btn-mini" title="Edit">Edit</a>
+                                                    <a style="width:90%;" rel="{{$dev->user_id}}" rel1="delete-developer"  href="javascript:" class="btn btn-danger btn-mini deleteRecord">Delete</a>
                                                 </td>
                                             </tr>
                                 @endforeach

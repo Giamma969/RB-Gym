@@ -82,8 +82,8 @@
                   <td>View groups @if(in_array("view_groups", $group, true))<span class="glyphicon icon-ok">@else <span class="glyphicon icon-remove"> @endif </span></td>
                   <td>View services @if(in_array("view_services", $group, true))<span class="glyphicon icon-ok">@else <span class="glyphicon icon-remove"> @endif </span></td>
                   <td rowspan="5" class="center">
-                    <a href="{{ url('/admin/edit-group/'.$group[0])  }} " class="btn btn-primary btn-mini" title="Edit">Edit</a>
-                    <a rel="{{$group[0]}}" rel1="delete-group"  href="javascript:" class="btn btn-danger btn-mini deleteRecord">Delete</a>
+                    <a style="width:75%;" href="{{ url('/admin/edit-group/'.$group[0])  }} " class="btn btn-primary btn-mini" title="Edit">Edit</a>
+                    <a style="width:75%;" rel="{{$group[0]}}" rel1="delete-group"  href="javascript:" class="btn btn-danger btn-mini deleteRecord">Delete</a>
                   </td> 
                 </tr>
 

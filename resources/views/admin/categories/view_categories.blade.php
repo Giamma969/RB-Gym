@@ -54,9 +54,10 @@
                         <span style="color:green">Active</span>
                     @endif
                   </td>
-                  <td class="center"><a href="{{ url('/admin/edit-category/'.$category->id)  }} " class="btn btn-primary btn-mini">Edit</a>  
-                  <a <?php /*id="delCat"href="{{ url('/admin/delete-category/'.$category->id)  }} "*/ ?> rel="{{$category->id}}" 
-                   rel1="delete-category" haref="javascript:" class="btn btn-danger btn-mini deleteRecord">Delete</a></div></td> 
+                  <td style="max-width:50px;"class="center">
+                    <a style="width:90%;" href="{{ url('/admin/edit-category/'.$category->id)  }} " class="btn btn-primary btn-mini">Edit</a>  
+                    <a style="width:90%;" rel="{{$category->id}}" rel1="delete-category" haref="javascript:" class="btn btn-danger btn-mini deleteRecord">Delete</a>
+                  </td> 
                 </tr>
                 @endforeach
                  

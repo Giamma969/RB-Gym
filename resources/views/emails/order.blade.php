@@ -41,13 +41,7 @@
                     @if($orderDetails->coupon_id != NULL)
                     <tr>
                         <td colspan="5" align="right">Coupon discount:</td>
-                        
-                        @if($couponDetails->amount_type == "Fixed")
-                            <td>€ {{$couponDetails->amount}}</td>
-                        @else
-                            <?php $discount = ($couponDetails->amount / 100 * $orderDetails->grand_total);?>
-                            <td>€ {{$discount}} ({{$couponDetails->amount}} %)</td>
-                        @endif
+                        <td>€ {{$couponDetails->amount}}</td>
                     </tr>
                     @endif
                     <tr>

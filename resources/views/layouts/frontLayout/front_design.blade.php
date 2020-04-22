@@ -23,7 +23,7 @@
     <link rel="apple-touch-icon-precomposed" href="{{asset('images/frontend_images/ico/apple-touch-icon-57-precomposed.png')}}">
 </head>
 
-<body>
+<body style>
     @include('layouts.frontLayout.front_header')
     @yield('content')	
     @include('layouts.frontLayout.front_footer')	

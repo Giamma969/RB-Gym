@@ -43,21 +43,11 @@
                   <input value="{{ $couponDetails->amount }}" type="number" name="amount" min="0" id="amount">
                 </div>
               </div>
-              
-              <div class="control-group">
-                <label class="control-label">Amount type</label>
-                <div class="controls">
-                  <select name="amount_type" id="amount_type" style="width: 220px;">
-                    <option @if($couponDetails->amount_type=="Percentage") selected @endif value="Percentage">Percentage</option>
-                    <option @if($couponDetails->amount_type=="Fixed") selected @endif value="Fixed">Fixed</option>
-                   </select>
-                </div>
-              </div>
 
               <div class="control-group">
                 <label class="control-label">Expiry date</label>
                 <div class="controls">
-                  <input value="{{ $couponDetails->expiry_date }}"type="text" name="expiry_date" id="expiry_date" autocomplete="off" required>
+                  <input value="{{ $couponDetails->expiry_date }}"type="text" name="expiry_date" id="expiry_date" autocomplete="off" data-provide="datepicker" data-date-format="yyyy/mm/dd" required>
                 </div>
               </div>
 

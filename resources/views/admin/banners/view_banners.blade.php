@@ -59,9 +59,9 @@
                     @endif
                   </td>
                      
-                  <td class="center">
-                    <a href="{{ url('/admin/edit-banner/'.$banner->id)  }} " class="btn btn-primary btn-mini" title="Edit">Edit</a>
-                    <a  rel="{{ $banner->id }}" rel1="delete-banner"  href="javascript:" class="btn btn-danger btn-mini deleteRecord">Delete</a>
+                  <td style="max-width:40px;" class="center">
+                    <a style="width:90%;" href="{{ url('/admin/edit-banner/'.$banner->id)  }} " class="btn btn-primary btn-mini" title="Edit">Edit</a>
+                    <a style="width:90%;" rel="{{ $banner->id }}" rel1="delete-banner"  href="javascript:" class="btn btn-danger btn-mini deleteRecord">Delete</a>
                   </td> 
                 </tr>
                 @endforeach

@@ -59,21 +59,9 @@
                                 @endif
                             </tr>
                             <tr>
-                                <td class="taskDesc">Coupon type</td>
-                                @if($orderDetails->coupon_id == NULL)
-                                    <td class="taskStatus">-</td>
-                                @else
-                                    <td class="taskStatus">{{ $couponDetails->amount_type }}</td>
-                                @endif
-                            </tr>
-                            <tr>
                                 <td class="taskDesc">Coupon discount</td>
                                 @if($orderDetails->coupon_id != NULL)
-                                    @if($couponDetails->amount_type == "Fixed")
-                                        <td class="taskStatus">€ {{ $couponDetails->amount }}</td>
-                                    @else
-                                        <td class="taskStatus">% {{ $couponDetails->amount }}</td>
-                                    @endif
+                                    <td class="taskStatus">€ {{ $couponDetails->amount }}</td>
                                 @else
                                     <td class="taskStatus">-</td>
                                 @endif

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Coupon;
+use DB;
 
 class CouponsController extends Controller
 {
@@ -19,7 +20,6 @@ class CouponsController extends Controller
             $coupon = new Coupon;
             $coupon->coupon_code = $data['coupon_code'];
             $coupon->amount = $data['amount'];
-            $coupon->amount_type = $data['amount_type'];
             $coupon->expiry_date = $data['expiry_date'];
             $coupon->used = 0;
             if(empty($data['status'])){
@@ -29,7 +29,7 @@ class CouponsController extends Controller
                 $coupon->status = $data['status'];
             }
             $coupon->save();
-            return redirect()->action('CouponsController@viewCoupons')->with('flash_message_error','Coupon aggiunto con successo');
+            return redirect()->action('CouponsController@viewCoupons')->with('flash_message_success','Coupon aggiunto con successo');
         }
         return view('admin.coupons.add_coupon');
     }
@@ -37,7 +37,7 @@ class CouponsController extends Controller
     public function editCoupon(Request $request, $id=null){
         if($request->isMethod('post')){
             $data = $request->all();
-
+            // echo'<pre>'; print_r($data); die;
             //check if coupon code already exists
             $count_code = DB::table('coupons')->where('coupon_code', $data['coupon_code'])->count();
             $current_code = DB::table('coupons')->where('id', $id)->first();
@@ -48,7 +48,6 @@ class CouponsController extends Controller
             $coupon = Coupon::find($id);
             $coupon->coupon_code=$data['coupon_code'];
             $coupon->amount=$data['amount'];
-            $coupon->amount_type=$data['amount_type'];
             $coupon->expiry_date=$data['expiry_date'];
             if(empty($data['status'])){
                 $data['status'] = 0;
