@@ -44,7 +44,7 @@ class CategoryController extends Controller
     if($request->isMethod('post')) {
       $data = $request->all();
 
-       //check if email exists
+       //check if name exists
        $count_name = DB::table('categories')->where('name', $data['category_name'])->count();
        $current_name = DB::table('categories')->where('id', $id)->first();
        $current_name=$current_name->name;
@@ -57,14 +57,14 @@ class CategoryController extends Controller
        $current_url=$current_url->url;
        if($count_url > 0 && $data['url']!==$current_url)
            return redirect()->back()->with("flash_message_error","Category url not available!");
-      
-
+        
       //echo"<pre>"; print_r($data); die;
       if(empty($data['status'])){
         $status = 0;
       }else{
         $status = 1;
       }
+
       Category::where(['id'=>$id])->update(['name'=>$data['category_name'], 'description'=>$data['description'], 'url'=>$data['url'],'status'=>$status]);
       return redirect('/admin/view-categories')->with('flash_message_success', 'Categoria aggiornata con successo!');
     }

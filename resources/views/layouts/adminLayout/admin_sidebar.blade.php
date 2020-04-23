@@ -40,7 +40,7 @@
         <li <?php if(preg_match("/view-banners/i", $url)) { ?> class="active" <?php } ?>><a href="{{url('/admin/view-banners')}}">View banners</a></li>
       </ul>
     </li>
-
+   
     <li class="submenu"> <a href="#"><i class="icon icon-th-list"></i> <span>Users</span> </a>
       <ul <?php if(preg_match("/users/i", $url)) { ?> style="display: block;" <?php } ?>>
         <li <?php if(preg_match("/view-users/i", $url)) { ?> class="active" <?php } ?>><a href="{{url('/admin/view-users')}}">View users</a></li>

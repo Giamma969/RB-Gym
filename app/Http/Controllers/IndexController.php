@@ -16,39 +16,53 @@ class IndexController extends Controller
         //ordine crescente(default)
         $productsAll=Product::get();
 
-        //ordine decrescente
-        $productsAll = Product::orderBy('id','DESC')->get();
+        //***************SLIDER 1*********************
+        //get cardio products if status==1
+        $slider2 = Category::where(['id'=>"9"])->first();
+        if($slider2->status == "0"){
+            $slider2 = DB::table('categories')->where(['parent_id'=>0, 'status'=>1])->first();
+        }
+        $category_name2 = $slider2->name;
+        $sub_categories= Category::where(['parent_id'=>$slider2->id])->get();
+        foreach($sub_categories as $subcat){
+            $cat_ids2[] = $subcat->id;
+        }
         
-        //ordine casuale
-        $productsAll=Product::inRandomOrder()->where('status',1)->paginate(6);//get();
+        $products_slider2= DB::table('products')
+            ->whereIn('category_id',$cat_ids2)
+            ->where('products.status',1)
+            ->join('categories','categories.id','=','products.category_id')
+            ->select('products.*','categories.name as category_name')
+            ->get();
+            //->orderBy('id','Desc');
+        
+        // echo'<pre>'; print_r($productsCardio); die;
 
-        $categories= Category::with('categories')->where(['parent_id'=>0])->get();
-       /* $categories= json_decode(json_encode($categories));
-        echo"<pre>";print_r($categories);die;*/
-        $categories_menu="";
-        // foreach($categories as $cat){
-        //    $categories_menu .=" 
-        //         <div class='panel-heading'>
-        //             <h4 class='panel-title'>
-        //                 <a data-toggle='collapse' data-parent='#accordian' href='#".$cat->id."'>
-        //                     <span class='badge pull-right'><i class='fa fa-plus'></i></span>
-        //                         ".$cat->name."
-        //                 </a>
-        //             </h4>
-        //         </div>
-        //         <div id='".$cat->id."' class='panel-collapse collapse'>
-        //             <div class='panel-body'>
-        //                 <ul>";
-        //                 $sub_categories= Category::where(['parent_id'=>$cat->id])->get();
-        //                 foreach($sub_categories as $subcat){
-        //                     $categories_menu .=" <li><a href='".$subcat->url."'>".$subcat->name." </a></li>";
-        //                 }
-                            
-        //                     $categories_menu .="
-        //                 </ul>
-        //             </div>
-        //         </div>";
-        // }
+
+        //***************SLIDER 2*********************
+        //get FORZA products if status==1
+        $slider3 = Category::where(['id'=>"13"])->first();
+        if($slider3->status == "0"){
+            $slider3 = DB::table('categories')->where(['parent_id'=>0, 'status'=>1])->first();
+        }
+        $category_name3 = $slider3->name;
+        $sub_categories= Category::where(['parent_id'=>$slider3->id])->get();
+        foreach($sub_categories as $subcat){
+            $cat_ids3[] = $subcat->id;
+        }
+        
+        $products_slider3= DB::table('products')
+            ->whereIn('category_id',$cat_ids3)
+            ->where('products.status',1)
+            ->join('categories','categories.id','=','products.category_id')
+            ->select('products.*','categories.name as category_name')
+            ->get();
+       
+
+        
+        $categories= Category::with('categories')->where(['parent_id'=>0,'status'=>1])->get();
+       
+        
 
         //assign session_in for first time entering on website
         if(empty(Session::get('session_id'))){
@@ -78,7 +92,7 @@ class IndexController extends Controller
 
         $banners = Banner::where('status','1')->get(); 
 
-        return view('index')->with(compact('productsAll','categories_menu','categories','banners'));
+        return view('index')->with(compact('productsAll','categories','banners','products_slider2','category_name2','products_slider3','category_name3'));
     }
     
 }

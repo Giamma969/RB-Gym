@@ -1,390 +1,250 @@
-/*price range*/
+/*  ---------------------------------------------------
+    Template Name: Fashi
+    Description: Fashi eCommerce HTML Template
+    Author: Colorlib
+    Author URI: https://colorlib.com/
+    Version: 1.0
+    Created: Colorlib
+---------------------------------------------------------  */
 
- $('#sl2').slider();
+'use strict';
 
-	var RGBChange = function() {
-	  $('#RGB').css('background', 'rgb('+r.getValue()+','+g.getValue()+','+b.getValue()+')')
-	};	
-		
-/*scroll to top*/
+(function ($) {
 
-$(document).ready(function(){
-	$(function () {
-		$.scrollUp({
-	        scrollName: 'scrollUp', // Element ID
-	        scrollDistance: 300, // Distance from top/bottom before showing element (px)
-	        scrollFrom: 'top', // 'top' or 'bottom'
-	        scrollSpeed: 300, // Speed back to top (ms)
-	        easingType: 'linear', // Scroll to top easing (see http://easings.net/)
-	        animation: 'fade', // Fade, slide, none
-	        animationSpeed: 200, // Animation in speed (ms)
-	        scrollTrigger: false, // Set a custom triggering element. Can be an HTML string or jQuery object
-					//scrollTarget: false, // Set a custom target element for scrolling to the top
-	        scrollText: '<i class="fa fa-angle-up"></i>', // Text for element, can contain HTML
-	        scrollTitle: false, // Set a custom <a> title if required.
-	        scrollImg: false, // Set true to use image
-	        activeOverlay: false, // Set CSS color to display scrollUp active point, e.g '#00FFFF'
-	        zIndex: 2147483647 // Z-Index for the overlay
-		});
-	});
-});
+    /*------------------
+        Preloader
+    --------------------*/
+    $(window).on('load', function () {
+        $(".loader").fadeOut();
+        $("#preloder").delay(50).fadeOut("slow");
+    });
 
+    /*------------------
+        Background Set
+    --------------------*/
+    $('.set-bg').each(function () {
+        var bg = $(this).data('setbg');
+        $(this).css('background-image', 'url(' + bg + ')');
+    });
 
+    /*------------------
+		Navigation
+	--------------------*/
+    $(".mobile-menu").slicknav({
+        prependTo: '#mobile-menu-wrap',
+        allowParentLinks: true
+    });
 
+    /*------------------
+        Hero Slider
+    --------------------*/
+    $(".hero-items").owlCarousel({
+        loop: true,
+        margin: 0,
+        nav: true,
+        items: 1,
+        dots: false,
+        animateOut: 'fadeOut',
+        animateIn: 'fadeIn',
+        navText: ['<i class="ti-angle-left"></i>', '<i class="ti-angle-right"></i>'],
+        smartSpeed: 1200,
+        autoHeight: false,
+        autoplay: true,
+    });
 
+    /*------------------
+        Product Slider
+    --------------------*/
+   $(".product-slider").owlCarousel({
+        loop: true,
+        margin: 25,
+        nav: true,
+        items: 4,
+        dots: true,
+        navText: ['<i class="ti-angle-left"></i>', '<i class="ti-angle-right"></i>'],
+        smartSpeed: 1200,
+        autoHeight: false,
+        autoplay: true,
+        responsive: {
+            0: {
+                items: 1,
+            },
+            576: {
+                items: 2,
+            },
+            992: {
+                items: 2,
+            },
+            1200: {
+                items: 3,
+            }
+        }
+    });
 
+    /*------------------
+       logo Carousel
+    --------------------*/
+    $(".logo-carousel").owlCarousel({
+        loop: false,
+        margin: 30,
+        nav: false,
+        items: 5,
+        dots: false,
+        navText: ['<i class="ti-angle-left"></i>', '<i class="ti-angle-right"></i>'],
+        smartSpeed: 1200,
+        autoHeight: false,
+        mouseDrag: false,
+        autoplay: true,
+        responsive: {
+            0: {
+                items: 3,
+            },
+            768: {
+                items: 5,
+            }
+        }
+    });
 
-$(document).ready(function(){
-	$(".changeImage").click(function(){
-		var img = $(this).attr('src');
-		$(".mainImage").attr("src",img);
-	});
-	
-});
+    /*-----------------------
+       Product Single Slider
+    -------------------------*/
+    $(".ps-slider").owlCarousel({
+        loop: false,
+        margin: 10,
+        nav: true,
+        items: 3,
+        dots: false,
+        navText: ['<i class="fa fa-angle-left"></i>', '<i class="fa fa-angle-right"></i>'],
+        smartSpeed: 1200,
+        autoHeight: false,
+        autoplay: true,
+    });
+    
+    /*------------------
+        CountDown
+    --------------------*/
+    // For demo preview
+    var today = new Date();
+    var dd = String(today.getDate()).padStart(2, '0');
+    var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+    var yyyy = today.getFullYear();
 
+    if(mm == 12) {
+        mm = '01';
+        yyyy = yyyy + 1;
+    } else {
+        mm = parseInt(mm) + 1;
+        mm = String(mm).padStart(2, '0');
+    }
+    var timerdate = mm + '/' + dd + '/' + yyyy;
+    // For demo preview end
 
-$().ready(function(){
-	$("#registerForm").validate({
-		rules:{
-			name:{
-				required:true,
-				minlength:2,
-				lettersonly:true
-			},
-			surname:{
-				required:true,
-				minlength:2,
-				lettersonly:true
-			},
-			username:{
-				required:true,
-				minlength:6,
-				remote:"/check-username"
-			},
-			email:{
-				required:true,
-				email:true,
-				remote:"/check-email"
-			},
-			password:{
-				required:true,
-				minlength:6
-			},
-			confirm_password:{
-				required:true,
-				minlength:6
-			}
-			
-		},
+    console.log(timerdate);
+    
 
-		messages:{
-			name:{
-				required:"Inserisci il tuo nome",
-				minlength:"Il nome deve contenere almeno 2 caratteri",
-				lettersonly:"Il nome deve contenere soltanto lettere"
-			},
-			surname:{
-				required:"Inserisci il tuo cognome",
-				minlength:"Il cognome deve contenere almeno 2 caratteri",
-				lettersonly:"Il cognome deve contenere soltanto lettere"
-			},
-			username:{
-				required:"Inserisci un username",
-				minlength:"l'username deve contenere almeno 6 caratteri",
-				remote:"Username non disponibile!"
-			},			
-			email:{
-				required:"Inserisci il tuo indirizzo email",
-				email:"inserisci un indirizzo email valido",
-				remote:"Email già esistente!"
-			},
-			password:{
-				required:"Inserisci una password",
-				minlength:"La password deve contenere almeno 6 caratteri"
-			},
-			confirm_password:{
-				required:"Ripeti la password",
-				minlength:"La password deve contenere almeno 6 caratteri"
-			}
-			
+    // Use this for real timer date
+    /* var timerdate = "2020/01/01"; */
+
+	$("#countdown").countdown(timerdate, function(event) {
+        $(this).html(event.strftime("<div class='cd-item'><span>%D</span> <p>Days</p> </div>" + "<div class='cd-item'><span>%H</span> <p>Hrs</p> </div>" + "<div class='cd-item'><span>%M</span> <p>Mins</p> </div>" + "<div class='cd-item'><span>%S</span> <p>Secs</p> </div>"));
+    });
+
+        
+    /*----------------------------------------------------
+     Language Flag js 
+    ----------------------------------------------------*/
+    $(document).ready(function(e) {
+    //no use
+    try {
+        var pages = $("#pages").msDropdown({on:{change:function(data, ui) {
+            var val = data.value;
+            if(val!="")
+                window.location = val;
+        }}}).data("dd");
+
+        var pagename = document.location.pathname.toString();
+        pagename = pagename.split("/");
+        pages.setIndexByValue(pagename[pagename.length-1]);
+        $("#ver").html(msBeautify.version.msDropdown);
+    } catch(e) {
+        // console.log(e);
+    }
+    $("#ver").html(msBeautify.version.msDropdown);
+
+    //convert
+    $(".language_drop").msDropdown({roundedBorder:false});
+        $("#tech").data("dd");
+    });
+    /*-------------------
+		Range Slider
+	--------------------- */
+	var rangeSlider = $(".price-range"),
+		minamount = $("#minamount"),
+		maxamount = $("#maxamount"),
+		minPrice = rangeSlider.data('min'),
+		maxPrice = rangeSlider.data('max');
+	    rangeSlider.slider({
+		range: true,
+		min: minPrice,
+        max: maxPrice,
+		values: [minPrice, maxPrice],
+		slide: function (event, ui) {
+			minamount.val('$' + ui.values[0]);
+			maxamount.val('$' + ui.values[1]);
 		}
 	});
-	
-	$("#accountForm").validate({
-		rules:{
-			name:{
-				required:true,
-				minlength:2,
-				lettersonly:true
-			},
-			surname:{
-				required:true,
-				minlength:2,
-				lettersonly:true
-			},
-			username:{
-				required:true,
-				minlength:6,
-				remote:"/check-username"
-			},
-			email:{
-				required:true,
-				email:true,
-				remote:"/check-email"
-			},
-			country:{
-				required:true
-			},
-			province:{
-				required:true,
-				minlength:2,
-				lettersonly:true
-			},
-			city:{
-				required:true,
-				minlength:2,
-				lettersonly:true
-			},
-			address:{
-				required:true,
-			},
-			pincode:{
-				required:true,
-				number:true
-			},
-			mobile:{
-				required:true,
-				number:true
-			}
-			
-		},
+	minamount.val('$' + rangeSlider.slider("values", 0));
+    maxamount.val('$' + rangeSlider.slider("values", 1));
 
-		messages:{
-			name:{
-				required:"Inserisci il tuo nome",
-				minlength:"Il nome deve contenere almeno 2 caratteri",
-				lettersonly:"Il nome deve contenere soltanto lettere"
-			},
-			surname:{
-				required:"Inserisci il tuo cognome",
-				minlength:"Il cognome deve contenere almeno 2 caratteri",
-				lettersonly:"Il cognome deve contenere soltanto lettere"
-			},
-			username:{
-				required:"Inserisci un username",
-				minlength:"l'username deve contenere almeno 6 caratteri",
-				remote:"Username non disponibile!"
-			},			
-			email:{
-				required:"Inserisci il tuo indirizzo email",
-				email:"inserisci un indirizzo email valido",
-				remote:"Email già esistente!"
-			},
-			country:{
-				required:"Inserisci la tua nazione"
-			},
-			province:{
-				required:"Inserisci la tua provincia",
-				minlength:"Questo campo deve contenere almeno 2 caratteri",
-				lettersonly:"Questo campo deve contenere soltanto lettere"
-			},
-			city:{
-				required:"Inserisci la tua città",
-				minlength:"Questo campo deve contenere almeno 2 caratteri",
-				lettersonly:"Questo campo deve contenere soltanto lettere"
-			},			
-			address:{
-				required:"Inserisci il tuo indirizzo"
-			},
-			pincode:{
-				required:"Inserisci il tuo CAP",
-				number:"Questo campo deve contenere soltanto numeri"
-			},
-			mobile:{
-				required:"Inserisci il tuo numero di telefono",
-				number:"Questo campo deve contenere soltanto numeri"
-			}
-			
-		}
-	});
-	
-	$("#loginForm").validate({
-		rules:{
-			email:{
-				required:true,
-				email:true
-			},
-			password:{
-				required:true
-			}
-		},
+    /*-------------------
+		Radio Btn
+	--------------------- */
+    $(".fw-size-choose .sc-item label, .pd-size-choose .sc-item label").on('click', function () {
+        $(".fw-size-choose .sc-item label, .pd-size-choose .sc-item label").removeClass('active');
+        $(this).addClass('active');
+    });
+    
+    /*-------------------
+		Nice Select
+    --------------------- */
+    $('.sorting, .p-show').niceSelect();
 
-		messages:{			
-			email:{
-				required:"Inserisci il tuo indirizzo email",
-				email:"inserisci un indirizzo email valido"
-			},
-			password:{
-				required:"Inserisci una password"
-			}
+    /*------------------
+		Single Product
+	--------------------*/
+	$('.product-thumbs-track .pt').on('click', function(){
+		$('.product-thumbs-track .pt').removeClass('active');
+		$(this).addClass('active');
+		var imgurl = $(this).data('imgbigurl');
+		var bigImg = $('.product-big-img').attr('src');
+		if(imgurl != bigImg) {
+			$('.product-big-img').attr({src: imgurl});
+			$('.zoomImg').attr({src: imgurl});
 		}
 	});
 
-	$("#passwordForm").validate({
-		rules:{
-		    current_pwd:{
-				required: true,
-				minlength:6,
-				maxlength:20
-			},
-			new_pwd:{
-				required: true,
-				minlength:6,
-				maxlength:20
-			},
-			confirm_pwd:{
-				required:true,
-				minlength:6,
-				maxlength:20,
-				equalTo:"#new_pwd"
+    $('.product-pic-zoom').zoom();
+    
+    /*-------------------
+		Quantity change
+	--------------------- */
+    var proQty = $('.pro-qty');
+	proQty.prepend('<span class="dec qtybtn">-</span>');
+	proQty.append('<span class="inc qtybtn">+</span>');
+	proQty.on('click', '.qtybtn', function () {
+		var $button = $(this);
+		var oldValue = $button.parent().find('input').val();
+		if ($button.hasClass('inc')) {
+			var newVal = parseFloat(oldValue) + 1;
+		} else {
+			// Don't allow decrementing below zero
+			if (oldValue > 0) {
+				var newVal = parseFloat(oldValue) - 1;
+			} else {
+				newVal = 0;
 			}
-		},
-		errorClass: "help-inline",
-		errorElement: "span",
-		highlight:function(element, errorClass, validClass) {
-			$(element).parents('.control-group').addClass('error');
-		},
-		unhighlight: function(element, errorClass, validClass) {
-			$(element).parents('.control-group').removeClass('error');
-			$(element).parents('.control-group').addClass('success');
 		}
-	});
-	
-	$('#current_pwd').keyup(function(){
-		var current_pwd=$(this).val();
-		$.ajax({
-			headers: {
-				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-			},
-			type:'post',
-			url:'/check-user-pwd',
-			data:{current_pwd:current_pwd},
-			success:function(resp){
-				if(resp=="false"){
-					$("#chkPwd").html("<font color='red'> La password corrente non corretta </font>");
-				}else if(resp=="true"){
-					$("#chkPwd").html("<font color='green'> La password corrente è corretta </font>");
-				}
-			},error:function(resp){
-				alert("Error");
-			}
-		});
+		$button.parent().find('input').val(newVal);
 	});
 
-	//visual strong password script
-	$('#myPassword').passtrength({
-		minChars: 6,
-		passwordToggle: true,
-		tooltip: true,
-		eyeImg: "/images/frontend_images/eye.svg"
-	});
-
-	$('#confirmPassword').passtrength({
-		minChars: 6,
-		passwordToggle: true,
-		tooltip: true,
-		eyeImg: "/images/frontend_images/eye.svg"
-	});
-
-	//copy billing address to account address script
-	$('#copyAddress').on('click',function(){
-		if(this.checked){
-			$('#shipping_name').val($('#billing_name').val());
-			$('#shipping_surname').val($('#billing_surname').val());
-			$('#shipping_country').val($('#billing_country').val());
-			$('#shipping_province').val($('#billing_province').val());
-			$('#shipping_city').val($('#billing_city').val());
-			$('#shipping_address').val($('#billing_address').val());
-			$('#shipping_pincode').val($('#billing_pincode').val());
-			$('#shipping_mobile').val($('#billing_mobile').val());
-		}
-		else{
-			$('#shipping_name').val('');
-			$('#shipping_surname').val('');
-			$('#shipping_country').val('');
-			$('#shipping_province').val('');
-			$('#shipping_city').val('');
-			$('#shipping_address').val('');
-			$('#shipping_pincode').val('');
-			$('#shipping_mobile').val('');
-		}
-	});
-
-});
-
-
-function selectPaymentMethod(){
-	if($('#Credit-debit-card').is(':checked') || $('#COD').is(':checked') ){
-
-	}else{
-		alert("Please select payment method!");
-		return false;
-	}
-}
-
-
-
-
-/*********** RateYo - Plugin for rating in a product review    https://rateyo.fundoocode.ninja/  ****************/
-
-
-$(document).ready(function(){
-	//generate stairs for a new review
-	$("#insert_rating").rateYo({
-		rating: 0,
-		starWidth: "25px",
-		maxValue: 5,
-		numStars: 5,
-		precision: 0,
-		fullStar: true
-	});
-
-	//set value in input field with rating value
-	$("#insert_rating").click(function () {
-		var $rateYo = $("#insert_rating").rateYo();
-		var rating = $rateYo.rateYo("rating");
-		var input = document.getElementById('review_rating');
-		input.setAttribute('value',rating);
-	});
-	
-	var avg = document.getElementById('avg').getAttribute("value");
-
-	//rating avg shown on details page 
-	$("#rating_avg").rateYo({
-		rating: avg,
-		starWidth: "25px",
-		maxValue: 5,
-		numStars: 5,
-		precision: 5,
-		readOnly: true
-	});
-
-	//return return for users review
-	$(".rate").each( function() {
-		var rating = $(this).text();//val("input").val();
-		$(this).rateYo(
-			{
-				rating: rating,
-				starWidth: "16px",
-				maxValue: 5,
-				numStars: 5,
-				precision: 5,
-				readOnly: true
-			}
-		);
-	});
-	
-});
-
-
-/******************************* End rateYo functions **************************/
+})(jQuery);

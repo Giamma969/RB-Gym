@@ -7,108 +7,173 @@
 	$cartCount = Product::cartCount();
 	$wishedProducts = Product::countWishedProducts();
 ?>
-	 	<header id="header"><!--header-->
-		<div class="header_top"><!--header_top-->
-			<div class="container">
-				<div class="row">
-					<div class="col-sm-6">
-						<div class="contactinfo">
-							<ul class="nav nav-pills">
-								<li><a><i class="fa fa-phone"></i>+39 0863738210</a></li>
-								<li><a><i class="fa fa-envelope"></i>info@rb-gym.com</a></li>
-							</ul>
-						</div>
+	<!-- Header Section Begin -->
+    <header class="header-section">
+        <div class="header-top">
+            <div class="container">
+                <div class="ht-left">
+                    <div class="mail-service">
+                        <i class="fa fa-envelope"></i>
+                        info@rb-gym.com
+                    </div>
+                    <div class="phone-service">
+                        <i class="fa fa-phone"></i>
+                        +39 0863738210
+                    </div>
+                </div>
+                <div class="ht-right">
+					@if(empty(Auth::check()))
+						<a href="{{ url('/user-register') }}" class="login-panel">Register</a>
+						<a href="{{ url('/user-login') }}" class="login-panel"><i class="fa fa-lock"></i> Login</a>
+					@else
+						<a href="{{ url('/account') }}" class="login-panel"><i class="fa fa-user"></i> Account</a>
+						<a href="{{ url('/user-logout') }}" class="login-panel"><i class="fa fa-sign-out "></i> Logout</a>
+					@endif
+                    <!-- <a href="#" class="login-panel"><i class="fa fa-user"></i>Login</a> -->
+                    <div class="lan-selector">
+                        <select class="language_drop" name="countries" id="countries" style="width:300px;">
+                            <option value='yt' data-image="{{asset('images/frontend_images/flag-1.jpg')}}" data-imagecss="flag yt"
+                                data-title="English">English</option>
+                        </select>
+                    </div>
+                    <div class="top-social">
+                        <a href="#"><i class="ti-facebook"></i></a>
+                        <a href="#"><i class="ti-twitter-alt"></i></a>
+                        <a href="#"><i class="ti-linkedin"></i></a>
+                        <a href="#"><i class="ti-pinterest"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="inner-header">
+                <div class="row">
+                    <div class="col-lg-2 col-md-2">
+                        <div class="logo">
+                            <a href="{{url('/')}}">
+                                <img src="{{asset('images/frontend_images/logo.png')}}" alt="">
+                            </a>
+                        </div>
 					</div>
-					<div class="col-sm-6">
-						<div class="social-icons pull-right">
-							<ul class="nav navbar-nav">
-								<li><a href="https://www.facebook.com/" target="_blank" ><i class="fa fa-facebook"></i></a></li>
-								<li><a href="https://twitter.com/explore" target="_blank"><i class="fa fa-twitter"></i></a></li>
-								<li><a href="https://www.linkedin.com/" target="_blank"><i class="fa fa-linkedin"></i></a></li>
-								<li><a href="https://www.instagram.com/" target="_blank"><i class="fa fa-instagram"></i></a></li>
-							</ul>
-						</div>
+					<div class="col-lg-7 col-md-7">
+						<form action="{{ url('/search-products') }}" method="post">{{ csrf_field() }}
+							<div class="advanced-search">
+								<button type="button" class="category-btn">All Categories</button>
+								
+									<div class="input-group">
+										<input type="text" name="product" placeholder="What do you need?">
+										<button type="submit"><i class="ti-search"></i></button>
+									</div>
+								
+							</div>
+						</form>
 					</div>
-				</div>
-			</div>
-		</div><!--/header_top-->
-		
-		<div class="header-middle"><!--header-middle-->
-			<div class="container">
-				<div class="row">
-					<div class="col-sm-4">
-						<div class="logo pull-left">
-							<a href="{{ url('/') }}"><img src="{{asset('images/frontend_images/home/logo.png')}}" alt="" /></a>
-						</div>
-					</div>
-					<div class="col-sm-8">
-						<div class="shop-menu pull-right">
-							<ul class="nav navbar-nav">
-								<li><a href="{{ url('/') }}"><i class="fa fa-home"></i> Home</a></li>
-								<li class="dropdown"><a href="#"><i class="fa fa-shopping-cart"></i>Shop</a>
-                                    <ul role="menu" class="sub-menu">
-										 @foreach($mainCategories as $cat)
-                                        	@if($cat->status == "1")
-												<li style="display:block !important;"><a style="background-color:rgb(102,102,102); " href="{{asset('products/'.$cat->url)}}">{{$cat->name}}</a></li>
-											@endif
-										@endforeach
-                                    </ul>
-                                </li>
-								<li><a href="{{ url('/contact-us') }}"><i class="fa fa-envelope"></i> Contact</a></li>
-								<li><a href="{{ url('/wishlist') }}"><i class="fa fa-star"></i> Wishlist ({{$wishedProducts}}) </a></li>
-								<li><a href="{{ url('/orders') }}"><i class="fa fa-crosshairs"></i> Orders </a></li>
-								<li><a href="{{ url('/cart') }}"><i class="fa fa-shopping-cart"></i> Cart ({{$cartCount}})</a></li>
+                    <div class="col-lg-3 text-right col-md-3">
+                        <ul class="nav-right">
+                            <li class="heart-icon">
+                                <a href="{{url('/wishlist')}}">
+                                    <i class="icon_heart_alt"></i>
+                                    <span>{{$wishedProducts}}</span>
+                                </a>
+                            </li>
+                            <li class="cart-icon">
+                                <a href="{{url('/cart')}}">
+                                    <i class="icon_bag_alt"></i>
+                                    <span>{{$cartCount}}</span>
+                                </a>
+                                <div class="cart-hover">
+                                    <div class="select-items">
+                                        <table>
+                                            <tbody>
+                                                <tr>
+                                                    <td class="si-pic"><img src="{{asset('images/frontend_images/select-product-1.jpg')}}" alt=""></td>
+                                                    <td class="si-text">
+                                                        <div class="product-selected">
+                                                            <p>$60.00 x 1</p>
+                                                            <h6>Kabino Bedside Table</h6>
+                                                        </div>
+                                                    </td>
+                                                    <td class="si-close">
+                                                        <i class="ti-close"></i>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="si-pic"><img src="{{asset('images/frontend_images/select-product-2.jpg')}}" alt=""></td>
+                                                    <td class="si-text">
+                                                        <div class="product-selected">
+                                                            <p>$60.00 x 1</p>
+                                                            <h6>Kabino Bedside Table</h6>
+                                                        </div>
+                                                    </td>
+                                                    <td class="si-close">
+                                                        <i class="ti-close"></i>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="select-total">
+                                        <span>total:</span>
+                                        <h5>$120.00</h5>
+                                    </div>
+                                    <div class="select-button">
+                                        <a href="#" class="primary-btn view-card">VIEW CARD</a>
+                                        <a href="#" class="primary-btn checkout-btn">CHECK OUT</a>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="cart-price">$150.00</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="nav-item">
+            <div class="container">
+                <div class="nav-depart">
+                    <div class="depart-btn">
+                        <i class="ti-menu"></i>
+                        <span>All departments</span>
+                        <ul class="depart-hover">
+							<li class="active"><a href="#">Women’s Clothing</a></li>
+							@foreach($mainCategories as $cat)
+								@if($cat->status == "1")
+									<li><a href="{{asset('products/'.$cat->url)}}">{{$cat->name}}</a></li>
+								@endif
+							@endforeach
+                        </ul>
+                    </div>
+                </div>
+                <nav class="nav-menu mobile-menu">
+                    <ul>
+                        <li class="active"><a href="{{ url('/') }}">Home</a></li>
+                        <li><a href="./shop.html">Shop</a></li>
+                        <li><a href="#">Collection</a>
+                            <ul class="dropdown">
+                                <li><a href="#">Men's</a></li>
+                                <li><a href="#">Women's</a></li>
+                                <li><a href="#">Kid's</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="{{ url('/contact-us') }}">Contact</a></li>
+                        <li><a href="#">Pages</a>
+                            <ul class="dropdown">
+                                <li><a href="{{('./cart')}}">Shopping Cart</a></li>
+                                <li><a href="./check-out.html">Checkout</a></li>
+                                <li><a href="./faq.html">Faq</a></li>
 								@if(empty(Auth::check()))
-									<li><a href="{{ url('/login-register') }}"><i class="fa fa-lock"></i> Login</a></li>
+									<li><a href="{{ url('/user-register') }}">Register</a></li>
+									<li><a href="{{ url('/user-login') }}"><i class="fa fa-lock"></i> Login</a></li>
 								@else
 									<li><a href="{{ url('/account') }}"><i class="fa fa-user"></i> Account</a></li>
 									<li><a href="{{ url('/user-logout') }}"><i class="fa fa-sign-out "></i> Logout</a></li>
 								@endif
-							</ul>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div><!--/header-middle-->
-	
-		<div class="header-bottom"><!--header-bottom-->
-			<div class="container">
-				<div class="row">
-					<div class="col-sm-9">
-						<!-- <div class="navbar-header">
-							<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-								<span class="sr-only">Toggle navigation</span>
-								<span class="icon-bar"></span>
-								<span class="icon-bar"></span>
-								<span class="icon-bar"></span>
-							</button>
-						</div> -->
-						<?php /*<div class="mainmenu pull-left">
-							<ul class="nav navbar-nav collapse navbar-collapse">
-								<li><a href="{{ url('/') }}" class="active">Home</a></li>
-								<li class="dropdown"><a href="#">Shop<i class="fa fa-angle-down"></i></a>
-                                    <ul role="menu" class="sub-menu">
-										 @foreach($mainCategories as $cat)
-                                        	@if($cat->status == "1")
-												<li><a href="{{asset('products/'.$cat->url)}}">{{$cat->name}}</a></li>
-											@endif
-										@endforeach
-                                    </ul>
-                                </li>
-								<li><a href="{{ url('/contact-us') }}">Contact</a></li>
-							</ul>
-						</div> */?>
-					</div>
-					<div class="col-sm-3">
-						<div class="search_box pull-right">
-						<form action="{{ url('/search-products') }}" method="post">{{ csrf_field() }}
-							<input type="text" placeholder="Search Products" name="product"/>
-							<button type="submit" style="margin-top:0px;" class="btn btn-primary" >Go</button>
-							<!-- style="border:0px; heigth:30px; margin-left:-3px;" -->
-						</form>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div><!--/header-bottom-->
-	</header><!--/header-->
+                            </ul>
+                        </li>
+                    </ul>
+                </nav>
+                <div id="mobile-menu-wrap"></div>
+            </div>
+        </div>
+    </header>
+    <!-- Header End -->

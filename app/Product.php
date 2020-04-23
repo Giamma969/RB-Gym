@@ -162,4 +162,6 @@ class Product extends Model
             DB::table('products')->where('id', $product->product_id)->update(['stock'=>$new_stock]);
         }
     }
+
+    
 }

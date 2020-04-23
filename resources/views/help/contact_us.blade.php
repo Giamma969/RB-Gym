@@ -2,86 +2,104 @@
 @section('content')
 
 <section>
-	 <div id="contact-page" class="container">
-    	<div class="bg">
-	    	<!-- <div class="row">    		
-	    		<div class="col-sm-12">    			   			
-					<h2 class="title text-center">Contact <strong>Us</strong></h2>    			    				    				
-					
-				</div>			 		
-			</div>    	 -->
-    		<div class="row" style="margin-top:50px;">
-            @if(Session::has('flash_message_error'))
-				<div class="alert alert-error alert-block" style="background-color:#f2dfd0; margin-right:15px; margin-left:15px;">
-					<button type="button" class="close" data-dismiss="alert">×</button>
-						<strong> {!! session ('flash_message_error') !!}</strong>
-				</div>
-			@endif
-			@if(Session::has('flash_message_success'))
-				<div class="alert alert-success alert-block" style="margin-right:15px; margin-left:15px;">
-					<button type="button" class="close" data-dismiss="alert">×</button>
-						<strong> {!! session ('flash_message_success') !!}</strong>
-				</div>
-			@endif
-              	
-	    		<div class="col-sm-8">
-	    			<div class="contact-form">
-	    				<h2 class="title text-center">Get In Touch</h2>
-	    				<div class="status alert alert-success" style="display: none"></div>
-				    	<form id="main-contact-form" class="contact-form row" name="contact-form" method="post" action="{{ url('/contact-us' )}}"> {{ csrf_field() }}
-				            <div class="form-group col-md-6">
-				                <input type="text" name="name" class="form-control" required="required" placeholder="Name">
-				            </div>
-				            <div class="form-group col-md-6">
-				                <input type="email" name="email" class="form-control" required="required" placeholder="Email">
-				            </div>
-				            <div class="form-group col-md-12">
-				                <input type="text" name="subject" class="form-control" required="required" placeholder="Subject">
-				            </div>
-				            <div class="form-group col-md-12">
-				                <textarea name="message" id="message" required="required" class="form-control" rows="8" placeholder="Your Message Here"></textarea>
-				            </div>                        
-				            <div class="form-group col-md-12">
-				                <input type="submit" name="submit" class="btn btn-primary pull-right" value="Send">
-				            </div>
-				        </form>
-	    			</div>
-	    		</div>
-	    		<div class="col-sm-4">
-	    			<div class="contact-info">
-	    				<h2 class="title text-center">Contact Info</h2>
-	    				<address>
-	    					<p>RB-Gym Inc.</p>
-							<p>48 Via Vetoio L'Aquila, IT 67100, AQ</p>
-							<p>L'Aquila ITA</p>
-							<p>Mobile: +39 3333333333</p>
-							<p>Fax: 1-714-252-0026</p>
-							<p>Email: info@RB-Gym.com</p>
-	    				</address>
-	    				<div class="social-networks">
-	    					<h2 class="title text-center">Social Networking</h2>
-							<ul>
-								<li>
-									<a href="https://www.facebook.com/" target="_blank"><i class="fa fa-facebook"></i></a>
-								</li>
-								<li>
-									<a href="https://twitter.com/explore" target="_blank"><i class="fa fa-twitter"></i></a>
-								</li>
-                                <li>
-									<a href="https://www.instagram.com/" target="_blank"><i class="fa fa-instagram"></i></a>
-								</li>
-								<li>
-									<a href="https://www.youtube.com/" target="_blank"><i class="fa fa-youtube"></i></a>
-								</li>
-							</ul>
-	    				</div>
-	    			</div>
-    			</div>    			
-	    	</div>  
-    	</div>	
-    </div><!--/#contact-page-->
-</section>
+	 <!-- Breadcrumb Section Begin -->
+    <div class="breacrumb-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="breadcrumb-text">
+                        <a href="#"><i class="fa fa-home"></i> Home</a>
+                        <span>Contact</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Breadcrumb Section Begin -->
 
+    <!-- Map Section Begin -->
+    <div class="map spad">
+        <div class="container">
+            <div class="map-inner">
+                <iframe
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d48158.305462977965!2d-74.13283844036356!3d41.02757295168286!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c2e440473470d7%3A0xcaf503ca2ee57958!2sSaddle%20River%2C%20NJ%2007458%2C%20USA!5e0!3m2!1sen!2sbd!4v1575917275626!5m2!1sen!2sbd"
+                    height="610" style="border:0" allowfullscreen="">
+                </iframe>
+                <div class="icon">
+                    <i class="fa fa-map-marker"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Map Section Begin -->
+
+    <!-- Contact Section Begin -->
+    <section class="contact-section spad">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-5">
+                    <div class="contact-title">
+                        <h4>Contacts Us</h4>
+                        <p>Contrary to popular belief, Lorem Ipsum is simply random text. It has roots in a piece of
+                            classical Latin literature from 45 BC, maki years old.</p>
+                    </div>
+                    <div class="contact-widget">
+                        <div class="cw-item">
+                            <div class="ci-icon">
+                                <i class="ti-location-pin"></i>
+                            </div>
+                            <div class="ci-text">
+                                <span>Address:</span>
+                                <p>60-49 Road 11378 New York</p>
+                            </div>
+                        </div>
+                        <div class="cw-item">
+                            <div class="ci-icon">
+                                <i class="ti-mobile"></i>
+                            </div>
+                            <div class="ci-text">
+                                <span>Phone:</span>
+                                <p>+65 11.188.888</p>
+                            </div>
+                        </div>
+                        <div class="cw-item">
+                            <div class="ci-icon">
+                                <i class="ti-email"></i>
+                            </div>
+                            <div class="ci-text">
+                                <span>Email:</span>
+                                <p>hellocolorlib@gmail.com</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 offset-lg-1">
+                    <div class="contact-form">
+                        <div class="leave-comment">
+                            <h4>Leave A Comment</h4>
+                            <p>Our staff will call back later and answer your questions.</p>
+                            <form action="#" class="comment-form">
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <input type="text" placeholder="Your name">
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <input type="text" placeholder="Your email">
+                                    </div>
+                                    <div class="col-lg-12">
+                                        <textarea placeholder="Your message"></textarea>
+                                        <button type="submit" class="site-btn">Send message</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Contact Section End -->
+</section>
 @endsection
 	
 	

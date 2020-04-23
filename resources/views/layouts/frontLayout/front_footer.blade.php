@@ -1,75 +1,74 @@
-<!--Footer-->
-<footer id="footer">
-	<div class="footer-widget">
-		<div class="container">
-			<div class="row">
-				<div class="col-sm-2">
-					<div class="single-widget">
-						<h2>Service</h2>
-						<ul class="nav nav-pills nav-stacked">
-							<li><a href="{{ url('/contact-us') }}">Contact Us</a></li>
-							<li><a href="#">Order Status</a></li>
-							<li><a href="#">FAQ’s</a></li>
-						</ul>
-					</div>
-				</div>
-				<div class="col-sm-2">
-					<div class="single-widget">
-						<h2>Quick Shop</h2>
-						<ul class="nav nav-pills nav-stacked">
-							<li><a href="#">T-Shirt</a></li>
-							<li><a href="#">Mens</a></li>
-							<li><a href="#">Womens</a></li>
-							<li><a href="#">Gift Cards</a></li>
-							<li><a href="#">Shoes</a></li>
-						</ul>
-					</div>
-				</div>
-				<div class="col-sm-2">
-					<div class="single-widget">
-						<h2>Policies</h2>
-						<ul class="nav nav-pills nav-stacked">
-							<li><a href="#">Terms of Use</a></li>
-							<li><a href="#">Privecy Policy</a></li>
-							<li><a href="#">Refund Policy</a></li>
-							<li><a href="#">Billing System</a></li>
-							<li><a href="#">Ticket System</a></li>
-						</ul>
-					</div>
-				</div>
-				<div class="col-sm-2">
-					<div class="single-widget">
-						<h2>About Shopper</h2>
-						<ul class="nav nav-pills nav-stacked">
-							<li><a href="#">Company Information</a></li>
-							<li><a href="#">Careers</a></li>
-							<li><a href="#">Store Location</a></li>
-							<li><a href="#">Affillate Program</a></li>
-							<li><a href="#">Copyright</a></li>
-						</ul>
-					</div>
-				</div>
-				<div class="col-sm-3 col-sm-offset-1">
-					<div class="single-widget">
-						<h2>About Shopper</h2>
-						<form action="#" class="searchform">
-							<input type="text" placeholder="Your email address" />
-							<button type="submit" class="btn btn-default"><i class="fa fa-arrow-circle-o-right"></i></button>
-							<p>Get the most recent updates from <br />our site and be updated your self...</p>
-						</form>
-					</div>
-				</div>
-				
-			</div>
-		</div>
-	</div>
-	
-	<div class="footer-bottom">
-		<div class="container">
-			<div class="row">
-				<p class="pull-left">Copyright ©2013 E-SHOPPER Inc. All rights reserved.</p>
-			</div>
-		</div>
-	</div>
-	
-</footer><!--/Footer-->
+ <!-- Footer Section Begin -->
+ <footer class="footer-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3">
+                    <div class="footer-left">
+                        <div class="footer-logo">
+                            <a href="#"><img src="{{asset('images/frontend_images/footer-logo.png') }}" alt=""></a>
+                        </div>
+                        <ul>
+                            <li>Address: 60-49 Road 11378 New York</li>
+                            <li>Phone: +65 11.188.888</li>
+                            <li>Email: hello.colorlib@gmail.com</li>
+                        </ul>
+                        <div class="footer-social">
+                            <a href="#"><i class="fa fa-facebook"></i></a>
+                            <a href="#"><i class="fa fa-instagram"></i></a>
+                            <a href="#"><i class="fa fa-twitter"></i></a>
+                            <a href="#"><i class="fa fa-pinterest"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-2 offset-lg-1">
+                    <div class="footer-widget">
+                        <h5>Information</h5>
+                        <ul>
+                            <li><a href="#">About Us</a></li>
+                            <li><a href="#">Checkout</a></li>
+                            <li><a href="#">Contact</a></li>
+                            <li><a href="#">Serivius</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-2">
+                    <div class="footer-widget">
+                        <h5>My Account</h5>
+                        <ul>
+                            <li><a href="#">My Account</a></li>
+                            <li><a href="#">Contact</a></li>
+                            <li><a href="#">Shopping Cart</a></li>
+                            <li><a href="#">Shop</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="newslatter-item">
+                        <h5>Join Our Newsletter Now</h5>
+                        <p>Get E-mail updates about our latest shop and special offers.</p>
+                        <form action="#" class="subscribe-form">
+                            <input type="text" placeholder="Enter Your Mail">
+                            <button type="button">Subscribe</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="copyright-reserved">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="copyright-text">
+                            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                        </div>
+                        <div class="payment-pic">
+                            <img src="img/payment-method.png" alt="">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- Footer Section End -->

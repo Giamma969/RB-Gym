@@ -16,10 +16,6 @@ use Illuminate\Support\Facades\Mail;
 class UsersController extends Controller
 {
 
-    public function userLoginRegister(){
-        return view('users.login_register');
-    }
-
     public function login(Request $request){
         if($request->isMethod('post')){
             $data=$request->all();
@@ -67,6 +63,7 @@ class UsersController extends Controller
                 return redirect()->back()->with('flash_message_error','Credenziali errate!');
             }
         }
+        return view('users.login');
 
     }
 
@@ -87,6 +84,7 @@ class UsersController extends Controller
             
             if($data['password'] != $data['confirm_password'])
                 return redirect()->back()->with('flash_message_error','Password non coincidenti!');
+            
             
             $user=new User;
             $user->name = $data['name'];
@@ -128,10 +126,9 @@ class UsersController extends Controller
         
            
 
-            return redirect()->back()->with('flash_message_success','Please confirm your email to activate your account!');
-        
-
+            return redirect('/user-login')->with('flash_message_success','Please confirm your email to activate your account!');
         }
+        return view('users.register');
     }
 
     public function confirmAccount($email){
@@ -140,7 +137,7 @@ class UsersController extends Controller
         if($usersCount == 1){
             $userDetails = User::where('email',$email)->first();
             if($userDetails->status == 1){
-                return redirect('login-register')->with('flash_message_success','Email dell\'account già attiva. Puoi effettuare il login!');
+                return redirect('/user-login')->with('flash_message_success','Email dell\'account già attiva. Puoi effettuare il login!');
             }else{
                 User::where('email',$email)->update(['status'=> 1,'email_verified_at' => DB::raw('now()')]);
                 //send welcome mail
@@ -148,7 +145,7 @@ class UsersController extends Controller
                 Mail::send('emails.welcome', $messageData, function($message) use($email){
                     $message->to($email)->subject('Welcome to RB-Gym');
                 });
-                return redirect('login-register')->with('flash_message_success','Email dell\'account attivata con successo. Ora puoi effettuare il login!');
+                return redirect('/user-login')->with('flash_message_success','Email dell\'account attivata con successo. Ora puoi effettuare il login!');
             }
         }else{
             abort(404);

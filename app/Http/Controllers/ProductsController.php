@@ -469,7 +469,12 @@ class ProductsController extends Controller
         //get product detail
         $productDetails = Product::where('id',$id)->first();
 
-        $relatedProducts = Product::where('id','!=',$id)->where(['category_id'=>$productDetails->category_id])->get();
+        $relatedProducts = DB::table('products')
+            ->where('products.id','!=',$id)
+            ->where(['category_id'=>$productDetails->category_id])
+            ->join('categories','categories.id','=','products.category_id')
+            ->select('categories.name as category_name','products.*')
+            ->get();
         
         $categories = Category::with('categories')->where(['parent_id'=>0])->get();
         $categoryDetails = Category::where('id',$productDetails->category_id)->first();
@@ -544,7 +549,7 @@ class ProductsController extends Controller
                 'product_quantity'=> $data ['quantity']
             ]);
         }
-        return redirect('cart')->with('flash_message_success','Prodotto aggiunto al carrello!');
+        return redirect()->back()->with('flash_message_success','Prodotto aggiunto al carrello!');
     }
 
     public function cart(){

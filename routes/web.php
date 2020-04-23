@@ -72,20 +72,19 @@ Route::match(['get','post'],'/remove-wishlist/{id}','ProductsController@removeWi
 Route::get('/cart/delete-product/{id}','ProductsController@deleteCartProduct');
 //update product quantity in cart
 Route::get('/cart/update-quantity/{id}/{quantity}','ProductsController@updateCartQuantity');
-//users login-register page
-Route::get('/login-register','UsersController@userLoginRegister');
 //users forgot password
 Route::match(['get','post'],'/forgot-password','UsersController@forgotPassword');
-//users register form submit
-Route::post('/user-register','UsersController@register');
+
 //user confirm account
 Route::get('confirm/{code}','UsersController@confirmAccount');
 //check if username already exists
 Route::match(['get','post'],'/check-username','UsersController@checkUsername');
 //check if email already exists
 Route::match(['get','post'],'/check-email','UsersController@checkEmail');
+//users register form submit
+Route::match(['get','post'],'/user-register','UsersController@register');
 //users login
-Route::post('/user-login','UsersController@login');
+Route::match(['get','post'],'/user-login','UsersController@login');
 //users logout
 Route::get('/user-logout','UsersController@logout');
 //Search products route
