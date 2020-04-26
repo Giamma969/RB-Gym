@@ -163,5 +163,42 @@ class Product extends Model
         }
     }
 
-    
+    public static function getProductName($id){
+        if(DB::table('products')->where('id',$id)->exists()){
+            $productDetails = DB::table('products')->where('id',$id)->first();
+            $product_name = $productDetails->product_name;
+        }else{
+            $product_name = "";
+        }
+        return $product_name;
+    }
+
+    public static function getProductImage($id){
+        if(DB::table('products')->where('id',$id)->exists()){
+            $productDetails = DB::table('products')->where('id',$id)->first();
+            $product_image = $productDetails->image;
+        }else{
+            $product_image = "";
+        }
+        return $product_image;
+    }
+
+    public static function getProductPrice($id){
+        if(DB::table('products')->where('id',$id)->exists()){
+            $productDetails = DB::table('products')->where('id',$id)->first();
+            $product_price = $productDetails->price;
+        }else{
+            $product_price = "";
+        }
+        return $product_price;
+    }
+
+    public static function getOrderCoupon($coupon_id){
+        $coupon = NULL;
+        if($coupon_id !== NULL){
+            $coupon = DB::table('coupons')->where('id',$coupon_id)->first();
+            $coupon=$coupon->amount;
+        }
+        return $coupon;
+    }
 }

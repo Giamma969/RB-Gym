@@ -7,6 +7,7 @@ use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use App\Category;
+use Illuminate\Support\Facades\Session;
 
 class Controller extends BaseController
 {
@@ -16,5 +17,12 @@ class Controller extends BaseController
        /* $mainCategories= json_decode(json_encode($mainCategories));
         echo"<pre>";print_r($mainCategories);die;*/
         return $mainCategories;
+    }
+
+    public static function createSession(){
+        if(empty(Session::get('session_id'))){
+            $new_session=str_random(40);
+            Session::put('session_id',$new_session);
+        }
     }
 }

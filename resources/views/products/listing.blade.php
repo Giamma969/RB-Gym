@@ -8,255 +8,109 @@
 @endphp
 
 @extends('layouts.frontLayout.front_design')
+
 @section('content')
- <section id="slider"><!--slider-->
-		<div class="container">
-			<div>
-				<ol class="breadcrumb">
-					@php echo $breadcrumb; @endphp
-				</ol>
-			</div>
-			<div class="row">
-				@if(Session::has('flash_message_error'))
-					<div class="alert alert-error alert-block" style="background-color:#f2dfd0; margin-right:15px; margin-left:15px;">
-						<button type="button" class="close" data-dismiss="alert">×</button>
-							<strong> {!! session ('flash_message_error') !!}</strong>
-					</div>
-				@endif
-				@if(Session::has('flash_message_success'))
-					<div class="alert alert-success alert-block" style="margin-right:15px; margin-left:15px;">
-						<button type="button" class="close" data-dismiss="alert">×</button>
-							<strong> {!! session ('flash_message_success') !!}</strong>
-					</div>
-				@endif
-				<div class="col-sm-12">
-					<div id="slider-carousel" class="carousel slide" data-ride="carousel">
-						<ol class="carousel-indicators">
-							<li data-target="#slider-carousel" data-slide-to="0" class="active"></li>
-							<li data-target="#slider-carousel" data-slide-to="1"></li>
-							<li data-target="#slider-carousel" data-slide-to="2"></li>
-						</ol>
-						
-						<div class="carousel-inner">
-							<div class="item active">
-								<div class="col-sm-6">
-									<h1><span>E</span>-SHOPPER</h1>
-									<h2>Free E-Commerce Template</h2>
-									<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
-									<button type="button" class="btn btn-default get">Get it now</button>
-								</div>
-								<div class="col-sm-6">
-									<img src="{{asset('images/frontend_images/home/girl1.jpg')}}" class="girl img-responsive" alt="" />
-									<img src="{{asset('images/frontend_images/home/pricing.png')}}"  class="pricing" alt="" />
-								</div>
-							</div>
-							<div class="item">
-								<div class="col-sm-6">
-									<h1><span>E</span>-SHOPPER</h1>
-									<h2>100% Responsive Design</h2>
-									<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
-									<button type="button" class="btn btn-default get">Get it now</button>
-								</div>
-								<div class="col-sm-6">
-									<img src="{{asset('images/frontend_images/home/girl2.jpg')}}" class="girl img-responsive" alt="" />
-									<img src="{{asset('images/frontend_images/home/pricing.png')}}"  class="pricing" alt="" />
-								</div>
-							</div>
-							
-							<div class="item">
-								<div class="col-sm-6">
-									<h1><span>E</span>-SHOPPER</h1>
-									<h2>Free Ecommerce Template</h2>
-									<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
-									<button type="button" class="btn btn-default get">Get it now</button>
-								</div>
-								<div class="col-sm-6">
-									<img src="{{asset('images/frontend_images/home/girl3.jpg')}}" class="girl img-responsive" alt="" />
-									<img src="{{asset('images/frontend_images/home/pricing.png')}}" class="pricing" alt="" />
-								</div>
-							</div>
-							
-						</div>
-						
-						<a href="#slider-carousel" class="left control-carousel hidden-xs" data-slide="prev">
-							<i class="fa fa-angle-left"></i>
-						</a>
-						<a href="#slider-carousel" class="right control-carousel hidden-xs" data-slide="next">
-							<i class="fa fa-angle-right"></i>
-						</a>
-					</div>
-					
+<!-- Breadcrumb Section Begin -->
+<div class="breacrumb-section">
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-12">
+				<div class="breadcrumb-text">
+					<a href="#"><i class="fa fa-home"></i> Home</a>
+					<span>Shop</span>
 				</div>
 			</div>
 		</div>
-	</section><!--/slider-->
-	
-	<section>
-		<div class="container">
-			<div class="row">
-				<div class="col-sm-3">
-					@include('layouts.frontLayout.front_sidebar')
+	</div>
+</div>
+<!-- Breadcrumb Section Begin -->
+
+<!-- Product Shop Section Begin -->
+<section class="product-shop spad">
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-3 col-md-6 col-sm-8 order-2 order-lg-1 produts-sidebar-filter">
+				@include('layouts.frontLayout.front_sidebar')
+			</div>
+			<div class="col-lg-9 order-1 order-lg-2">
+				@if(!empty($search_product))
+					
+					<h4 class="fw-title" >Products for "{{ $search_product }}"</h4>
+				@else
+				<div class="filter-widget" style="margin-bottom:5px;">
+					<h4 style="text-align:center; font-size:30px;" class="fw-title" >{{ $categoryDetails->name }}</h4>
 				</div>
-				
-				<div class="col-sm-9 padding-right">
-					<div class="features_items"><!--features_items-->
-						<h2 class="title text-center">
-						@if(!empty($search_product))
-							Products for "{{ $search_product }}" ({{ $count_search_product }})
-						@else
-							{{ $categoryDetails->name }} ({{ $productSubcatCount }})
-						@endif
-						</h2>
+				@endif
+				<div class="product-show-option">
+					<div class="row">
+						<div class="col-lg-7 col-md-7">
+							<div class="select-option">
+								<select class="sorting">
+									<option value="">Default Sorting</option>
+								</select>
+								<select class="p-show">
+									<option value="">Show:</option>
+								</select>
+							</div>
+						</div>
+						<div class="col-lg-5 col-md-5 text-right">
+							<p>Show 01- 09 Of 36 Product</p>
+						</div>
+					</div>
+				</div>
+				<div class="product-list">
+					<div class="row">
 						@foreach($productsAll as $product)
-						<div class="col-sm-4">
-							<div class="product-image-wrapper">
-								<div class="single-products">
-										<div class="productinfo text-center">
-											<a href="{{ url('product/'.$product->id) }}">
-												<img src="{{asset('images/backend_images/products/small/'.$product->image)}}" alt="" />
-											</a>
-											<h2>€ {{$product->price}}</h2>
-											<p>{{$product->product_name}}</p>
-											<a href="{{ url('product/'.$product->id) }}" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+							<div class="col-lg-4 col-sm-6">
+								<div class="product-item">
+									<div class="pi-pic">
+										<a href="{{ url('product/'.$product->id) }}">
+											<img src="{{asset('images/backend_images/products/small/'.$product->image)}}" alt="">
+										</a>
+										<div class="sale pp-sale">Sale</div>
+										<div class="icon">
+											@if(Product::checkIfWished($product->id))
+												<i class="fa fa-heart" aria-hidden="true"></i>
+											@else
+												<i class="fa fa-heart-o" aria-hidden="true"></i>
+											@endif
 										</div>
-								</div>
-								<div class="choose">
-									<ul class="nav nav-pills nav-justified">
-										@if(Product::checkIfWished($product->id))
-											<li><a href="{{ url('/remove-wishlist/'.$product->id)  }}"><i class="fa fa-plus-square"></i>Remove to wishlist</a></li>
-										@else
-											<li><a href="{{ url('/add-wishlist/'.$product->id) }}"><i class="fa fa-plus-square"></i>Add to wishlist</a></li>
-										@endif
-									</ul>
+										<ul>
+											<li class="w-icon active"><a href="#"><i class="icon_bag_alt"></i></a></li>
+											<li class="quick-view">
+												@if(Product::checkIfWished($product->id))
+													<a href="{{ url('/remove-wishlist/'.$product->id) }}">Remove wishlist</a>
+												@else
+													<a href="{{ url('/add-wishlist/'.$product->id) }}">Add wishlist</a>
+												@endif
+											</li>
+											<li class="w-icon"><a href="#"><i class="fa fa-random"></i></a></li>
+										</ul>
+									</div>
+									<div class="pi-text">
+										<div class="catagory-name">Towel</div>
+										<a href="{{ url('product/'.$product->id) }}">
+											<h5>{{$product->product_name}}</h5>
+										</a>
+										<div class="product-price">
+											€{{$product->price}}
+											<span>$35.00</span>
+										</div>
+									</div>
 								</div>
 							</div>
-						</div>
 						@endforeach
-
-						
-					</div><!--features_items-->
-					 @if(empty($search_product))
-					<div align="center">{{ $productsAll->links() }}</div> 
+					</div>
+				</div>
+				<div class="loading-more">
+					@if(empty($search_product))
+						<div align="center">{{ $productsAll->links() }}</div> 
 					@endif 
-					
-					<div class="category-tab"><!--category-tab-->
-						<div class="col-sm-12">
-							<ul class="nav nav-tabs">
-								<li class="active"><a href="#tshirt" data-toggle="tab">T-Shirt</a></li>
-								<li><a href="#blazers" data-toggle="tab">Blazers</a></li>
-								<li><a href="#sunglass" data-toggle="tab">Sunglass</a></li>
-								<li><a href="#kids" data-toggle="tab">Kids</a></li>
-								<li><a href="#poloshirt" data-toggle="tab">Polo shirt</a></li>
-							</ul>
-						</div>
-						
-					</div><!--/category-tab-->
-					
-					<div class="recommended_items"><!--recommended_items-->
-						<h2 class="title text-center">Recommended items</h2>
-						
-						<div id="recommended-item-carousel" class="carousel slide" data-ride="carousel">
-							<div class="carousel-inner">
-								<div class="item active">	
-									<div class="col-sm-4">
-										<div class="product-image-wrapper">
-											<div class="single-products">
-												<div class="productinfo text-center">
-													<img src="{{asset('images/frontend_images/home/recommend1.jpg')}}" alt="" />
-													<h2>$56</h2>
-													<p>Easy Polo Black Edition</p>
-													<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
-												</div>
-												
-											</div>
-										</div>
-									</div>
-									<div class="col-sm-4">
-										<div class="product-image-wrapper">
-											<div class="single-products">
-												<div class="productinfo text-center">
-													<img src="{{asset('images/frontend_images/home/recommend2.jpg')}}" alt="" />
-													<h2>$56</h2>
-													<p>Easy Polo Black Edition</p>
-													<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
-												</div>
-												
-											</div>
-										</div>
-									</div>
-									<div class="col-sm-4">
-										<div class="product-image-wrapper">
-											<div class="single-products">
-												<div class="productinfo text-center">
-													<img src="{{asset('images/frontend_images/home/recommend3.jpg')}}" alt="" />
-													<h2>$56</h2>
-													<p>Easy Polo Black Edition</p>
-													<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
-												</div>
-												
-											</div>
-										</div>
-									</div>
-								</div>
-								<div class="item">	
-									<div class="col-sm-4">
-										<div class="product-image-wrapper">
-											<div class="single-products">
-												<div class="productinfo text-center">
-													<img src="{{asset('images/frontend_images/home/recommend1.jpg')}}" alt="" />
-													<h2>$56</h2>
-													<p>Easy Polo Black Edition</p>
-													<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
-												</div>
-												
-											</div>
-										</div>
-									</div>
-									<div class="col-sm-4">
-										<div class="product-image-wrapper">
-											<div class="single-products">
-												<div class="productinfo text-center">
-													<img src="{{asset('images/frontend_images/home/recommend2.jpg')}}" alt="" />
-													<h2>$56</h2>
-													<p>Easy Polo Black Edition</p>
-													<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
-												</div>
-												
-											</div>
-										</div>
-									</div>
-									<div class="col-sm-4">
-										<div class="product-image-wrapper">
-											<div class="single-products">
-												<div class="productinfo text-center">
-													<img src="{{asset('images/frontend_images/home/recommend3.jpg')}}" alt="" />
-													<h2>$56</h2>
-													<p>Easy Polo Black Edition</p>
-													<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
-												</div>
-												
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-							 <a class="left recommended-item-control" href="#recommended-item-carousel" data-slide="prev">
-								<i class="fa fa-angle-left"></i>
-							  </a>
-							  <a class="right recommended-item-control" href="#recommended-item-carousel" data-slide="next">
-								<i class="fa fa-angle-right"></i>
-							  </a>			
-						</div>
-					</div><!--/recommended_items-->
-					
 				</div>
 			</div>
 		</div>
-	</section>
+	</div>
+</section>
+<!-- Product Shop Section End -->
 
- 
- 
- 
-   
-
-    @endsection
+@endsection

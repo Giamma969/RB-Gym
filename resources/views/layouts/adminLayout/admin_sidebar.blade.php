@@ -79,6 +79,13 @@
       </ul>
     </li>
 
+    <li class="submenu"> <a href="#"><i class="icon icon-th-list"></i> <span>Faqs</span> </a>
+      <ul <?php if(preg_match("/faq/i", $url)) { ?> style="display: block;" <?php } ?>>
+        <li <?php if(preg_match("/add-faq/i", $url)) { ?> class="active" <?php } ?>><a href="{{url('/admin/add-faq')}}">Add faq</a></li>
+        <li <?php if(preg_match("/view-faqs/i", $url)) { ?> class="active" <?php } ?>><a href="{{url('/admin/view-faqs')}}">View faqs</a></li>
+      </ul>
+    </li>
+
 
   </ul>
 </div>

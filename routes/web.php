@@ -91,21 +91,27 @@ Route::get('/user-logout','UsersController@logout');
 Route::post('/search-products','ProductsController@searchProducts');
 //contact us
 Route::match(['get','post'],'/contact-us','ProductsController@contactUs');
+//FAQ
+Route::get('/faq','ProductsController@faq');
+
+
 
 //all routes after login
 Route::group(['middleware'=>['frontlogin']],function(){
     //users account page
-    Route::match(['get','post'],'account','UsersController@account');
+    // Route::match(['get','post'],'account','UsersController@account');
+    //update info account
+    Route::match(['get','post'],'/account-informations','UsersController@accountInformations');
     //check user current password
     Route::post('/check-user-pwd','UsersController@chkUserPassword');
     //update user password
-    Route::post('/update-user-pwd','UsersController@updatePassword');
+    Route::match(['get','post'],'/update-user-pwd','UsersController@updatePassword');
     //checkout page
-    Route::match(['get','post'],'checkout','ProductsController@checkout');
+    Route::match(['get','post'],'/checkout','ProductsController@checkout');
     //order review page
     Route::match(['get','post'],'order-review','ProductsController@orderReview');
     //place order
-    Route::match(['get','post'],'place-order','ProductsController@placeOrder');
+    Route::match(['get','post'],'/place-order','ProductsController@placeOrder');
     //thanks page
     Route::get('/thanks','ProductsController@thanks');
     //thanks payment page
@@ -122,6 +128,8 @@ Route::group(['middleware'=>['frontlogin']],function(){
     Route::post('/cart/apply-coupon','ProductsController@applyCoupon');
     //forget coupon
     Route::get('cart/forget-coupon','ProductsController@forgetCoupon');
+
+
    
     
     
@@ -194,9 +202,16 @@ Route::group(['middleware'=>['auth']],function(){
     //Admin - Services routes
     Route::match(['get','post'],'/admin/view-services','ServicesController@viewServices')->middleware(ViewServices::class);
 
-    //Admin - view messages
+    //Admin - Messages routes
     Route::get('/admin/view-messages','MessagesController@viewMessages');
     Route::match(['get','post'],'/admin/edit-message/{id}','MessagesController@editMessage');
+
+    //Admin - Faqs
+    Route::get('/admin/view-faqs','FaqsController@viewFaqs');
+    Route::match(['get','post'], '/admin/add-faq', 'FaqsController@addFaq');
+    Route::match(['get','post'], '/admin/edit-faq/{id}', 'FaqsController@editFaq');
+    Route::get('/admin/delete-faq/{id}','FaqsController@deleteFaq');
+
 
 });
 

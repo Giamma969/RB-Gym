@@ -26,8 +26,8 @@
 						<a href="{{ url('/user-register') }}" class="login-panel">Register</a>
 						<a href="{{ url('/user-login') }}" class="login-panel"><i class="fa fa-lock"></i> Login</a>
 					@else
-						<a href="{{ url('/account') }}" class="login-panel"><i class="fa fa-user"></i> Account</a>
-						<a href="{{ url('/user-logout') }}" class="login-panel"><i class="fa fa-sign-out "></i> Logout</a>
+                        <a href="{{ url('/user-logout') }}" class="login-panel" style="margin-left:20px !important;"><i class="fa fa-sign-out "></i> Logout</a>
+                        <a href="{{ url('/account') }}" class="login-panel"><i class="fa fa-user"></i> Account</a>
 					@endif
                     <!-- <a href="#" class="login-panel"><i class="fa fa-user"></i>Login</a> -->
                     <div class="lan-selector">
@@ -59,7 +59,7 @@
 						<form action="{{ url('/search-products') }}" method="post">{{ csrf_field() }}
 							<div class="advanced-search">
 								<button type="button" class="category-btn">All Categories</button>
-								
+
 									<div class="input-group">
 										<input type="text" name="product" placeholder="What do you need?">
 										<button type="submit"><i class="ti-search"></i></button>
@@ -85,44 +85,55 @@
                                     <div class="select-items">
                                         <table>
                                             <tbody>
+                                                <?php $total_amount=0; ?>
+                                                @foreach($userCart as $product)
                                                 <tr>
-                                                    <td class="si-pic"><img src="{{asset('images/frontend_images/select-product-1.jpg')}}" alt=""></td>
+                                                    <td class="si-pic">
+                                                        <a href="{{ url('product/'.$product->id) }}">
+                                                            <img style="width:70px;"src="{{asset('images/backend_images/products/small/'.$product->image)}}" alt="">
+                                                        </a>
+                                                    </td>
                                                     <td class="si-text">
                                                         <div class="product-selected">
-                                                            <p>$60.00 x 1</p>
-                                                            <h6>Kabino Bedside Table</h6>
+                                                            <p>{{$product->price}} x {{$product->product_quantity}}</p>
+                                                            <h6><a href="{{ url('product/'.$product->id) }}">{{$product->product_name}}</a></h6>
                                                         </div>
                                                     </td>
                                                     <td class="si-close">
-                                                        <i class="ti-close"></i>
+                                                        <a href="{{ url('/cart/delete-product/'.$product->id) }}" style="color:black;"><i class="ti-close"></i></a>
                                                     </td>
                                                 </tr>
-                                                <tr>
-                                                    <td class="si-pic"><img src="{{asset('images/frontend_images/select-product-2.jpg')}}" alt=""></td>
-                                                    <td class="si-text">
-                                                        <div class="product-selected">
-                                                            <p>$60.00 x 1</p>
-                                                            <h6>Kabino Bedside Table</h6>
-                                                        </div>
-                                                    </td>
-                                                    <td class="si-close">
-                                                        <i class="ti-close"></i>
-                                                    </td>
-                                                </tr>
+                                                <?php $total_amount = $total_amount+ ($product->price * $product->product_quantity);  ?>
+                                                @endforeach
                                             </tbody>
                                         </table>
                                     </div>
                                     <div class="select-total">
-                                        <span>total:</span>
-                                        <h5>$120.00</h5>
+                                    @if(!empty(Session::get('coupon_amount')))
+                                        <span>Subtotal:</span><h5>€ @php echo $total_amount; @endphp</h5><br>
+                                        <span>Discount:</span><h5>€ {!! session ('coupon_amount') !!}</h5><br>
+                                        @if($total_amount == 0)
+                                            <span>Total:</span><h5>€ 0</h5><br>
+                                        @else
+                                            <span>Total:</span><h5>€ @php echo $total_amount - Session::get('coupon_amount'); @endphp</h5><br>
+                                        @endif
+                                        <?php /* <li>Shipping Cost <span>Free</span></li> */ ?>
+                                    @else
+                                        <span>Total:</span><h5>€ @php echo $total_amount; @endphp</h5>
+                                    @endif
                                     </div>
+                                    
                                     <div class="select-button">
-                                        <a href="#" class="primary-btn view-card">VIEW CARD</a>
-                                        <a href="#" class="primary-btn checkout-btn">CHECK OUT</a>
+                                        <a href="{{ url('/cart') }}" class="primary-btn view-card">VIEW CART</a>
+                                        <a href="{{ url('/checkout') }}" class="primary-btn checkout-btn">CHECK OUT</a>
                                     </div>
                                 </div>
                             </li>
-                            <li class="cart-price">$150.00</li>
+                            @if(!empty(Session::get('coupon_amount')))
+                                <li class="cart-price">€@php echo $total_amount - Session::get('coupon_amount'); @endphp</li>
+                            @else
+                                <li class="cart-price">€@php echo $total_amount; @endphp</li>
+                            @endif
                         </ul>
                     </div>
                 </div>
@@ -135,10 +146,10 @@
                         <i class="ti-menu"></i>
                         <span>All departments</span>
                         <ul class="depart-hover">
-							<li class="active"><a href="#">Women’s Clothing</a></li>
 							@foreach($mainCategories as $cat)
 								@if($cat->status == "1")
-									<li><a href="{{asset('products/'.$cat->url)}}">{{$cat->name}}</a></li>
+                                    <li><a href="{{asset('products/'.$cat->url)}}">{{$cat->name}}</a></li>
+                                    <!-- class="active"  -->
 								@endif
 							@endforeach
                         </ul>
@@ -155,19 +166,33 @@
                                 <li><a href="#">Kid's</a></li>
                             </ul>
                         </li>
-                        <li><a href="{{ url('/contact-us') }}">Contact</a></li>
+                        @if(!empty(Auth::check()))
+                        <li><a href="#">Account</a>
+                            <ul class="dropdown">
+                                <li><a href="{{ url('/account-informations') }}">Account informations</a></li>
+                                <li><a href="{{ url('/update-user-pwd') }}">Update password</a></li>
+                                <li><a href="{{ url('/orders') }}">Your orders</a></li>
+                                <li><a href="#">Newsletter subscription</a></li>
+
+                            </ul>
+                        </li>
+                        @endif
                         <li><a href="#">Pages</a>
                             <ul class="dropdown">
-                                <li><a href="{{('./cart')}}">Shopping Cart</a></li>
-                                <li><a href="./check-out.html">Checkout</a></li>
-                                <li><a href="./faq.html">Faq</a></li>
+                                <li><a href="{{ url('./cart') }}">Shopping Cart</a></li>
+                                <li><a href="{{ url('/checkout') }}">Checkout</a></li>
 								@if(empty(Auth::check()))
 									<li><a href="{{ url('/user-register') }}">Register</a></li>
 									<li><a href="{{ url('/user-login') }}"><i class="fa fa-lock"></i> Login</a></li>
 								@else
-									<li><a href="{{ url('/account') }}"><i class="fa fa-user"></i> Account</a></li>
-									<li><a href="{{ url('/user-logout') }}"><i class="fa fa-sign-out "></i> Logout</a></li>
+                                    <li><a href="{{ url('/user-logout') }}"><i class="fa fa-sign-out "></i> Logout</a></li>
 								@endif
+                            </ul>
+                        </li>
+                        <li><a href="#">Help</a>
+                            <ul class="dropdown">
+                                <li><a href="{{ url('/contact-us') }}">Contact us</a></li>
+                                <li><a href="{{ url('/faq') }}">FAQs</a></li>
                             </ul>
                         </li>
                     </ul>

@@ -41,14 +41,7 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-3">
-                <div class="filter-widget">
-                    <h4 class="fw-title">Categories</h4>
-                    <ul class="filter-catagories">
-                        <li><a href="#">Men</a></li>
-                        <li><a href="#">Women</a></li>
-                        <li><a href="#">Kids</a></li>
-                    </ul>
-                </div>
+                @include('layouts.frontLayout.front_sidebar')
             </div>
             <div class="col-lg-9">
                 <form name="addtocartForm" id="addtocartForm" action="{{ url('add-cart' )}}" method="post"> {{ csrf_field() }}
@@ -83,7 +76,6 @@
                                 <div class="pd-title">
                                     <span>oranges</span>
                                     <h3>{{$productDetails->product_name}}</h3>
-                                    <a href="#" class="heart-icon"><i class="icon_heart_alt"></i></a>
                                 </div>
                                 <input id="avg" name="avg" type="hidden" value="{{ $ratingAvg }}">
                                 <br>
@@ -144,6 +136,11 @@
                                         <a href="#"><i class="ti-twitter-alt"></i></a>
                                         <a href="#"><i class="ti-linkedin"></i></a>
                                     </div>
+                                    @if(Product::checkIfWished($productDetails->id))
+                                        <a href="{{ url('/remove-wishlist/'.$productDetails->id) }}" class="primary-btn pd-cart">Remove to Wishlist</a>
+                                    @else
+                                        <a href="{{ url('/add-wishlist/'.$productDetails->id) }}" class="primary-btn pd-cart">Add to Wishlist</a>
+                                    @endif
                                 </div>
                             </div>
                         </div>   
@@ -159,7 +156,7 @@
                                 <a data-toggle="tab" href="#tab-2" role="tab">SPECIFICATIONS</a>
                             </li>
                             <li>
-                                <a data-toggle="tab" href="#tab-3" role="tab">Customer Reviews (02)</a>
+                                <a data-toggle="tab" href="#tab-3" role="tab">Customer Reviews</a>
                             </li>
                         </ul>
                     </div>
@@ -329,11 +326,21 @@
                                 <img src="{{asset('images/backend_images/products/medium/'.$item->image) }}" alt="">
                                 <div class="sale">Sale</div>
                                 <div class="icon">
-                                    <i class="icon_heart_alt"></i>
+                                    @if(Product::checkIfWished($item->id))
+                                        <i class="fa fa-heart" aria-hidden="true"></i>
+                                    @else
+                                        <i class="fa fa-heart-o" aria-hidden="true"></i>
+                                    @endif
                                 </div>
                                 <ul>
                                     <li class="w-icon active"><a href="#"><i class="icon_bag_alt"></i></a></li>
-                                    <li class="quick-view"><a href="#">+ Quick View</a></li>
+                                    <li class="quick-view">
+                                        @if(Product::checkIfWished($item->id))
+                                            <a href="{{ url('/remove-wishlist/'.$item->id) }}">Remove wishlist</a>
+                                        @else
+                                            <a href="{{ url('/add-wishlist/'.$item->id) }}">Add wishlist</a>
+                                        @endif
+                                    </li>
                                     <li class="w-icon"><a href="#"><i class="fa fa-random"></i></a></li>
                                 </ul>
                             </div>

@@ -26,7 +26,7 @@ use Illuminate\Support\Facades\Mail;
 
 class ProductsController extends Controller
 {
-
+    //admin
     public function addProduct(Request $request){
         if($request->isMethod('post')){ 
             $data=$request->all();
@@ -107,7 +107,7 @@ class ProductsController extends Controller
 
 
     }
-
+    //admin
     public function editProduct(Request $request, $id=null){
         if($request->isMethod('post')){
             $data=$request->all();
@@ -193,7 +193,7 @@ class ProductsController extends Controller
         return view('admin.products.edit_product')->with(compact('productDetails','categories_dropdown'));
         
     }
-
+    //admin
     public function viewProducts(Request $request){
         $products= Product::get();
         
@@ -206,7 +206,7 @@ class ProductsController extends Controller
         
         return view('admin.products.view_products')->with(compact('products'));
     }
-
+    //admin
     public function deleteProduct($id=null){
         //unlink image
         $this->deleteProductImage($id);
@@ -215,7 +215,7 @@ class ProductsController extends Controller
         Product::where(['id'=>$id])->delete();
         return redirect()->back()->with('flash_message_success','il prodotto è stato eliminato');
     }
-
+    //admin
     public function deleteProductImage($id=null){
         //prendo l'immagine del prodotto
         $productImage = Product::where(['id' => $id]) -> first();
@@ -244,7 +244,7 @@ class ProductsController extends Controller
         Product::where(['id'=>$id])->update(['image'=>NULL]);
         return redirect()->back()->with('flash_message_success', ' Immagine del prodotto eliminata con successo!');
     }
-
+    //admin
     public function deleteAllAltImage($product_id=null){
         //prendo l'immagine del prodotto
         $productImage = DB::table('products_images')->where(['product_id' => $product_id])->get();
@@ -275,7 +275,7 @@ class ProductsController extends Controller
             ProductsImage::where(['id'=>$image->id])->delete();
         }    
     }
-
+    //admin
     public function deleteAltImage($id=null){
         //prendo l'immagine del prodotto
         $productImage = ProductsImage::where(['id' => $id]) -> first();
@@ -305,7 +305,7 @@ class ProductsController extends Controller
         ProductsImage::where(['id'=>$id])->delete();
         return redirect()->back()->with('flash_message_success', ' Immagine alternativa del prodotto eliminata con successo!');
     }
-
+    //admin
     public function addImages(Request $request, $id=null){
 
         if($request->isMethod('post')){
@@ -408,20 +408,20 @@ class ProductsController extends Controller
         }
         
         
-        $productsAll=$productsAll->paginate(3);
+        $productsAll=$productsAll->paginate(9);
 
         //$brandArray= array_flatten(json_decode(json_encode($brandArray),true));
 
         //$brandArray = json_decode(json_encode($brandArray)); 
         //echo '<pre>'; print_r($productsAll); die;
-        return view('products.listing')->with(compact('categories','categoryDetails','productsAll','url','brandArray','breadcrumb'));
+        $userCart = \App\Cart::getProductsCart();
+        return view('products.listing')->with(compact('categories','categoryDetails','productsAll','url','brandArray','breadcrumb','userCart'));
     }
 
 
     public function filter(Request $request){    
         $data=$request->all();
-        
-        
+        //echo'<pre>'; print_r($data); die;
         $brandUrl="";
         if(!empty($data['brandFilter'])){
             foreach($data['brandFilter'] as $brand){
@@ -455,7 +455,8 @@ class ProductsController extends Controller
             $breadcrumb = "<a style=\"color:#333 !important;\" href='/'>Home</a> /
             <a  style=\"color:#333 !important;\">". $data['product']."</a>";
 
-            return view('products.listing')->with(compact('categories','productsAll','search_product','breadcrumb'));
+            $userCart = \App\Cart::getProductsCart();
+            return view('products.listing')->with(compact('categories','productsAll','search_product','breadcrumb','userCart'));
         }
     }
 
@@ -497,8 +498,9 @@ class ProductsController extends Controller
             ->where('product_id', $productDetails->id)
             ->count();
         
-            
-        return view('products.detail')->with(compact('productDetails','categories','productAltImages','relatedProducts','breadcrumb','ratingAvg','countReviews'));
+        $userCart = \App\Cart::getProductsCart();
+        $categories= Category::with('categories')->where(['parent_id'=>0,'status'=>1])->get();
+        return view('products.detail')->with(compact('productDetails','categories','productAltImages','relatedProducts','breadcrumb','ratingAvg','countReviews','userCart','categories'));
     }
 
     public function addtocart(Request $request){
@@ -553,36 +555,7 @@ class ProductsController extends Controller
     }
 
     public function cart(){
-        if(Auth::check()){
-            $user_id=Auth::user()->id;
-            $cartDetails=DB::table('cart')->where(['user_id'=>$user_id])->first();
-        }else{
-            $user_id = NULL;
-            $session_id = Session::get('session_id');
-            //if user not logged haven't a cart create it
-            $cartCount=DB::table('cart')->where(['session_id'=> $session_id])->count();
-            if($cartCount == 0){
-                DB::table('cart')->insert([
-                    'user_id'=> $user_id,
-                    'session_id'=> $session_id,
-                    'created_at' => DB::raw('now()'),
-                    'updated_at' => DB::raw('now()')
-                ]);
-            }
-            $cartDetails=DB::table('cart')->where(['session_id'=> $session_id])->first();
-        }
-        //$cartDetails=json_decode(json_encode($cartDetails));
-        //echo '<pre>'; print_r($cartDetails); die;
-        $cart_id=$cartDetails->id;
-        $userCart = DB::table('products_carts')->where(['cart_id'=>$cart_id])
-            ->join('products', 'products.id', '=', 'products_carts.product_id')
-            ->select('products.*','products_carts.cart_id','products_carts.product_quantity')
-            ->get();
-        
-        /*foreach($userCart as $key => $product){
-            $productDetails = Product::where('id',$product->product_id)->first();
-            $userCart[$key]->image = $productDetails->image;
-        }*/
+        $userCart = \App\Cart::getProductsCart();
         return view('products.cart')->with(compact('userCart'));
     }
 
@@ -712,18 +685,16 @@ class ProductsController extends Controller
             return redirect()->back()->with('flash_message_error','Non ci sono prodotti nel carrello!');
         }
        
+        $userCart = \App\Cart::getProductsCart();
+        $categories= Category::with('categories')->where(['parent_id'=>0,'status'=>1])->get();
 
         //check if shipping address exists
         $shippingCount = Address::where(['user_id'=>$user_id, 'is_shipping'=>1])->count();
 
-        //update cart table with user id
-        /*$session_id=Session::get('session_id');
-        DB::table('cart')->where(['session_id'=>$session_id])->update(['user_id'=>$user_id]);*/
-
         //if user account is not updated
         if(empty($bill_address->country) || empty($bill_address->province) || empty($bill_address->city) || 
         empty($bill_address->address) || empty($bill_address->pincode) || empty($bill_address->mobile) ){
-            return view('users.account')->with(compact('userDetails','countries','bill_address'));
+            return view('users.account_informations')->with(compact('userDetails','countries','bill_address','userCart','categories'));
         }
 
         if($request->isMethod('post')){
@@ -758,13 +729,13 @@ class ProductsController extends Controller
             }
             return redirect()->action('ProductsController@orderReview');
         }
-
+        $userCart = \App\Cart::getProductsCart();
         if($shippingCount > 0){
             $shippingDetails = Address::where(['user_id'=>$user_id, 'is_shipping'=>1])->first();
-            return view('products.checkout')->with(compact('userDetails','countries','shippingCount','shippingDetails','bill_address'));
+            return view('products.checkout')->with(compact('userDetails','countries','shippingCount','shippingDetails','bill_address','userCart'));
         }
        
-        return view('products.checkout')->with(compact('userDetails','countries','shippingCount','bill_address'));
+        return view('products.checkout')->with(compact('userDetails','countries','shippingCount','bill_address','userCart'));
        
     }
 
@@ -789,8 +760,8 @@ class ProductsController extends Controller
         }*/
         
         //$countProduct = DB::table('cart')->where(['user_id'=>$user_id])->count();
-        
-        return view('products.order_review')->with(compact('userDetails','shippingDetails','userCart','countProduct'));
+        $userCart = \App\Cart::getProductsCart();
+        return view('products.order_review')->with(compact('userDetails','shippingDetails','userCart','countProduct','userCart'));
     }
 
     public function placeOrder(Request $request){
@@ -938,8 +909,9 @@ class ProductsController extends Controller
         //mark coupon like used
         $coupon_code = Session::get('coupon_code');
         Coupon::where('coupon_code',$coupon_code)->update(['used'=> 1]);
-        
-        return view('orders.thanks');
+
+        $userCart = \App\Cart::getProductsCart();
+        return view('orders.thanks')->with(compact('userCart'));
     }
 
     public function thanksPayment(){
@@ -986,20 +958,22 @@ class ProductsController extends Controller
             $message->to($user_email)->subject('Order placed - RB-Gym');
         });
 
+        $userCart = \App\Cart::getProductsCart();
             
-        return view('orders.thanks_payment')->with(compact('order_id'));
+        return view('orders.thanks_payment')->with(compact('order_id','userCart'));
     }
 
     public function payment(){
-        return view('orders.payment');
+        $userCart = \App\Cart::getProductsCart();
+        return view('orders.payment')->with(compact('userCart'));
     }
-
-    
 
     public function userOrders(){
         $user_id=Auth::user()->id;
         $orders=Order::with('orders')->where('user_id',$user_id)->orderBy('id','DESC')->get();
-        return view('orders.user_orders')->with(compact('orders'));
+        $userCart = \App\Cart::getProductsCart();
+        $categories = Category::with('categories')->where(['parent_id'=>0,'status'=>1])->get();
+        return view('orders.user_orders')->with(compact('orders','userCart','categories'));
     }
 
     public function userOrderDetails($order_id){
@@ -1009,8 +983,8 @@ class ProductsController extends Controller
             ->join('products', 'products.id', '=', 'orders_products.product_id')
             ->select('products.*','orders_products.product_quantity')
             ->get();
-
-        return view('orders.user_order_details')->with(compact('productsOrder','orderDetails'));
+        $userCart = \App\Cart::getProductsCart();
+        return view('orders.user_order_details')->with(compact('productsOrder','orderDetails','userCart'));
 
     }
 
@@ -1049,6 +1023,7 @@ class ProductsController extends Controller
         //return view('reviews.add_review')->with(compact('productDetails'));
     }
 
+    //admin
     public function viewOrders(){
         $usersOrders = DB::table('orders')
             ->join('users', 'users.id', '=', 'orders.user_id')
@@ -1056,7 +1031,7 @@ class ProductsController extends Controller
             ->get();
         return view('admin.orders.view_orders')->with(compact('usersOrders'));
     }
-
+    //admin
     public function viewOrderDetails($order_id){
         $orderDetails = Order::with('orders')->where('id',$order_id)->first();
         $user_id = $orderDetails->user_id;
@@ -1084,7 +1059,7 @@ class ProductsController extends Controller
         
         
     }
-
+    //admin
     public function updateOrderStatus(Request $request){
         if($request->isMethod('post')){
             $data=$request->all();
@@ -1126,7 +1101,8 @@ class ProductsController extends Controller
             ->get();
     
         $categories = Category::with('categories')->where(['parent_id'=>0])->get();
-        return view('products.wishlist')->with(compact('productsWish','categories')); 
+        $userCart = \App\Cart::getProductsCart();
+        return view('products.wishlist')->with(compact('productsWish','categories','userCart')); 
     }
 
     public function addWishlist($product_id){
@@ -1180,6 +1156,7 @@ class ProductsController extends Controller
         return redirect()->back()->with('flash_message_success','Prodotto rimosso dalla wishlist!');
     }
 
+    //admin
     //return all reviews to admin page
     public function viewReviews(){
         $reviewsDetails = DB::table('reviews')
@@ -1204,10 +1181,16 @@ class ProductsController extends Controller
             ]);
             return redirect()->back()->with('flash_message_success','Request successfully sent. We will reply as soon as possible!');
         }
-        return view('help.contact_us');
+        $userCart = \App\Cart::getProductsCart();
+        return view('help.contact_us')->with(compact('userCart'));
     }
 
-    
+    public function faq(){
+        $userCart = \App\Cart::getProductsCart();
+        $faqs = DB::table('faqs')->where('status',1)->select('faqs.question','faqs.answer')->get();
+        return view('help.faq')->with(compact('userCart','faqs'));
+    }
+
 }
 
 

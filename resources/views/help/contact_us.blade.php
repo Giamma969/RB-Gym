@@ -2,7 +2,7 @@
 @section('content')
 
 <section>
-	 <!-- Breadcrumb Section Begin -->
+    <!-- Breadcrumb Section Begin -->
     <div class="breacrumb-section">
         <div class="container">
             <div class="row">
@@ -17,24 +17,20 @@
     </div>
     <!-- Breadcrumb Section Begin -->
 
-    <!-- Map Section Begin -->
-    <div class="map spad">
-        <div class="container">
-            <div class="map-inner">
-                <iframe
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d48158.305462977965!2d-74.13283844036356!3d41.02757295168286!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c2e440473470d7%3A0xcaf503ca2ee57958!2sSaddle%20River%2C%20NJ%2007458%2C%20USA!5e0!3m2!1sen!2sbd!4v1575917275626!5m2!1sen!2sbd"
-                    height="610" style="border:0" allowfullscreen="">
-                </iframe>
-                <div class="icon">
-                    <i class="fa fa-map-marker"></i>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Map Section Begin -->
-
     <!-- Contact Section Begin -->
     <section class="contact-section spad">
+        @if(Session::has('flash_message_error'))
+            <div class="alert alert-error alert-block" style="background-color:#f2dfd0;">
+                <button type="button" class="close" data-dismiss="alert">×</button>
+                    <strong> {!! session ('flash_message_error') !!}</strong>
+            </div>
+        @endif
+        @if(Session::has('flash_message_success'))
+            <div class="alert alert-success alert-block">
+                <button type="button" class="close" data-dismiss="alert">×</button>
+                    <strong> {!! session ('flash_message_success') !!}</strong>
+            </div>
+        @endif
         <div class="container">
             <div class="row">
                 <div class="col-lg-5">
@@ -50,7 +46,7 @@
                             </div>
                             <div class="ci-text">
                                 <span>Address:</span>
-                                <p>60-49 Road 11378 New York</p>
+                                <p>Via Vetoio, 48, 67100 Coppito AQ</p>
                             </div>
                         </div>
                         <div class="cw-item">
@@ -59,7 +55,7 @@
                             </div>
                             <div class="ci-text">
                                 <span>Phone:</span>
-                                <p>+65 11.188.888</p>
+                                <p>+39 333 32 333 32</p>
                             </div>
                         </div>
                         <div class="cw-item">
@@ -68,7 +64,7 @@
                             </div>
                             <div class="ci-text">
                                 <span>Email:</span>
-                                <p>hellocolorlib@gmail.com</p>
+                                <p>rb-gym@info.com</p>
                             </div>
                         </div>
                     </div>
@@ -78,16 +74,19 @@
                         <div class="leave-comment">
                             <h4>Leave A Comment</h4>
                             <p>Our staff will call back later and answer your questions.</p>
-                            <form action="#" class="comment-form">
+                            <form id="main-contact-form" class="comment-form" name="contact-form" method="post" action="{{ url('/contact-us' )}}"> {{ csrf_field() }}
                                 <div class="row">
                                     <div class="col-lg-6">
-                                        <input type="text" placeholder="Your name">
+                                        <input type="text" name="name" required="required" placeholder="Your name">
                                     </div>
                                     <div class="col-lg-6">
-                                        <input type="text" placeholder="Your email">
+                                        <input type="email" name="email" required="required" placeholder="Your email">
+                                    </div>
+                                    <div class="col-lg-6" style="flex:0 0 100%; max-width:100%;">
+                                        <input type="text" name="subject" required="required" placeholder="Subject">
                                     </div>
                                     <div class="col-lg-12">
-                                        <textarea placeholder="Your message"></textarea>
+                                        <textarea name="message" id="message" required="required" placeholder="Your message here"></textarea>
                                         <button type="submit" class="site-btn">Send message</button>
                                     </div>
                                 </div>

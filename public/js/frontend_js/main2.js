@@ -6,9 +6,13 @@
 	  $('#RGB').css('background', 'rgb('+r.getValue()+','+g.getValue()+','+b.getValue()+')')
 	};	
 		
-/*scroll to top*/
+
+
+
 
 $(document).ready(function(){
+	
+	/*scroll to top*/
 	$(function () {
 		$.scrollUp({
 	        scrollName: 'scrollUp', // Element ID
@@ -30,16 +34,11 @@ $(document).ready(function(){
 });
 
 
-
-
-
-
 $(document).ready(function(){
 	$(".changeImage").click(function(){
 		var img = $(this).attr('src');
 		$(".mainImage").attr("src",img);
 	});
-	
 });
 
 

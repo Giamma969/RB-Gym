@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\User;
 use App\Country;
 use App\Address;
+use App\Category;
 use Auth;
-use Session;
+use Illuminate\Support\Facades\Session;
 use \DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
@@ -23,8 +25,6 @@ class UsersController extends Controller
                 return redirect()->back()->with('flash_message_error','Tutti i campi devono essere compilati');
             }
 
-            $request->session()->flush();
-
             if(Auth::attempt(['email'=>$data['email'],'password'=>$data['password']])){
                 //check if account is actived
                 $userStatus = User::where('email',$data['email'])->first();
@@ -33,10 +33,9 @@ class UsersController extends Controller
                 }
                 
                 Session::put('front_session',$data['email']);
-                $new_session=str_random(40);
-                Session::put('session_id',$new_session);
+                Controller::createSession();
+
                 $session_id=Session::get('session_id');
-                
                 $user_id=Auth::user()->id;
 
                 //create empty cart if first login
@@ -63,7 +62,9 @@ class UsersController extends Controller
                 return redirect()->back()->with('flash_message_error','Credenziali errate!');
             }
         }
-        return view('users.login');
+        Controller::createSession();
+        $userCart = \App\Cart::getProductsCart();
+        return view('users.login')->with(compact('userCart'));
 
     }
 
@@ -117,18 +118,11 @@ class UsersController extends Controller
                 $message->to($email)->subject('Confirm your RB-Gym account');
             });
 
-            $request->session()->flush();
-            /*Session::put('front_session',$data['email']);
-            $new_session=str_random(40);
-            Session::put('session_id',$new_session);
-            
-            $session_id = Session::get('session_id');*/
-        
-           
-
             return redirect('/user-login')->with('flash_message_success','Please confirm your email to activate your account!');
         }
-        return view('users.register');
+        Controller::createSession();
+        $userCart = \App\Cart::getProductsCart();
+        return view('users.register')->with(compact('userCart'));
     }
 
     public function confirmAccount($email){
@@ -151,53 +145,6 @@ class UsersController extends Controller
             abort(404);
         }
 
-    }
-
-    public function account(Request $request){
-        $user_id=Auth::user()->id;
-        $userDetails = User::find($user_id);
-        $countries = DB::table('countries')->get(); 
-        $bill_address = Address::where(['user_id'=>$user_id, 'is_billing'=>1])->first();
-
-        if($request->isMethod('post')){
-            $data=$request->all();
-
-            if( empty($data['name']) || empty($data['surname']) || empty($data['username']) || empty($data['email']) ||
-                 empty($data['country']) || empty($data['province']) || empty($data['city']) || empty($data['address'])
-                 || empty($data['pincode']) || empty($data['mobile'])){
-                return redirect()->back()->with('flash_message_error','Tutti i campi devono essere compilati');
-            }
-
-            //check if email already exists
-            $userEmailCount=User::where('email',$data['email'])->count();
-            if($userEmailCount > 0){
-                if($userDetails->email != $data['email'])
-                    return redirect()->back()->with('flash_message_error','Email non disponibile');
-            }
-
-            //check if username already exists
-            $usernameCount=User::where('username',$data['username'])->count();
-            if($usernameCount > 0){
-                if($userDetails->username != $data['username'])
-                    return redirect()->back()->with('flash_message_error','Username non disponibile');
-            }
-            if(!empty($data['email'])){
-                //cambia il nome alla sessione
-                Session::put('front_session',$data['email']);
-            }
-
-            $user=User::find($user_id);
-
-            $bill_address->country=$data['country'];
-            $bill_address->province=$data['province'];
-            $bill_address->city=$data['city'];
-            $bill_address->address=$data['address'];
-            $bill_address->pincode=$data['pincode'];
-            $bill_address->mobile=$data['mobile'];
-            $bill_address->save();
-            return redirect()->back()->with('flash_message_success','Account aggiornato con successo!');
-        }
-        return view('users.account')->with(compact('countries','userDetails','bill_address'));
     }
 
     public function forgotPassword(Request $request){
@@ -284,16 +231,18 @@ class UsersController extends Controller
                 return redirect()->back()->with('flash_message_error','La password corrente non è corretta!');
             }
         }
+        Controller::createSession();
+        $userCart = \App\Cart::getProductsCart();
+        $categories= Category::with('categories')->where(['parent_id'=>0,'status'=>1])->get();
+        return view('users.update_password')->with(compact('userCart','categories'));
+
     }
 
     public function logout(){
         Session::flush();
         Auth::logout();
-
-        //inizializzo una nuova sessione casuale
-        $session_id = str_random(40);
-        Session::put('session_id',$session_id);
-
+        //init a new session
+        Controller::createSession();
         return redirect('/');
     }
 
@@ -315,12 +264,63 @@ class UsersController extends Controller
             echo "true";
     }
 
+    //admin
     public function viewUsers(){
         $usersDetails = DB::table('addresses')->where(['is_billing'=>1])
             ->join('users', 'users.id', '=', 'addresses.user_id')
             ->select('addresses.country','addresses.city','addresses.province','addresses.address','addresses.pincode','addresses.mobile','users.*')
             ->get();
         return view('admin.users.view_users')->with(compact('usersDetails'));
+    }
+
+    //View account informations --> user can edit
+    public function accountInformations(Request $request){
+        $user_id=Auth::user()->id;
+        $userDetails = User::find($user_id);
+        $countries = DB::table('countries')->get(); 
+        $bill_address = Address::where(['user_id'=>$user_id, 'is_billing'=>1])->first();
+        
+        if($request->isMethod('post')){
+            $data=$request->all();
+            if( empty($data['name']) || empty($data['surname']) || empty($data['username']) || empty($data['email']) ||
+                 empty($data['country']) || empty($data['province']) || empty($data['city']) || empty($data['address'])
+                 || empty($data['pincode']) || empty($data['mobile'])){
+                return redirect()->back()->with('flash_message_error','Tutti i campi devono essere compilati');
+            }
+
+            //check if email already exists
+            $userEmailCount=User::where('email',$data['email'])->count();
+            if($userEmailCount > 0){
+                if($userDetails->email != $data['email'])
+                    return redirect()->back()->with('flash_message_error','Email non disponibile');
+            }
+
+            //check if username already exists
+            $usernameCount=User::where('username',$data['username'])->count();
+            if($usernameCount > 0){
+                if($userDetails->username != $data['username'])
+                    return redirect()->back()->with('flash_message_error','Username non disponibile');
+            }
+            if(!empty($data['email'])){
+                //cambia il nome alla sessione
+                Session::put('front_session',$data['email']);
+            }
+
+            $user=User::find($user_id);
+
+            $bill_address->country=$data['country'];
+            $bill_address->province=$data['province'];
+            $bill_address->city=$data['city'];
+            $bill_address->address=$data['address'];
+            $bill_address->pincode=$data['pincode'];
+            $bill_address->mobile=$data['mobile'];
+            $bill_address->save();
+            return redirect()->back()->with('flash_message_success','Account aggiornato con successo!');
+        }
+        Controller::createSession();
+        $userCart = \App\Cart::getProductsCart();
+        $categories= Category::with('categories')->where(['parent_id'=>0,'status'=>1])->get();
+        return view('users.account_informations')->with(compact('countries','userDetails','bill_address','userCart','categories'));
     }
 
     

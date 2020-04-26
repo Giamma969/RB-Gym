@@ -89,10 +89,10 @@ class IndexController extends Controller
             ]);
         }
         
-
+        $userCart = \App\Cart::getProductsCart();
         $banners = Banner::where('status','1')->get(); 
 
-        return view('index')->with(compact('productsAll','categories','banners','products_slider2','category_name2','products_slider3','category_name3'));
+        return view('index')->with(compact('productsAll','categories','banners','products_slider2','category_name2','products_slider3','category_name3','userCart'));
     }
     
 }
