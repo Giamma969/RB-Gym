@@ -21,6 +21,7 @@ class MessagesController extends Controller
             DB::table('contact_us')->where('id',$id)->update([
                 'resolved'=>$data['resolved'],
             ]);
+            return redirect()->back()->with('flash_message_success','Operation performed successfully!');
         }
         $messageDetails = DB::table('contact_us')->where('id',$id)->first();
         return view('admin.messages.edit_message')->with(compact('messageDetails')); 

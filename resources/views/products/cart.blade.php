@@ -18,21 +18,20 @@
     </div>
 </div>
 <!-- Breadcrumb Section Begin -->
-
+@if(Session::has('flash_message_error'))
+    <div class="alert alert-error alert-block" style="background-color:#f2dfd0;">
+        <button type="button" class="close" data-dismiss="alert">×</button>
+            <strong> {!! session ('flash_message_error') !!}</strong>
+    </div>
+@endif
+@if(Session::has('flash_message_success'))
+    <div class="alert alert-success alert-block">
+        <button type="button" class="close" data-dismiss="alert">×</button>
+            <strong> {!! session ('flash_message_success') !!}</strong>
+    </div>
+@endif
 <!-- Shopping Cart Section Begin -->
 <section class="shopping-cart spad">
-    @if(Session::has('flash_message_error'))
-        <div class="alert alert-error alert-block" style="background-color:#f2dfd0;">
-            <button type="button" class="close" data-dismiss="alert">×</button>
-                <strong> {!! session ('flash_message_error') !!}</strong>
-        </div>
-    @endif
-    @if(Session::has('flash_message_success'))
-        <div class="alert alert-success alert-block" style="">
-            <button type="button" class="close" data-dismiss="alert">×</button>
-                <strong> {!! session ('flash_message_success') !!}</strong>
-        </div>
-    @endif
     <div class="container">
         <div class="row">
             <div class="col-lg-12">
@@ -52,9 +51,15 @@
                             <?php $total_amount=0; ?>
                             @foreach($userCart as $product)
                                 <tr>
-                                    <td class="cart-pic first-row"><img src="{{asset('images/backend_images/products/small/'.$product->image)}}" alt=""></td>
+                                    <td class="cart-pic first-row">
+                                        <a href="{{ url('product/'.$product->id) }}">
+                                            <img src="{{asset('images/backend_images/products/small/'.$product->image)}}" alt="">
+                                        </a>
+                                    </td>
                                     <td class="cart-title first-row">
-                                        <h5>{{ $product->product_name}}</h5>
+                                        <a href="{{ url('product/'.$product->id) }}">
+                                            <h5>{{ $product->product_name}}</h5>
+                                        </a>
                                         <p>Code: {{ $product->product_code}}</p>
                                     </td>
                                     <td class="p-price first-row">€{{ $product->price }}</td>

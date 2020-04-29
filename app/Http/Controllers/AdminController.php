@@ -30,12 +30,11 @@ class AdminController extends Controller
                 return redirect('/admin/dashboard');
             }
             else{
-                return redirect('/admin')->with('flash_message_error', 'invalid Username or Password');
+                return redirect('/admin')->with('flash_message_error', 'invalid Email or Password');
             }
         }
    	    return view('admin.admin_login');
     }
-
 
     public function dashboard(){
         if(Session::has('admin_session') || Session::has('dev_session') ){
@@ -86,8 +85,10 @@ class AdminController extends Controller
         }
      }
 
-    public function logout(){
+    
+     public function logout(){
         Session::flush();
+        Auth::logout();
         return redirect('/admin')->with('flash_message_success', 'Logged out Successfully');
     }
 

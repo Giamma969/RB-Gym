@@ -29,7 +29,7 @@ class CouponsController extends Controller
                 $coupon->status = $data['status'];
             }
             $coupon->save();
-            return redirect()->action('CouponsController@viewCoupons')->with('flash_message_success','Coupon aggiunto con successo');
+            return redirect()->back()->with('flash_message_success','Coupon aggiunto con successo');
         }
         return view('admin.coupons.add_coupon');
     }
@@ -54,7 +54,7 @@ class CouponsController extends Controller
             }
             $coupon->status=$data['status'];
             $coupon->save();
-            return redirect()->action('CouponsController@viewCoupons')->with('flash_message_success','Coupon modificato con successo!');
+            return redirect()->back()->with('flash_message_success','Coupon modificato con successo!');
         }       
         $couponDetails = Coupon::find($id);
         return view('admin.coupons.edit_coupon')->with(compact('couponDetails'));

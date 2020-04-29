@@ -1176,7 +1176,7 @@ ol {
 .product-item .pi-pic .sale {
 	color: #ffffff;
 	font-size: 10px;
-	background: #76BC42;
+	background:rgb(165,12,39);
 	position: absolute;
 	left: 0;
 	top: 20px;
@@ -2001,15 +2001,15 @@ ol {
 	padding-right: 70px;
 }
 
-.product-show-option .select-option .p-show.nice-select {
+.product-show-option .select-option .show_paginate.nice-select{
 	padding-right: 105px;
 }
 
-.product-show-option .select-option .p-show.nice-select:before {
+.product-show-option .select-option .show_paginate.nice-select:before{
 	position: absolute;
 	right: 48px;
 	top: 0;
-	content: "09";
+	/* content: "09"; */
 	font-size: 16px;
 	color: #252525;
 }
@@ -4310,6 +4310,8 @@ ol {
 		padding-right: 15px;
 	}
 }
+
+
 #shipping_country{
 	width: 100%;
     height: 46px;
@@ -4343,9 +4345,6 @@ ol {
 	text-decoration: underline;
 }
 
-.a_heart{
-	color:black !important;
-}
 .th_user_orders{
 	padding:6px 8px 6px 8px!important;
 }
@@ -4365,4 +4364,67 @@ ol {
 	border-radius:3px !important;
 	padding-left:30px!important;
 	margin-bottom:40px;
+}
+
+.a_view_product:hover{
+	background-color: rgb(165,12,39);
+	color:rgb(255,255,255) !important;
+}
+
+a:hover{
+	/*color:rgb(165,12,39) !important;*/
+}
+
+.select_listing{
+	border-radius: 0;
+    border: 1px solid #ECEDEE;
+    height: 40px;
+	line-height: 35px;
+	padding-right: 105px;
+	-webkit-tap-highlight-color: transparent;
+	background-color: #fff;
+	box-sizing: border-box;
+    clear: both;
+    cursor: pointer;
+    display: block;
+    float: left;
+    font-family: inherit;
+    font-size: 14px;
+	font-weight: normal;
+	outline: none;
+	padding-left: 18px;
+	position: relative;
+	text-align: left !important;
+	transition: all 0.2s ease-in-out;
+    white-space: nowrap;
+	width: auto;
+	-webkit-font-smoothing: antialiased;
+	color: #212529;
+
+	border-bottom: 2px solid #4c4c4c;
+    border-right: 2px solid #4c4c4c;
+    opacity: 0.7;
+}
+
+.select_account{
+	width: 100%;
+    height: 46px;
+    border: 2px solid #ebebeb;
+    margin-bottom: 25px;
+	padding-left: 15px !important;
+	border-radius: 0px !important;
+	margin: 0;
+    font-family: inherit;
+    font-size: inherit;
+	line-height: inherit;
+	color: black;
+    letter-spacing: normal;
+    word-spacing: normal;
+    text-transform: none;
+    /* text-indent: 0px; */
+    /* text-shadow: none; */
+    display: inline-block;
+	/* text-align: start; */
+	background-color: white;
+	box-sizing:border-box;
 }

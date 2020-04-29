@@ -40,7 +40,7 @@
     @include('layouts.frontLayout.front_footer')
     <script src="{{asset('js/frontend_js/jquery-3.3.1.min.js')}}"></script>
     <script src="{{asset('js/frontend_js/jquery-ui.min.js')}}"></script>    	
-	<script src="{{asset('js/frontend_js/bootstrap.min.js')}}"></script>
+    <script src="{{asset('js/frontend_js/bootstrap.min.js')}}"></script>
     <script src="{{asset('js/frontend_js/jquery.rateyo.js')}}"></script>
     <script src="{{asset('js/frontend_js/jquery.countdown.min.js')}}"></script>
     <script src="{{asset('js/frontend_js/imagesloaded.pkgd.min.js')}}"></script>
@@ -51,11 +51,16 @@
     <script src="{{asset('js/frontend_js/owl.carousel.min.js')}}"></script>   
     <!-- <script src="https://code.jquery.com/ui/1.12.4/jquery-ui.js"></script> -->
     <!-- <script src="//code.jquery.com/jquery-1.11.1.min.js"></script> -->
+    <script src="{{asset('js/frontend_js/validation.js')}}"></script>
     <script src="{{asset('js/frontend_js/main.js')}}"></script>
     <script src="{{asset('js/frontend_js/main2.js')}}"></script>
     <script src="{{asset('js/frontend_js/passtrength.js')}}"></script>
     <script src="https://js.stripe.com/v3/"></script>
-    <script src="{{asset('js/frontend_js/stripe_payment.js')}}"></script>    
+    <!-- <script src="https://js.stripe.com/v2/"></script> -->
+    <script src="{{asset('js/frontend_js/stripe_payment.js')}}"></script>
+    <!-- <script src="{{asset('js/frontend_js/jquery.validate.js')}}"></script>     -->
+
+    
     <!-- <script src="//code.jquery.com/jquery-1.11.1.min.js"></script> -->
   
 </body>

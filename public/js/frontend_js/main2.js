@@ -35,10 +35,21 @@ $(document).ready(function(){
 
 
 $(document).ready(function(){
-	$(".changeImage").click(function(){
-		var img = $(this).attr('src');
-		$(".mainImage").attr("src",img);
-	});
+	$(".icon_heart").hover(function(){
+						$(this).removeClass("icon_heart");
+						$(this).addClass("icon_heart_alt");
+					}, function(){
+						$(this).removeClass("icon_heart_alt");
+						$(this).addClass("icon_heart");
+					});
+	$(".icon_heart_alt").hover(function(){
+							$(this).removeClass("icon_heart_alt");
+							$(this).addClass("icon_heart");
+						}, function(){
+							$(this).removeClass("icon_heart");
+							$(this).addClass("icon_heart_alt");
+		
+					});
 });
 
 
@@ -318,6 +329,8 @@ $().ready(function(){
 			$('#shipping_mobile').val('');
 		}
 	});
+	
+	// $('.show_paginate').niceSelect();
 
 });
 
@@ -334,7 +347,7 @@ function selectPaymentMethod(){
 
 
 
-/*********** RateYo - Plugin for rating in a product review    https://rateyo.fundoocode.ninja/  ****************/
+/*********** RateYo - Plugin for rating a product reviews    https://rateyo.fundoocode.ninja/  ****************/
 
 
 $(document).ready(function(){

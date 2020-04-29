@@ -15,7 +15,18 @@
 	</div>
 </div>
 <!-- Breadcrumb Section Begin -->
-
+@if(Session::has('flash_message_error'))
+    <div class="alert alert-error alert-block" style="background-color:#f2dfd0;">
+        <button type="button" class="close" data-dismiss="alert">×</button>
+            <strong> {!! session ('flash_message_error') !!}</strong>
+    </div>
+@endif
+@if(Session::has('flash_message_success'))
+    <div class="alert alert-success alert-block">
+        <button type="button" class="close" data-dismiss="alert">×</button>
+            <strong> {!! session ('flash_message_success') !!}</strong>
+    </div>
+@endif
 <!-- Product Shop Section Begin -->
 <section class="product-shop spad">
 	<div class="container">
@@ -48,20 +59,26 @@
 								<div class="product-item">
 									<div class="pi-pic">
 										<a href="{{ url('product/'.$product->id) }}">
-											<img src="{{asset('images/backend_images/products/small/'.$product->image)}}" alt="">
+											<img src="{{asset('images/backend_images/products/medium/'.$product->image)}}" alt="">
 										</a>
-										<div class="sale pp-sale">Sale</div>
+											<div class="sale">Sale</div>
 										<div class="icon">
-											<i class="icon_heart_alt"></i>
 										</div>
 										<ul>
-											<li class="w-icon active"><a href="#"><i class="icon_bag_alt"></i></a></li>
-											<li class="quick-view"><a href="#">+ Quick View</a></li>
-											<li class="w-icon"><a href="#"><i class="fa fa-random"></i></a></li>
+											<li class="w-icon active">
+												@if(Product::checkIfWished($product->id))
+													<a href="{{ url('/remove-wishlist/'.$product->id) }}"><i class="icon_heart"  aria-hidden="true"></i></a>
+												@else
+													<a href="{{ url('/add-wishlist/'.$product->id) }}"><i class="icon_heart_alt"  aria-hidden="true"></i></a>
+												@endif
+											</li>
+											<li class="quick-view">
+												<a class="a_view_product" href="{{ url('product/'.$product->id) }}">View product</a>
+											</li>
 										</ul>
 									</div>
 									<div class="pi-text">
-										<div class="catagory-name">Towel</div>
+										<div class="catagory-name"><?php //{{$product->category_name}} ?></div>
 										<a href="{{ url('product/'.$product->id) }}">
 											<h5>{{$product->product_name}}</h5>
 										</a>

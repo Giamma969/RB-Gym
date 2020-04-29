@@ -10,7 +10,7 @@
 			@foreach($categories as $cat)
 				@if($cat->status == 1)
 					<li>
-						<a class="a_sidebar" href="#">{{$cat->name}}</a>
+						<a class="a_sidebar" href="{{asset('/products/'.$cat->url)}}">{{$cat->name}}</a>
 						<ul style="margin-left:30px;" class="filter-catagories">
 							@foreach($cat->categories as $subcat)
 								@if($subcat->status == "1")

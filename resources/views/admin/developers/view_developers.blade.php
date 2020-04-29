@@ -12,18 +12,16 @@
 
         <h1>Developers</h1>
         @if(Session::has('flash_message_error'))
-        <div class="alert alert-success alert-block">
+        <div class="alert alert-error alert-block">
             <button type="button" class="close" data-dismiss="alert">×</button>
             <strong> {!! session ('flash_message_error') !!}</strong>
         </div>
         @endif
-
         @if(Session::has('flash_message_success'))
         <div class="alert alert-success alert-block">
             <button type="button" class="close" data-dismiss="alert">×</button>
-                <strong> {!! session ('flash_message_success') !!}</strong>
+            <strong> {!! session ('flash_message_success') !!}</strong>
         </div>
-
         @endif
     </div>
 
@@ -50,25 +48,46 @@
                             </thead>
                             <tbody>
                                  @foreach($developers as $dev)
-                                            <tr class="gradeX">
-                                                <td class="center">{{$dev->user_id}}</td>
-                                                <td class="center">{{$dev->user_name}}</td>
-                                                <td class="center">{{$dev->user_surname}}</td>
-                                                <td class="center">{{$dev->email}}</td>
-                                                <td class="center">
-                                                    @if($dev->status == 0)
-                                                        <span style="color:red">Inactive</span>
-                                                    @else 
-                                                        <span style="color:green">Active</span>
-                                                    @endif   
-                                                </td>
-                                                <td class="center">{{$dev->created_at}}</td>
-                                                <td style="max-width:80px;" class="center">
-                                                    <a style="width:90%;" href="{{ url('/admin/view-dev-groups/'.$dev->user_id) }} " class="btn btn-success btn-mini" title="Groups">View groups</a>
-                                                    <a style="width:90%;" href="{{ url('/admin/edit-developer/'.$dev->user_id) }} " class="btn btn-primary btn-mini" title="Edit">Edit</a>
-                                                    <a style="width:90%;" rel="{{$dev->user_id}}" rel1="delete-developer"  href="javascript:" class="btn btn-danger btn-mini deleteRecord">Delete</a>
-                                                </td>
-                                            </tr>
+                                    <tr class="gradeX">
+                                        <td class="center">{{$dev->user_id}}</td>
+                                        <td class="center">{{$dev->user_name}}</td>
+                                        <td class="center">{{$dev->user_surname}}</td>
+                                        <td class="center">{{$dev->email}}</td>
+                                        <td class="center">
+                                            @if($dev->status == 0)
+                                                <span style="color:red">Inactive</span>
+                                            @else 
+                                                <span style="color:green">Active</span>
+                                            @endif   
+                                        </td>
+                                        <td class="center">{{$dev->created_at}}</td>
+                                        <td style="max-width:80px;" class="center">
+                                            <a style="width:90%;" href="{{ url('/admin/view-dev-groups/'.$dev->user_id) }} " class="btn btn-success btn-mini" title="Groups">View groups</a>
+                                            <a style="width:90%;" href="{{ url('/admin/edit-developer/'.$dev->user_id) }} " class="btn btn-primary btn-mini" title="Edit">Edit</a>
+                                            <a style="width:90%;"  href="#myModal{{$dev->user_id}}" data-toggle="modal" class="btn btn-success btn-mini" title="View">View</a>
+                                            <a style="width:90%;" rel="{{$dev->user_id}}" rel1="delete-developer"  href="javascript:" class="btn btn-danger btn-mini deleteRecord">Delete</a>
+                                        </td>
+                                    </tr>
+                                    <div id="myModal{{$dev->user_id}}" class="modal hide">
+                                        <div class="modal-header">
+                                            <button data-dismiss="modal" class="close" type="button">×</button>
+                                            <h3><b>{{$dev->email}}</b></h3>
+                                        </div>
+                                        <div class="modal-body">
+                                            <p><b>Developer ID: </b> {{$dev->user_id}}</p>
+                                            <p><b>Name: </b> {{$dev->user_name}}</p>
+                                            <p><b>Surname: </b> {{$dev->user_surname}}</p>
+                                            <p><b>Email: </b> {{$dev->email}}</p>
+                                            <p><b>Creation date: </b> {{$dev->created_at}}</p>
+                                            <p><b>Status: </b> 
+                                            @if($dev->status == 0)
+                                                Inactive
+                                            @else 
+                                                Active
+                                            @endif
+                                            </p>
+                                        </div>
+                                    </div>
                                 @endforeach
                                 
                                 <?php /*

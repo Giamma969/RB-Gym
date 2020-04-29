@@ -116,8 +116,9 @@ class Product extends Model
             ->where('product_id', $product_id)
             ->count();
         return $countReviews;
-    }  
-    public static function  createCartIfNotExists(){
+    }
+      
+    public static function createCartIfNotExists(){
         if(empty(Session::get('session_id'))){
             $new_session=str_random(40);
             Session::put('session_id',$new_session);
@@ -200,5 +201,24 @@ class Product extends Model
             $coupon=$coupon->amount;
         }
         return $coupon;
+    }
+
+    public static function setListingDetails($productsAll){
+        switch(Session::get('sorting')){
+            case "alpha":
+                $productsAll=$productsAll->orderBy('product_name','asc');;
+                break;
+            case "price_asc":
+                $productsAll=$productsAll->orderBy('price','asc');
+                break;
+            case "price_desc":
+                $productsAll=$productsAll->orderBy('price','desc');
+                break;
+            case "recent":
+                $productsAll=$productsAll->orderBy('id','desc');
+                break;
+        }
+        $productsAll=$productsAll->paginate(Session::get('paginate'));
+        return $productsAll;
     }
 }

@@ -23,21 +23,21 @@
     </div>
 </div>
 <!-- Breadcrumb Section Begin -->
-
+@if(Session::has('flash_message_error'))
+    <div class="alert alert-error alert-block" style="background-color:#f2dfd0;">
+        <button type="button" class="close" data-dismiss="alert">×</button>
+            <strong> {!! session ('flash_message_error') !!}</strong>
+    </div>
+@endif
+@if(Session::has('flash_message_success'))
+    <div class="alert alert-success alert-block">
+        <button type="button" class="close" data-dismiss="alert">×</button>
+            <strong> {!! session ('flash_message_success') !!}</strong>
+    </div>
+@endif
 <!-- Product Shop Section Begin -->
 <section class="product-shop spad page-details">
-    @if(Session::has('flash_message_error'))
-        <div class="alert alert-error alert-block" style="background-color:#f2dfd0; margin-right:15px; margin-left:15px;">
-            <button type="button" class="close" data-dismiss="alert">×</button>
-                <strong> {!! session ('flash_message_error') !!}</strong>
-        </div>
-    @endif
-    @if(Session::has('flash_message_success'))
-        <div class="alert alert-success alert-block" style="margin-right:15px; margin-left:15px;">
-            <button type="button" class="close" data-dismiss="alert">×</button>
-                <strong> {!! session ('flash_message_success') !!}</strong>
-        </div>
-    @endif
+    
     <div class="container">
         <div class="row">
             <div class="col-lg-3">
@@ -97,9 +97,9 @@
                                     <h4>€{{$productDetails->price}} <span>629.99</span></h4>
                                     <br>
                                     <p><b>Brand:</b> {{ $productDetails ->brand }}</p>
-                                    <p> <b>Stock:</b> @if($productDetails->stock > 0) In stock @else Out of stock @endif </p>
                                     <p><b>Condition:</b>New</p>
                                     <p><b>Color:</b> {{ $productDetails ->product_color}}</p>
+                                    <p>@if($productDetails->stock > 0) {{$productDetails->stock}} in stock @else Out of stock @endif </p>
                                 </div>
                                 <div class="pd-color">
                                     <h6>Color</h6>

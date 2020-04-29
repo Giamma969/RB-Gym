@@ -8,14 +8,13 @@
         @if(Session::has('flash_message_error'))
         <div class="alert alert-error alert-block">
             <button type="button" class="close" data-dismiss="alert">×</button>
-                <strong> {!! session ('flash_message_error') !!}</strong>
+            <strong> {!! session ('flash_message_error') !!}</strong>
         </div>
         @endif
-
         @if(Session::has('flash_message_success'))
         <div class="alert alert-success alert-block">
             <button type="button" class="close" data-dismiss="alert">×</button>
-                <strong> {!! session ('flash_message_success') !!}</strong>
+            <strong> {!! session ('flash_message_success') !!}</strong>
         </div>
         @endif
     </div>
@@ -135,43 +134,6 @@
                                     </div>
                                 </div>
                             </div>
-
-                            <!--<div style="clear:left;">
-                                <div class="control-group" style="float:left;">
-                                    <label class="control-label">Product main image</label>
-                                    <div class="controls">
-                                        <input type="checkbox" name="product_main_image" id="product_main_image">
-                                    </div>
-                                </div>
-
-                                <div class="control-group" style="float:left;">
-                                    <label class="control-label">Product description</label>
-                                    <div class="controls">
-                                        <input type="checkbox" name="product_description_permission" id="product_description_permission">
-                                    </div>
-                                </div>
-
-                                <div class="control-group" style="float:left;">
-                                    <label class="control-label">Product price</label>
-                                    <div class="controls">
-                                        <input type="checkbox" name="product_price_permission" id="product_price_permission">
-                                    </div>
-                                </div>
-
-                                <div class="control-group" style="float:left;">
-                                    <label class="control-label">Product stock</label>
-                                    <div class="controls">
-                                        <input type="checkbox" name="product_stock_permission" id="product_stock_permission">
-                                    </div>
-                                </div>
-
-                                <div class="control-group" style="clear:left;">
-                                    <label class="control-label">Enable/Disable product</label>
-                                    <div class="controls">
-                                        <input type="checkbox" name="enable_disable_product" id="enable_disable_product">
-                                    </div>
-                                </div>
-                            </div> -->
 
                             <!-- Coupons permissions -->
                             <div class="widget-title" style="clear:left; border-top:1px solid #CDCDCD; border-bottom:0px;"> 

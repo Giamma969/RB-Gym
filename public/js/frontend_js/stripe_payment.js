@@ -1,4 +1,4 @@
-var stripe = Stripe('pk_test_cO1LBLlyND6Qnb6i24iWbM9i00vApmJSp1');
+var stripe = Stripe('pk_test_5JlIAuMPx0g9fhxI3hsvPfee00othlHOlt');
 var elements = stripe.elements();
 
 var style = {
@@ -21,7 +21,7 @@ card.addEventListener('change',function(){
 });
 
 //create a token or display an error when the form is submitted
-var form = document.getElementById('payment-form');
+var form = document.getElementById('payment_form');
 
 form.addEventListener('submit',function(event){
     event.preventDefault();
@@ -38,12 +38,11 @@ form.addEventListener('submit',function(event){
 
 function stripeTokenHandler(token){
     //console.log(token);
-    var form = document.getElementById('payment-form');
+    var form = document.getElementById('payment_form');
     var hiddenInput = document.createElement('input');
     hiddenInput.setAttribute('type','hidden');
     hiddenInput.setAttribute('name','stripeToken');
     hiddenInput.setAttribute('value',token.id);
     form.appendChild(hiddenInput);
-
     form.submit();
 }

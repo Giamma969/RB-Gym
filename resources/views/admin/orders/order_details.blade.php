@@ -8,19 +8,17 @@
   <div id="content-header">
     <div id="breadcrumb"> <a href="#" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a> <a href="#" class="current">Orders</a> </div>
     <h1>Order #{{ $orderDetails->id }}</h1>
-
     @if(Session::has('flash_message_error'))
-    <div class="alert alert-success alert-block">
-        <button type="button" class="close" data-dismiss="alert">×</button>
+      <div class="alert alert-error alert-block">
+    	  <button type="button" class="close" data-dismiss="alert">×</button>
         <strong> {!! session ('flash_message_error') !!}</strong>
-    </div>
+      </div>
     @endif
-
     @if(Session::has('flash_message_success'))
-    <div class="alert alert-success alert-block">
-        <button type="button" class="close" data-dismiss="alert">×</button>
-            <strong> {!! session ('flash_message_success') !!}</strong>
-    </div>
+      <div class="alert alert-success alert-block">
+    	  <button type="button" class="close" data-dismiss="alert">×</button>
+        <strong> {!! session ('flash_message_success') !!}</strong>
+      </div>
     @endif
   </div>
   <div class="container-fluid">
@@ -137,7 +135,7 @@
                     </form>
                 </div>
             </div>
-            <div class="widget-box">
+            <div class="widget-box" style="margin-top:86px;">
                 <div class="widget-title"> <span class="icon"><i class="icon-time"></i></span>
                     <h5>Shipping address</h5>
                 </div>

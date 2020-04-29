@@ -53,13 +53,13 @@ Route::get('/home', 'HomeController@index')->name('home');
 //Home page
 Route::get('/','IndexController@index');
 //Category/Listing page
-Route::get('/products/{url}','ProductsController@products');
+Route::match(['get','post'],'/products/{url}','ProductsController@products');
 //Products filter page
 Route::match(['get','post'],'/products-filter', 'ProductsController@filter');
 //Product detail page
 Route::get('/product/{id}','ProductsController@product');
 //add to cart Route
-Route::match(['get','post'],'/add-cart', 'ProductsController@addtocart');
+Route::post('/add-cart', 'ProductsController@addtocart');
 //cart page
 Route::match(['get','post'],'/cart', 'ProductsController@cart');
 //user wishlist
@@ -72,7 +72,7 @@ Route::match(['get','post'],'/remove-wishlist/{id}','ProductsController@removeWi
 Route::get('/cart/delete-product/{id}','ProductsController@deleteCartProduct');
 //update product quantity in cart
 Route::get('/cart/update-quantity/{id}/{quantity}','ProductsController@updateCartQuantity');
-//users forgot password
+//users forget password
 Route::match(['get','post'],'/forgot-password','UsersController@forgotPassword');
 
 //user confirm account
@@ -103,7 +103,7 @@ Route::group(['middleware'=>['frontlogin']],function(){
     //update info account
     Route::match(['get','post'],'/account-informations','UsersController@accountInformations');
     //check user current password
-    Route::post('/check-user-pwd','UsersController@chkUserPassword');
+    Route::get('/check-user-pwd','UsersController@chkUserPassword');
     //update user password
     Route::match(['get','post'],'/update-user-pwd','UsersController@updatePassword');
     //checkout page
@@ -182,6 +182,8 @@ Route::group(['middleware'=>['auth']],function(){
 
     //Admin users route
     Route::get('/admin/view-users','UsersController@viewUsers')->middleware(ViewUsers::class);
+    Route::match(['get','post'],'/admin/edit-user-status/{id}','UsersController@editUserStatus');
+
 
     //Admin reviews route
     Route::get('/admin/view-reviews','ProductsController@viewReviews')->middleware(ViewReviews::class);

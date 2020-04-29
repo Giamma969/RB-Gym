@@ -15,21 +15,20 @@
     </div>
 </div>
 <!-- Breadcrumb Section Begin -->
-
+@if(Session::has('flash_message_error'))
+    <div class="alert alert-error alert-block" style="background-color:#f2dfd0;">
+        <button type="button" class="close" data-dismiss="alert">×</button>
+            <strong> {!! session ('flash_message_error') !!}</strong>
+    </div>
+@endif
+@if(Session::has('flash_message_success'))
+    <div class="alert alert-success alert-block">
+        <button type="button" class="close" data-dismiss="alert">×</button>
+            <strong> {!! session ('flash_message_success') !!}</strong>
+    </div>
+@endif
 <!-- Shopping Cart Section Begin -->
 <section class="checkout-section spad">
-    @if(Session::has('flash_message_error'))
-        <div class="alert alert-error alert-block" style="background-color:#f2dfd0;">
-            <button type="button" class="close" data-dismiss="alert">×</button>
-                <strong> {!! session ('flash_message_error') !!}</strong>
-        </div>
-    @endif
-    @if(Session::has('flash_message_success'))
-        <div class="alert alert-success alert-block">
-            <button type="button" class="close" data-dismiss="alert">×</button>
-                <strong> {!! session ('flash_message_success') !!}</strong>
-        </div>
-    @endif
     <div class="container">
         <div class="row">
             <div class="col-lg-3 col-md-6 col-sm-8 order-2 order-lg-1 produts-sidebar-filter">
@@ -48,16 +47,12 @@
                             <input  value="{{ $userDetails->surname }}" id="surname" name="surname" type="text" readonly>
                         </div>
                         <div class="col-lg-6">
-                            <label for="username">Username<span>*</span></label>
-                            <input  value="{{ $userDetails->username }}" id="username" name="username" type="text" readonly>
-                        </div>
-                        <div class="col-lg-6">
                             <label for="email">Email<span>*</span></label>
                             <input value="{{ $userDetails->email }}" id="email" name="email" type="email" readonly/>
                         </div>
                         <div class="col-lg-12">
                             <label for="country">Country<span>*</span></label>
-                            <select id="country" name="country" required>
+                            <select id="country" name="country" class="select_account" required>
                                 @foreach($countries as $country)
                                 <option value="{{ $country->country_name }}" @if($country->country_name == $bill_address->country) selected @endif >{{ $country->country_name }}</option>
                                 @endforeach

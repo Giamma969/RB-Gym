@@ -15,42 +15,43 @@
     </div>
 </div>
 <!-- Breadcrumb Section Begin -->
-
+@if(Session::has('flash_message_error'))
+    <div class="alert alert-error alert-block" style="background-color:#f2dfd0;">
+        <button type="button" class="close" data-dismiss="alert">×</button>
+            <strong> {!! session ('flash_message_error') !!}</strong>
+    </div>
+@endif
+@if(Session::has('flash_message_success'))
+    <div class="alert alert-success alert-block">
+        <button type="button" class="close" data-dismiss="alert">×</button>
+            <strong> {!! session ('flash_message_success') !!}</strong>
+    </div>
+@endif
 <!-- Shopping Cart Section Begin -->
 <section class="checkout-section spad">
-    @if(Session::has('flash_message_error'))
-        <div class="alert alert-error alert-block" style="background-color:#f2dfd0;">
-            <button type="button" class="close" data-dismiss="alert">×</button>
-                <strong> {!! session ('flash_message_error') !!}</strong>
-        </div>
-    @endif
-    @if(Session::has('flash_message_success'))
-        <div class="alert alert-success alert-block">
-            <button type="button" class="close" data-dismiss="alert">×</button>
-                <strong> {!! session ('flash_message_success') !!}</strong>
-        </div>
-    @endif
     <div class="container">
         <div class="row">
             <div class="col-lg-3 col-md-6 col-sm-8 order-2 order-lg-1 produts-sidebar-filter">
 				@include('layouts.frontLayout.front_sidebar')
 			</div>
             <div class="col-lg-6 order-1 order-lg-2" style="margin-left:150px; !important">
-                <form d="passwordForm" name="passwordForm" action="{{ url('/update-user-pwd') }}" method="post" class="checkout-form"> {{ csrf_field() }}
+                <form id="passwordForm" name="passwordForm" action="{{ url('/update-user-pwd') }}" method="post" class="checkout-form"> {{ csrf_field() }}
                     <h4>Update password</h4>
                     <div class="row">
                         <div class="col-lg-9">
                             <label for="current_pwd">Current password<span>*</span></label>
-                            <input id="current_pwd" name="current_pwd" type="password" placeholder="Current password"/>
-                            <span id="chkPwd"></span>
+                            <input id="current_pwd" name="current_pwd" type="password" placeholder="Current password" style="width:90%;"/>
+                            <i id="chkPwd" class="fa fa-times-circle" aria-hidden="true"></i>
                         </div>
                         <div class="col-lg-9">
-                            <label for="new_pwd">New password<span>*</span></label>
-                            <input id="new_pwd" name="new_pwd" type="password" placeholder="New password"/>
+                            <label for="new_pwd">New password<span>*</span> (at least 6 characters)</label>
+                            <input id="new_pwd" name="new_pwd" type="password" placeholder="New password" style="width:90%;"/>
+                            <i id="nPwd" class="fa fa-times-circle" aria-hidden="true"></i>
                         </div>
                         <div class="col-lg-9">
-                            <label for="confirm_pwd">Confirm password<span>*</span></label>
-                            <input id="confirm_pwd" name="confirm_pwd" type="password" placeholder="Confirm password"/>
+                            <label for="confirm_pwd">Confirm password<span>*</span> (at least 6 characters)</label>
+                            <input id="confirm_pwd" name="confirm_pwd" type="password" placeholder="Confirm password" style="width:90%;"/>
+                            <i id="confirmPwd" class="fa fa-times-circle" aria-hidden="true"></i>
                         </div>
                         <div class="order-btn" style="margin:15px 0px 0px 15px;">
                             <button type="submit" class="site-btn place-btn" >Update password</button>

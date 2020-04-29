@@ -5,18 +5,16 @@
   <div id="breadcrumb"> <a href="index.html" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a> <a href="#">Reviews</a> <a href="#" class="current">View reviews</a> </div>
     <h1>Reviews</h1>
     @if(Session::has('flash_message_error'))
-    <div class="alert alert-success alert-block">
-    	<button type="button" class="close" data-dismiss="alert">×</button>
-            <strong> {!! session ('flash_message_error') !!}</strong>
-    </div>
-     @endif
-
+      <div class="alert alert-error alert-block">
+    	  <button type="button" class="close" data-dismiss="alert">×</button>
+        <strong> {!! session ('flash_message_error') !!}</strong>
+      </div>
+    @endif
     @if(Session::has('flash_message_success'))
-    <div class="alert alert-success alert-block">
-    	<button type="button" class="close" data-dismiss="alert">×</button>
-            <strong> {!! session ('flash_message_success') !!}</strong>
-    </div>
-
+      <div class="alert alert-success alert-block">
+    	  <button type="button" class="close" data-dismiss="alert">×</button>
+        <strong> {!! session ('flash_message_success') !!}</strong>
+      </div>
     @endif
   </div>
   <div class="container-fluid">
@@ -41,6 +39,7 @@
                   <th>User ID</th>
                   <th>User email</th>
                   <th>Review data</th>
+                  <th>Actions</th>
                 </tr>
               </thead>
               <tbody>
@@ -55,8 +54,27 @@
                   <td>{{$review->user_id}}</td>
                   <td>{{$review->email}}</td>
                   <td>{{$review->created_at}}</td>
+                  <td>
+                    <a style="width:80%;"  href="#myModal{{$review->id}}" data-toggle="modal" class="btn btn-success btn-mini" title="View">View</a>
+                  </td>
                 </tr>
-                
+                <div id="myModal{{$review->id}}" class="modal hide">
+                  <div class="modal-header">
+                    <button data-dismiss="modal" class="close" type="button">×</button>
+                    <h3><b>{{$review->title}}</b></h3>
+                  </div>
+                  <div class="modal-body">
+                    <p><b>Review ID: </b> {{$review->id}}</p>
+                    <p><b>Rating: </b> {{$review->rating}}</p>
+                    <p><b>Title: </b> {{$review->title}}</p>
+                    <p><b>Description: </b> {{$review->description}}</p>
+                    <p><b>Product ID: </b> {{$review->product_id}}</p>
+                    <p><b>Product name: </b> {{$review->product_name}}</p>
+                    <p><b>User ID: </b> {{$review->user_id}}</p>
+                    <p><b>Email: </b> {{$review->email}}</p>
+                    <p><b>Review date: </b> {{$review->created_at}}</p>
+                  </div>
+                </div>
                 @endforeach
                  
               </tbody>

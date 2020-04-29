@@ -8,7 +8,7 @@
 
 @section('content')
 @if(Session::has('flash_message_error'))
-    <div class="alert alert-error alert-block" style="background-color:#f2dfd0;>
+    <div class="alert alert-error alert-block" style="background-color:#f2dfd0;">
         <button type="button" class="close" data-dismiss="alert">×</button>
             <strong> {!! session ('flash_message_error') !!}</strong>
     </div>
@@ -102,6 +102,9 @@
                 </div>
             </div>
             <div class="col-lg-8 offset-lg-1">
+                <div class="filter-control">
+                    <ul></ul>
+                </div>
                 <div class="product-slider owl-carousel">
                     @foreach($products_slider2 as $product)
                         <div class="product-item">
@@ -111,22 +114,18 @@
                                 </a>
                                     <div class="sale">Sale</div>
                                 <div class="icon">
-                                    @if(Product::checkIfWished($product->id))
-                                        <i class="fa fa-heart" aria-hidden="true"></i>
-                                    @else
-                                        <i class="fa fa-heart-o" aria-hidden="true"></i>
-                                    @endif
                                 </div>
                                 <ul>
-                                    <li class="w-icon active"><a href="#"><i class="icon_bag_alt"></i></a></li>
-                                    <li class="quick-view">
+                                    <li class="w-icon active">
                                         @if(Product::checkIfWished($product->id))
-                                            <a href="{{ url('/remove-wishlist/'.$product->id) }}">Remove wishlist</a>
+                                            <a href="{{ url('/remove-wishlist/'.$product->id) }}"><i class="icon_heart"  aria-hidden="true"></i></a>
                                         @else
-                                            <a href="{{ url('/add-wishlist/'.$product->id) }}">Add wishlist</a>
+                                            <a href="{{ url('/add-wishlist/'.$product->id) }}"><i class="icon_heart_alt"  aria-hidden="true"></i></a>
                                         @endif
                                     </li>
-                                    <li class="w-icon"><a href="#"><i class="fa fa-random"></i></a></li>
+                                    <li class="quick-view">
+                                        <a class="a_view_product" href="{{ url('product/'.$product->id) }}">View product</a>
+                                    </li>
                                 </ul>
                             </div>
                             <div class="pi-text">
@@ -190,6 +189,9 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-lg-8">
+                <div class="filter-control">
+                    <ul></ul>
+                </div>
                 <div class="product-slider owl-carousel">
                     @foreach($products_slider3 as $product)
                         <div class="product-item">
@@ -197,24 +199,20 @@
                                 <a href="{{ url('product/'.$product->id) }}">
                                     <img src="{{asset('images/backend_images/products/medium/'.$product->image)}}" alt="">
                                 </a>
-                                <div class="sale">Sale</div>
+                                    <div class="sale">Sale</div>
                                 <div class="icon">
-                                    @if(Product::checkIfWished($product->id))
-                                        <i class="fa fa-heart" aria-hidden="true"></i>
-                                    @else
-                                        <i class="fa fa-heart-o" aria-hidden="true"></i>
-                                    @endif
                                 </div>
                                 <ul>
-                                    <li class="w-icon active"><a href="#"><i class="icon_bag_alt"></i></a></li>
-                                    <li class="quick-view">
+                                    <li class="w-icon active">
                                         @if(Product::checkIfWished($product->id))
-                                            <a href="{{ url('/remove-wishlist/'.$product->id) }}">Remove wishlist</a>
+                                            <a href="{{ url('/remove-wishlist/'.$product->id) }}"><i class="icon_heart"  aria-hidden="true"></i></a>
                                         @else
-                                            <a href="{{ url('/add-wishlist/'.$product->id) }}">Add wishlist</a>
-                                        @endif    
+                                            <a href="{{ url('/add-wishlist/'.$product->id) }}"><i class="icon_heart_alt"  aria-hidden="true"></i></a>
+                                        @endif
                                     </li>
-                                    <li class="w-icon"><a href="#"><i class="fa fa-random"></i></a></li>
+                                    <li class="quick-view">
+                                        <a class="a_view_product" href="{{ url('product/'.$product->id) }}">View product</a>
+                                    </li>
                                 </ul>
                             </div>
                             <div class="pi-text">
@@ -223,7 +221,7 @@
                                     <h5>{{$product->product_name}}</h5>
                                 </a>
                                 <div class="product-price">
-                                    {{$product->price}}
+                                    €{{$product->price}}
                                     <span>$35.00</span>
                                 </div>
                             </div>

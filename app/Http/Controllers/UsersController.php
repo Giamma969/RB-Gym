@@ -72,17 +72,16 @@ class UsersController extends Controller
         if($request->isMethod('post')){
             $data=$request->all();
             //controllo se l'utente già esiste
-            if(empty($data['name']) || empty($data['surname']) || empty($data['username']) || empty($data['email']) || empty($data['password']) || empty($data['confirm_password'])){
+            if(empty($data['name']) || empty($data['surname']) || empty($data['email']) || empty($data['password']) || empty($data['confirm_password'])){
                 return redirect()->back()->with('flash_message_error','Tutti i campi devono essere compilati');
             }
             $usersCount=User::where('email',$data['email'])->count();
             if($usersCount > 0)
                 return redirect()->back()->with('flash_message_error','Email già esistente!');
-        
-            $userscount1=User::where('username',$data['username'])->count();
-            if($userscount1 > 0)
-                return redirect()->back()->with('flash_message_error','Username già esistente!');
-            
+                
+            if(strlen($data['password'])<6 || strlen($data['confirm_password'])<6)
+                return redirect()->back()->with('flash_message_error','The password must be at least 6 characters long!');
+
             if($data['password'] != $data['confirm_password'])
                 return redirect()->back()->with('flash_message_error','Password non coincidenti!');
             
@@ -90,7 +89,6 @@ class UsersController extends Controller
             $user=new User;
             $user->name = $data['name'];
             $user->surname = $data['surname'];
-            $user->username = $data['username'];
             $user->email = $data['email'];
             $user->password = bcrypt($data['password']);
             $user->save();
@@ -186,11 +184,11 @@ class UsersController extends Controller
             Mail::send('emails.forgotpassword', $messageData, function($message) use($email){
                 $message->to($email)->subject('New Password RB-Gym');
             });
-
-            return redirect('login-register')->with('flash_message_success','Please check your email for new password!');
-
+            return redirect('/user-login')->with('flash_message_success','Please check your email for new password!');
         }
-        return view('users.forgot_password');
+        Controller::createSession();
+        $userCart = \App\Cart::getProductsCart();
+        return view('users.forgot_password')->with(compact('userCart'));
     }
 
     public function chkUserPassword(Request $request){
@@ -208,6 +206,11 @@ class UsersController extends Controller
     public function updatePassword(Request $request){
         if($request->isMethod('post')){
             $data=$request->all();
+
+            //password at least 6 chars
+            if(strlen($data['confirm_pwd'])<6 || strlen($data['new_pwd'])<6)
+                return redirect()->back()->with('flash_message_error','The password must be at least 6 characters long!');
+            
             $user_id=Auth::User()->id;
             $userDetails=User::where('id',$user_id)->first();
             $old_pwd=$userDetails->password;
@@ -273,6 +276,21 @@ class UsersController extends Controller
         return view('admin.users.view_users')->with(compact('usersDetails'));
     }
 
+    public function editUserStatus(Request $request, $id){
+        if($request->isMethod('post')){
+            $data = $request->all();
+            if(empty($data['status'])){
+                $data['status'] = 0;
+            }
+            DB::table('users')->where('id',$id)->update([
+                'status'=>$data['status'],
+            ]);
+            return redirect()->back()->with('flash_message_success','Operation performed successfully!');
+        }
+        $userDetails = DB::table('users')->where('id',$id)->first();
+        return view('admin.users.edit_user_status')->with(compact('userDetails'));
+    }
+
     //View account informations --> user can edit
     public function accountInformations(Request $request){
         $user_id=Auth::user()->id;
@@ -282,7 +300,7 @@ class UsersController extends Controller
         
         if($request->isMethod('post')){
             $data=$request->all();
-            if( empty($data['name']) || empty($data['surname']) || empty($data['username']) || empty($data['email']) ||
+            if( empty($data['name']) || empty($data['surname']) || empty($data['email']) ||
                  empty($data['country']) || empty($data['province']) || empty($data['city']) || empty($data['address'])
                  || empty($data['pincode']) || empty($data['mobile'])){
                 return redirect()->back()->with('flash_message_error','Tutti i campi devono essere compilati');
@@ -295,12 +313,6 @@ class UsersController extends Controller
                     return redirect()->back()->with('flash_message_error','Email non disponibile');
             }
 
-            //check if username already exists
-            $usernameCount=User::where('username',$data['username'])->count();
-            if($usernameCount > 0){
-                if($userDetails->username != $data['username'])
-                    return redirect()->back()->with('flash_message_error','Username non disponibile');
-            }
             if(!empty($data['email'])){
                 //cambia il nome alla sessione
                 Session::put('front_session',$data['email']);

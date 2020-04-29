@@ -7,23 +7,22 @@
     <div id="breadcrumb"> <a href="index.html" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a></div>
   </div>
 <!--End-breadcrumbs-->
-
+@if(Session::has('flash_message_error'))
+  <div class="alert alert-error alert-block" >
+      <button type="button" class="close" data-dismiss="alert">×</button>
+          <strong> {!! session ('flash_message_error') !!}</strong>
+  </div>
+@endif
+@if(Session::has('flash_message_success'))
+  <div class="alert alert-success alert-block">
+      <button type="button" class="close" data-dismiss="alert">×</button>
+          <strong> {!! session ('flash_message_success') !!}</strong>
+  </div>
+@endif
 <!--Action boxes-->
   <div class="container-fluid">
     <div class="quick-actions_homepage">
       <ul class="quick-actions">
-        @if(Session::has('flash_message_error'))
-            <div class="alert alert-error alert-block" style="margin: 20px!important;">
-                <button type="button" class="close" data-dismiss="alert">×</button>
-                    <strong> {!! session ('flash_message_error') !!}</strong>
-            </div>
-        @endif
-        @if(Session::has('flash_message_success'))
-            <div class="alert alert-success alert-block">
-                <button type="button" class="close" data-dismiss="alert">×</button>
-                    <strong> {!! session ('flash_message_success') !!}</strong>
-            </div>
-        @endif
         <li class="bg_lb"> <a href="index.html"> <i class="icon-dashboard"></i> <span class="label label-important">20</span> My Dashboard </a> </li>
         <li class="bg_lg span3"> <a href="charts.html"> <i class="icon-signal"></i> Charts</a> </li>
         <li class="bg_ly"> <a href="widgets.html"> <i class="icon-inbox"></i><span class="label label-success">101</span> Widgets </a> </li>

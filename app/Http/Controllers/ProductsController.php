@@ -20,6 +20,7 @@ use App\Address;
 use App\Order;
 use App\OrdersProduct;
 use App\Wishlist;
+use App\Cart;
 use Redirect;
 use Illuminate\Support\Facades\Mail;
 
@@ -89,7 +90,7 @@ class ProductsController extends Controller
 
             $product->status = $status;
             $product->save();  
-            return redirect('/admin/view-products')->with('flash_message_success','Prodotto aggiunto con successo!');        
+            return redirect()->back()->with('flash_message_success','Prodotto aggiunto con successo!');        
         }
         //Categories drop down start
         $categories= Category::where(['parent_id'=>0])->get();
@@ -165,7 +166,7 @@ class ProductsController extends Controller
            'product_name'=>$data['product_name'],'product_code'=>$data['product_code'],
            'product_color'=>$data['product_color'],'description'=>$data['description'], 'brand'=> $data['brand'],
            'price'=>$data['price'], 'image'=>$filename, 'stock'=> $data['stock'], 'status'=>$status]);
-           return redirect('/admin/view-products')->with('flash_message_success','Prodotto aggiornato con successo!');        
+           return redirect()->back()->with('flash_message_success','Prodotto aggiornato con successo!');        
 
         }
         $productDetails= Product::where(['id'=>$id])->first();
@@ -202,8 +203,6 @@ class ProductsController extends Controller
             $category_name= Category::where(['id'=>$val->category_id])->first();
             $products[$key]->category_name = $category_name->name;
          }
-        //echo"<pre>";print_r($products);die;
-        
         return view('admin.products.view_products')->with(compact('products'));
     }
     //admin
@@ -348,14 +347,16 @@ class ProductsController extends Controller
         return view('admin.products.add_images')->with(compact('productDetails','productsImages'));
     }
     
-    
-    public function products($url = null){
+    public function products(Request $request, $url = null){
         //mostra la pagina 404 sel'URL della categoria non esiste
         $countCategory = Category::where(['url'=>$url, 'status'=>1])->count();
         if($countCategory==0)
             abort(404);
+        
+        if(empty(Session::get('sorting'))){ Session::put('sorting',"alpha"); }
+        if(empty(Session::get('paginate'))){ Session::put('paginate',"9"); }
 
-        $categories = Category::with('categories')->where(['parent_id'=>0])->get();
+        $categories = Category::with('categories')->where(['parent_id'=>0,'status'=>1])->get();
 
         $categoryDetails = Category::where(['url'=>$url])->first();
         if($categoryDetails->parent_id == 0){
@@ -365,57 +366,75 @@ class ProductsController extends Controller
                 $cat_ids[] = $subcat->id;
             }
             
-            $productsAll= DB::table('products')
-                ->whereIn('category_id',$cat_ids)
-                ->where('status',1)
-                ->orderBy('id','Desc');
-                //->get()
-                //->paginate(3);//->paginate(3);
+            $productsAll= DB::table('products')->whereIn('products.category_id',$cat_ids)->where('products.status',1)
+                ->join('categories','categories.id','=','products.category_id')->select('products.*','categories.name as category_name');    
+            // if($data['sorting'] ==  "price_asc")$productsAll->orderBy('products.price','asc');
+                
 
-            $brandArray=DB::table('products')
-                ->select(DB::raw('brand'))
-                ->whereIn('category_id',$cat_ids)
-                ->where('status',1)
-                ->groupBy('brand')
-                ->get();
+            $brandArray=DB::table('products')->select(DB::raw('brand'))->whereIn('products.category_id',$cat_ids)
+                ->where('products.status',1)->join('categories','categories.id','=','products.category_id')
+                ->select('products.*','categories.name as category_name')->groupBy('brand')->get();
             $breadcrumb= "<a style=\"color:#333 !important;\" href='/'>Home</a> / <a style=\"color:#333 !important;\" href='".$categoryDetails->url."'>".$categoryDetails->name."</a>";
             
         }else{
             //se l'URL è l'URL della sottocategoria
-            $brandArray=DB::table('products')
-                ->select(DB::raw('brand'))
-                ->where(['category_id'=>$categoryDetails->id, 'status'=>1])
-                ->groupBy('brand')
-                ->get();
-            //echo '<pre>'; print_r($brandArray); die;
-            $productsAll = DB::table('products')
-                ->where(['category_id'=>$categoryDetails->id])
-                ->where('status',1)
-                ->orderBy('id','Desc');
+            $brandArray=DB::table('products')->select(DB::raw('brand'))
+                ->where(['products.category_id'=>$categoryDetails->id, 'products.status'=>1])
+                ->join('categories','categories.id','=','products.category_id')
+                ->select('products.*','categories.name as category_name')->groupBy('brand')->get();
+            
+            $productsAll = DB::table('products')->where(['products.category_id'=>$categoryDetails->id])
+                ->where('products.status',1)->join('categories','categories.id','=','products.category_id')
+                ->select('products.*','categories.name as category_name');//->orderBy('products.id','Desc');
                 //->get()
-                //->paginate(3);//->paginate(3);
+                
 
             $mainCategory = Category::where('id',$categoryDetails->parent_id)->first();
             $breadcrumb= "<a style=\"color:#333 !important;\" href='/'>Home</a> 
                         / <a style=\"color:#333 !important;\" href='".$mainCategory->url."'>".$mainCategory->name."</a> / 
                         <a  style=\"color:#333 !important;\" href='".$categoryDetails->url."'>".$categoryDetails->name."</a>";
         }
-       
-       
         if(!empty($_GET['brand'])){
             $brand_test = explode('-', $_GET['brand']);
             $productsAll = $productsAll->whereIn('brand',$brand_test);
         }
+        //total products for category
+        $count_products = $productsAll->count();
         
+        if($request->isMethod('post')){
+            $data=$request->all();
+            Session::put('paginate', $data['paginate']);
+            switch ($data['sorting']) {
+                case "alpha":
+                    Session::put('sorting', "alpha");
+                    break;
+                case "price_asc":
+                    Session::put('sorting', "price_asc");
+                    break;
+                case "price_desc":
+                    Session::put('sorting', "price_desc");
+                    break;
+                case "recent":
+                    Session::put('sorting', "recent");
+                    break;
+            }
+        }
         
-        $productsAll=$productsAll->paginate(9);
-
-        //$brandArray= array_flatten(json_decode(json_encode($brandArray),true));
-
-        //$brandArray = json_decode(json_encode($brandArray)); 
-        //echo '<pre>'; print_r($productsAll); die;
-        $userCart = \App\Cart::getProductsCart();
-        return view('products.listing')->with(compact('categories','categoryDetails','productsAll','url','brandArray','breadcrumb','userCart'));
+        $productsAll = Product::setListingDetails($productsAll);
+        $start = 0;
+        $end = 0;
+        $products_currentpage=$productsAll->count();
+        $current_page=$productsAll->currentPage();
+        $multiple_pages=$productsAll->hasPages();
+        if($count_products != 0){
+            $start = 1 + (($current_page - 1) * Session::get('paginate'));
+            $end = $products_currentpage +(($current_page - 1) * Session::get('paginate'));
+        }
+       
+        
+        $userCart = Cart::getProductsCart();
+        // echo '<pre>'; print_r($userCart); die;
+        return view('products.listing')->with(compact('categories','categoryDetails','productsAll','url','brandArray','breadcrumb','userCart','url','count_products','end','start'));
     }
 
 
@@ -442,7 +461,7 @@ class ProductsController extends Controller
     public function searchProducts(Request $request){
         if($request->isMethod('post')){
             $data=$request->all();
-            $categories = Category::with('categories')->where(['parent_id'=>0])->get();
+            $categories = Category::with('categories')->where(['parent_id'=>0,'status'=>1])->get();
             $search_product = $data['product'];
             //$productsAll=Product::where('product_name','like', '%'.$search_product.'%')->orwhere('product_code',$search_product)->where('status',1)->paginate(3);
             $productsAll = Product::where(function($query) use($search_product){
@@ -455,7 +474,7 @@ class ProductsController extends Controller
             $breadcrumb = "<a style=\"color:#333 !important;\" href='/'>Home</a> /
             <a  style=\"color:#333 !important;\">". $data['product']."</a>";
 
-            $userCart = \App\Cart::getProductsCart();
+            $userCart = Cart::getProductsCart();
             return view('products.listing')->with(compact('categories','productsAll','search_product','breadcrumb','userCart'));
         }
     }
@@ -477,7 +496,7 @@ class ProductsController extends Controller
             ->select('categories.name as category_name','products.*')
             ->get();
         
-        $categories = Category::with('categories')->where(['parent_id'=>0])->get();
+        
         $categoryDetails = Category::where('id',$productDetails->category_id)->first();
         if($categoryDetails->parent_id == 0){
             $breadcrumb= "<li><a style=\"color:#333 !important;\" href='/'>Home</a></li>  <li><a style=\"color:#333 !important;\" href='".$categoryDetails->url."'>".$categoryDetails->name."</a></li> / <li><a style=\"color:#333 !important;\" > ".$productDetails->product_name."</a></li>";
@@ -498,7 +517,7 @@ class ProductsController extends Controller
             ->where('product_id', $productDetails->id)
             ->count();
         
-        $userCart = \App\Cart::getProductsCart();
+        $userCart = Cart::getProductsCart();
         $categories= Category::with('categories')->where(['parent_id'=>0,'status'=>1])->get();
         return view('products.detail')->with(compact('productDetails','categories','productAltImages','relatedProducts','breadcrumb','ratingAvg','countReviews','userCart','categories'));
     }
@@ -507,55 +526,58 @@ class ProductsController extends Controller
         // Session::forget('coupon_amount');
         // Session::forget('coupon_code');
         // Session::forget('coupon_type');
-        $data = $request->all();
-    
-        $getProductsStock=Product::where('id',$data['product_id'])->first();
-        if($getProductsStock->stock < $data['quantity']){
-            return redirect()->back()->with('flash_message_error','Quantità del prodotto richiesta non disponibile');
-        }
+        if($request->isMethod('post')){
+            $data = $request->all();
+            // echo'<pre>'; print_r($data); die;
+            $getProductsStock=DB::table('products')->where('id',$data['product_id'])->first();
+            
+            if($getProductsStock->stock < $data['quantity']){
+                return redirect()->back()->with('flash_message_error','Quantità del prodotto richiesta non disponibile');
+            }
 
-        if(Auth::check()){
-            $user_id=Auth::user()->id;
-        }else{
-            $user_id = NULL;
-        }
+            if(Auth::check()){
+                $user_id=Auth::user()->id;
+            }else{
+                $user_id = NULL;
+            }
 
-        $session_id = Session::get('session_id');
-       
-        if(Auth::check()){
-            $cartDetails=DB::table('cart')->where(['user_id'=> $user_id])->first();
-        }else{
-            //if user not logged haven't a cart create it
-            $cartCount=DB::table('cart')->where(['session_id'=> $session_id])->count();
-            if($cartCount == 0){
-                DB::table('cart')->insert([
-                    'user_id'=> $user_id,
-                    'session_id'=> $session_id,
-                    'created_at' => DB::raw('now()'),
-                    'updated_at' => DB::raw('now()')
+            $session_id = Session::get('session_id');
+        
+            if(Auth::check()){
+                $cartDetails=DB::table('cart')->where(['user_id'=> $user_id])->first();
+            }else{
+                //if user not logged haven't a cart create it
+                $cartCount=DB::table('cart')->where(['session_id'=> $session_id])->count();
+                if($cartCount == 0){
+                    DB::table('cart')->insert([
+                        'user_id'=> $user_id,
+                        'session_id'=> $session_id,
+                        'created_at' => DB::raw('now()'),
+                        'updated_at' => DB::raw('now()')
+                    ]);
+                }
+                $cartDetails=DB::table('cart')->where(['session_id'=> $session_id])->first();
+            }
+
+            $cart_id = $cartDetails->id;
+            $countProducts= DB::table('products_carts')->where(['cart_id'=>$cart_id,'product_id'=>$data['product_id']])->count();
+        
+
+            if($countProducts > 0){
+                return redirect()->back()->with('flash_message_error','Prodotto già presente nel carrello. Per modificare la quantità vai al carrello!');
+            }else{
+                DB::table('products_carts')->insert([
+                    'cart_id'=>$cart_id,
+                    'product_id'=> $data['product_id'],
+                    'product_quantity'=> $data ['quantity']
                 ]);
             }
-            $cartDetails=DB::table('cart')->where(['session_id'=> $session_id])->first();
+            return redirect()->back()->with('flash_message_success','Prodotto aggiunto al carrello!');
         }
-
-        $cart_id = $cartDetails->id;
-        $countProducts= DB::table('products_carts')->where(['cart_id'=>$cart_id,'product_id'=>$data['product_id']])->count();
-    
-
-        if($countProducts > 0){
-            return redirect()->back()->with('flash_message_error','Prodotto già presente nel carrello. Per modificare la quantità vai al carrello!');
-        }else{
-            DB::table('products_carts')->insert([
-                'cart_id'=>$cart_id,
-                'product_id'=> $data['product_id'],
-                'product_quantity'=> $data ['quantity']
-            ]);
-        }
-        return redirect()->back()->with('flash_message_success','Prodotto aggiunto al carrello!');
     }
 
     public function cart(){
-        $userCart = \App\Cart::getProductsCart();
+        $userCart = Cart::getProductsCart();
         return view('products.cart')->with(compact('userCart'));
     }
 
@@ -685,7 +707,7 @@ class ProductsController extends Controller
             return redirect()->back()->with('flash_message_error','Non ci sono prodotti nel carrello!');
         }
        
-        $userCart = \App\Cart::getProductsCart();
+        $userCart = Cart::getProductsCart();
         $categories= Category::with('categories')->where(['parent_id'=>0,'status'=>1])->get();
 
         //check if shipping address exists
@@ -729,7 +751,7 @@ class ProductsController extends Controller
             }
             return redirect()->action('ProductsController@orderReview');
         }
-        $userCart = \App\Cart::getProductsCart();
+        $userCart = Cart::getProductsCart();
         if($shippingCount > 0){
             $shippingDetails = Address::where(['user_id'=>$user_id, 'is_shipping'=>1])->first();
             return view('products.checkout')->with(compact('userDetails','countries','shippingCount','shippingDetails','bill_address','userCart'));
@@ -760,7 +782,7 @@ class ProductsController extends Controller
         }*/
         
         //$countProduct = DB::table('cart')->where(['user_id'=>$user_id])->count();
-        $userCart = \App\Cart::getProductsCart();
+        $userCart = Cart::getProductsCart();
         return view('products.order_review')->with(compact('userDetails','shippingDetails','userCart','countProduct','userCart'));
     }
 
@@ -910,7 +932,7 @@ class ProductsController extends Controller
         $coupon_code = Session::get('coupon_code');
         Coupon::where('coupon_code',$coupon_code)->update(['used'=> 1]);
 
-        $userCart = \App\Cart::getProductsCart();
+        $userCart = Cart::getProductsCart();
         return view('orders.thanks')->with(compact('userCart'));
     }
 
@@ -958,20 +980,20 @@ class ProductsController extends Controller
             $message->to($user_email)->subject('Order placed - RB-Gym');
         });
 
-        $userCart = \App\Cart::getProductsCart();
+        $userCart = Cart::getProductsCart();
             
         return view('orders.thanks_payment')->with(compact('order_id','userCart'));
     }
 
     public function payment(){
-        $userCart = \App\Cart::getProductsCart();
+        $userCart = Cart::getProductsCart();
         return view('orders.payment')->with(compact('userCart'));
     }
 
     public function userOrders(){
         $user_id=Auth::user()->id;
         $orders=Order::with('orders')->where('user_id',$user_id)->orderBy('id','DESC')->get();
-        $userCart = \App\Cart::getProductsCart();
+        $userCart = Cart::getProductsCart();
         $categories = Category::with('categories')->where(['parent_id'=>0,'status'=>1])->get();
         return view('orders.user_orders')->with(compact('orders','userCart','categories'));
     }
@@ -983,7 +1005,7 @@ class ProductsController extends Controller
             ->join('products', 'products.id', '=', 'orders_products.product_id')
             ->select('products.*','orders_products.product_quantity')
             ->get();
-        $userCart = \App\Cart::getProductsCart();
+        $userCart = Cart::getProductsCart();
         return view('orders.user_order_details')->with(compact('productsOrder','orderDetails','userCart'));
 
     }
@@ -1100,8 +1122,8 @@ class ProductsController extends Controller
             ->select('products.*')
             ->get();
     
-        $categories = Category::with('categories')->where(['parent_id'=>0])->get();
-        $userCart = \App\Cart::getProductsCart();
+        $categories = Category::with('categories')->where(['parent_id'=>0, 'status'=>1])->get();
+        $userCart = Cart::getProductsCart();
         return view('products.wishlist')->with(compact('productsWish','categories','userCart')); 
     }
 
@@ -1181,12 +1203,12 @@ class ProductsController extends Controller
             ]);
             return redirect()->back()->with('flash_message_success','Request successfully sent. We will reply as soon as possible!');
         }
-        $userCart = \App\Cart::getProductsCart();
+        $userCart = Cart::getProductsCart();
         return view('help.contact_us')->with(compact('userCart'));
     }
 
     public function faq(){
-        $userCart = \App\Cart::getProductsCart();
+        $userCart = Cart::getProductsCart();
         $faqs = DB::table('faqs')->where('status',1)->select('faqs.question','faqs.answer')->get();
         return view('help.faq')->with(compact('userCart','faqs'));
     }

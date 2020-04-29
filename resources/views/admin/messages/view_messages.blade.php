@@ -5,17 +5,16 @@
   <div id="breadcrumb"> <a href="index.html" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a> <a href="#">Messages</a> <a href="#" class="current">View messages</a> </div>
     <h1>Messages</h1>
     @if(Session::has('flash_message_error'))
-    <div class="alert alert-error alert-block">
-    	<button type="button" class="close" data-dismiss="alert">×</button>
-            <strong> {!! session ('flash_message_error') !!}</strong>
-    </div>
-     @endif
-
+      <div class="alert alert-error alert-block">
+    	  <button type="button" class="close" data-dismiss="alert">×</button>
+        <strong> {!! session ('flash_message_error') !!}</strong>
+      </div>
+    @endif
     @if(Session::has('flash_message_success'))
-    <div class="alert alert-success alert-block">
-    	<button type="button" class="close" data-dismiss="alert">×</button>
-            <strong> {!! session ('flash_message_success') !!}</strong>
-    </div>
+      <div class="alert alert-success alert-block">
+    	  <button type="button" class="close" data-dismiss="alert">×</button>
+        <strong> {!! session ('flash_message_success') !!}</strong>
+      </div>
     @endif
   </div>
   <div class="container-fluid">
@@ -32,7 +31,7 @@
               <thead>
                 <tr>
                     <th>Message ID</th>
-                    <th>Name</th>
+                    <th>Customer name</th>
                     <th>Email</th>
                     <th>Subject</th>
                     <th>Message</th>
@@ -56,20 +55,33 @@
                     @else 
                         <span style="color:green">Yes</span>
                     @endif
-                </td>
-                 
-                  <?php //<td> <div style="overflow:auto; max-height:100px!important; max-width:25ch;">{{$product->description}}</div></td> ?>
-                 
-                  <?php /* <td>
-                      @if(!empty($product->image))
-                       <img src="{{asset('/images/backend_images/products/small/'.$product->image)}}" style="width:50px;">
-                       @endif
-                  </td> */?>
-                  
+                </td> 
                   <td style="max-width:50px" class="center">
+                    <a style="width:80%;"  href="#myModal{{$mes->id}}" data-toggle="modal" class="btn btn-success btn-mini" title="View">View</a>
                     <a style="width:80%;" href="{{ url('/admin/edit-message/'.$mes->id)  }} "class="btn btn-primary btn-mini" title="Edit">Edit</a>  
                   </td> 
                 </tr>
+                <div id="myModal{{$mes->id}}" class="modal hide">
+                  <div class="modal-header">
+                      <button data-dismiss="modal" class="close" type="button">×</button>
+                      <h3><b>{{$mes->subject}}</b></h3>
+                  </div>
+                  <div class="modal-body">
+                      <p><b>Message ID: </b> {{$mes->id}}</p>
+                      <p><b>Customer name: </b> {{$mes->name}}</p>
+                      <p><b>Email: </b> {{$mes->email}}</p>
+                      <p><b>Subject: </b> {{$mes->subject}}</p>
+                      <p><b>Message: </b> {{$mes->message}}</p>
+                      <p><b>Date: </b> {{$mes->created_at}}</p>
+                      <p><b>Resolved: </b> 
+                      @if($mes->resolved == 0)
+                          No
+                      @else 
+                          Yes
+                      @endif
+                      </p>
+                  </div>
+              </div>
                               
              
             </div>

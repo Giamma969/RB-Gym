@@ -207,7 +207,7 @@
     /*-------------------
 		Nice Select
     --------------------- */
-    $('.sorting, .p-show').niceSelect();
+    $('.sorting, .show_paginate').niceSelect();
 
     /*------------------
 		Single Product

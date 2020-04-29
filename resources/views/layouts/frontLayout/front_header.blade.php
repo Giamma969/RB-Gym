@@ -23,7 +23,7 @@
                 </div>
                 <div class="ht-right">
 					@if(empty(Auth::check()))
-						<a href="{{ url('/user-register') }}" class="login-panel">Register</a>
+						<a href="{{ url('/user-register') }}" class="login-panel" style="margin-left:20px !important;">Register</a>
 						<a href="{{ url('/user-login') }}" class="login-panel"><i class="fa fa-lock"></i> Login</a>
 					@else
                         <a href="{{ url('/user-logout') }}" class="login-panel" style="margin-left:20px !important;"><i class="fa fa-sign-out "></i> Logout</a>
@@ -86,24 +86,24 @@
                                         <table>
                                             <tbody>
                                                 <?php $total_amount=0; ?>
-                                                @foreach($userCart as $product)
+                                                @foreach($userCart as $pro)
                                                 <tr>
                                                     <td class="si-pic">
-                                                        <a href="{{ url('product/'.$product->id) }}">
-                                                            <img style="width:70px;"src="{{asset('images/backend_images/products/small/'.$product->image)}}" alt="">
+                                                        <a href="{{ url('product/'.$pro->id) }}">
+                                                            <img style="width:70px;"src="{{asset('images/backend_images/products/small/'.$pro->image)}}" alt="">
                                                         </a>
                                                     </td>
                                                     <td class="si-text">
                                                         <div class="product-selected">
-                                                            <p>{{$product->price}} x {{$product->product_quantity}}</p>
-                                                            <h6><a href="{{ url('product/'.$product->id) }}">{{$product->product_name}}</a></h6>
+                                                            <p>{{$pro->price}} x {{$pro->product_quantity}}</p>
+                                                            <h6><a href="{{ url('product/'.$pro->id) }}">{{$pro->product_name}}</a></h6>
                                                         </div>
                                                     </td>
                                                     <td class="si-close">
-                                                        <a href="{{ url('/cart/delete-product/'.$product->id) }}" style="color:black;"><i class="ti-close"></i></a>
+                                                        <a href="{{ url('/cart/delete-product/'.$pro->id) }}" style="color:black;"><i class="ti-close"></i></a>
                                                     </td>
                                                 </tr>
-                                                <?php $total_amount = $total_amount+ ($product->price * $product->product_quantity);  ?>
+                                                <?php $total_amount = $total_amount+ ($pro->price * $pro->product_quantity);  ?>
                                                 @endforeach
                                             </tbody>
                                         </table>
@@ -158,7 +158,7 @@
                 <nav class="nav-menu mobile-menu">
                     <ul>
                         <li class="active"><a href="{{ url('/') }}">Home</a></li>
-                        <li><a href="./shop.html">Shop</a></li>
+                        <li><a href="#">Outlet</a></li>
                         <li><a href="#">Collection</a>
                             <ul class="dropdown">
                                 <li><a href="#">Men's</a></li>

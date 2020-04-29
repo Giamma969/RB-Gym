@@ -14,18 +14,16 @@
 
         <h1>Ordini</h1>
         @if(Session::has('flash_message_error'))
-        <div class="alert alert-success alert-block">
+        <div class="alert alert-error alert-block">
             <button type="button" class="close" data-dismiss="alert">×</button>
             <strong> {!! session ('flash_message_error') !!}</strong>
         </div>
         @endif
-
         @if(Session::has('flash_message_success'))
         <div class="alert alert-success alert-block">
             <button type="button" class="close" data-dismiss="alert">×</button>
-                <strong> {!! session ('flash_message_success') !!}</strong>
+            <strong> {!! session ('flash_message_success') !!}</strong>
         </div>
-
         @endif
     </div>
 
@@ -43,7 +41,7 @@
                                 <tr>
                                     <th>Order ID</th>
                                     <th>Order date</th>
-                                    <th>User ID</th>
+                                    <th>Customer ID</th>
                                     <th>Customer name</th>
                                     <th>Customer surname</th>
                                     <th>Ordered products</th>
@@ -71,9 +69,32 @@
                                         <td class="center">{{$order->order_status}}</td>
                                         <td class="center">{{$order->payment_method}}</td>
                                         <td style="max-width:50px;" class="center">
-                                            <a style="max-width:80%;" target="_blank" href="{{ url('admin/view-order/'.$order->id)}}" class="btn btn-success btn-mini" title="View">View order details</a>
+                                            <a style="width:80%;"  href="#myModal{{$order->id}}" data-toggle="modal" class="btn btn-success btn-mini" title="View">View</a>
+                                            <a style="max-width:80%;" target="_blank" href="{{ url('admin/view-order/'.$order->id)}}" class="btn btn-primary btn-mini" title="View">View order details</a>
                                         </td> 
                                     </tr>
+                                    <div id="myModal{{$order->id}}" class="modal hide">
+                                        <div class="modal-header">
+                                            <button data-dismiss="modal" class="close" type="button">×</button>
+                                            <h3><b>Order #{{$order->id}}</b></h3>
+                                        </div>
+                                        <div class="modal-body">
+                                            <p><b>Order ID: </b> {{$order->id}}</p>
+                                            <p><b>Order date: </b> {{$order->created_at}}</p>
+                                            <p><b>Customer name: </b> {{$order->name}}</p>
+                                            <p><b>Customer surname: </b> {{$order->surname}}</p>
+                                            <p><b>Ordered products: </b>
+                                                <ul> 
+                                                    @foreach($products as $pro)
+                                                        <li>{{ $pro->product_code }} ({{ $pro->product_quantity }})</li>
+                                                    @endforeach
+                                                </ul>
+                                            </p>
+                                            <p><b>Total payd: </b> {{$order->grand_total}}</p>
+                                            <p><b>Order status: </b> {{$order->order_status}}</p>
+                                            <p><b>Payment method: </b> {{$order->payment_method}}</p>
+                                        </div>
+                                    </div>
                                 @endforeach
                             </tbody>
                         </table>

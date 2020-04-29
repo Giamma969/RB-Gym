@@ -34,7 +34,7 @@ class CategoryController extends Controller
       $category->url = $data['url'];
       $category->status = $status;
       $category->save();
-      return redirect('/admin/view-categories')->with('flash_message_success','Categoria aggiunta con successo!');;
+      return redirect()->back()->with('flash_message_success','Categoria aggiunta con successo!');;
     }
     $levels = Category::where(['parent_id'=>0])->get();
       return view('admin.categories.add_category')->with(compact('levels'));
@@ -66,7 +66,7 @@ class CategoryController extends Controller
       }
 
       Category::where(['id'=>$id])->update(['name'=>$data['category_name'], 'description'=>$data['description'], 'url'=>$data['url'],'status'=>$status]);
-      return redirect('/admin/view-categories')->with('flash_message_success', 'Categoria aggiornata con successo!');
+      return redirect()->back()->with('flash_message_success', 'Categoria aggiornata con successo!');
     }
     $categoryDetails = Category::where(['id'=>$id])->first();
     $levels = Category::where(['parent_id'=>0])->get();

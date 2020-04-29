@@ -16,21 +16,20 @@
     </div>
 </div>
 <!-- Breadcrumb Section Begin -->
-
+@if(Session::has('flash_message_error'))
+    <div class="alert alert-error alert-block" style="background-color:#f2dfd0;">
+        <button type="button" class="close" data-dismiss="alert">×</button>
+            <strong> {!! session ('flash_message_error') !!}</strong>
+    </div>
+@endif
+@if(Session::has('flash_message_success'))
+    <div class="alert alert-success alert-block">
+        <button type="button" class="close" data-dismiss="alert">×</button>
+            <strong> {!! session ('flash_message_success') !!}</strong>
+    </div>
+@endif
 <!-- Shopping Cart Section Begin -->
 <section class="checkout-section spad">
-    @if(Session::has('flash_message_error'))
-        <div class="alert alert-error alert-block" style="background-color:#f2dfd0; margin-right:15px; margin-left:15px;">
-            <button type="button" class="close" data-dismiss="alert">×</button>
-                <strong> {!! session ('flash_message_error') !!}</strong>
-        </div>
-    @endif
-    @if(Session::has('flash_message_success'))
-        <div class="alert alert-success alert-block" style="margin-right:15px; margin-left:15px;">
-            <button type="button" class="close" data-dismiss="alert">×</button>
-                <strong> {!! session ('flash_message_success') !!}</strong>
-        </div>
-    @endif
     <div class="container">
         <form method="post" action="{{ url('/checkout') }}" class="checkout-form">{{csrf_field()}}
             <input value="{{ $bill_address->user_name }}" id="billing_name" name="billing_name" class="form-control" type="hidden" /> 
