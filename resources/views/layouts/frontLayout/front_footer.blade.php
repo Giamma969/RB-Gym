@@ -4,8 +4,8 @@
             <div class="row">
                 <div class="col-lg-3">
                     <div class="footer-left">
-                        <div class="footer-logo">
-                            <a href="#"><img src="{{asset('images/frontend_images/footer-logo.png') }}" alt=""></a>
+                        <div class="footer-logo" style="width:60%;">
+                            <a href="#"><img src="{{asset('images/frontend_images/logo1.png') }}" alt=""></a>
                         </div>
                         <ul>
                             <li>Address: Via Vetoio, 48, 67100 Coppito AQ</li>
@@ -13,10 +13,9 @@
                             <li>Email: rb-gym@info.com</li>
                         </ul>
                         <div class="footer-social">
-                            <a href="#"><i class="fa fa-facebook"></i></a>
-                            <a href="#"><i class="fa fa-instagram"></i></a>
-                            <a href="#"><i class="fa fa-twitter"></i></a>
-                            <a href="#"><i class="fa fa-pinterest"></i></a>
+                            <a href="https://www.facebook.com/" target="_blank"><i class="fa fa-facebook"></i></a>
+                            <a href="https://twitter.com/" target="_blank"><i class="fa fa-twitter"></i></a>
+                            <a href="https://www.instagram.com/" target="_blank"><i class="fa fa-instagram"></i></a>
                         </div>
                     </div>
                 </div>
@@ -24,11 +23,11 @@
                     <div class="footer-widget">
                         <h5>Information</h5>
                         <ul>
-                            <li><a href="#">About Us</a></li>
-                            <li><a href="{{ url('/faq') }}">FAQs</a></li>
-                            <li><a href="{{ url('/contact-us') }}">Contact Us</a></li>
-                            <li><a href="#">Privacy Policy</a></li>
-                            <li><a href="#">Cookie Policy</a></li>
+                            <li><a class="a_footer" href="#">About Us</a></li>
+                            <li><a class="a_footer" href="{{ url('/faq') }}">FAQs</a></li>
+                            <li><a class="a_footer" href="{{ url('/contact-us') }}">Contact Us</a></li>
+                            <li><a class="a_footer" href="#">Privacy Policy</a></li>
+                            <li><a class="a_footer" href="#">Cookie Policy</a></li>
                         </ul>
                     </div>
                 </div>
@@ -36,10 +35,10 @@
                     <div class="footer-widget">
                         <h5>My Account</h5>
                         <ul>
-                            <li><a href="#">My Account</a></li>
-                            <li><a href="#">Checkout</a></li>
-                            <li><a href="#">Shopping Cart</a></li>
-                            <li><a href="#">Shop</a></li>
+                            <li><a class="a_footer" href="#">My Account</a></li>
+                            <li><a class="a_footer" href="#">Checkout</a></li>
+                            <li><a class="a_footer" href="#">Shopping Cart</a></li>
+                            <li><a class="a_footer" href="#">Shop</a></li>
                         </ul>
                     </div>
                 </div>

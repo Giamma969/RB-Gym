@@ -29,7 +29,7 @@ class CouponsController extends Controller
                 $coupon->status = $data['status'];
             }
             $coupon->save();
-            return redirect()->back()->with('flash_message_success','Coupon aggiunto con successo');
+            return redirect()->back()->with('flash_message_success','Coupon successfully added!');
         }
         return view('admin.coupons.add_coupon');
     }
@@ -54,7 +54,7 @@ class CouponsController extends Controller
             }
             $coupon->status=$data['status'];
             $coupon->save();
-            return redirect()->back()->with('flash_message_success','Coupon modificato con successo!');
+            return redirect()->back()->with('flash_message_success','Coupon successfully modified!');
         }       
         $couponDetails = Coupon::find($id);
         return view('admin.coupons.edit_coupon')->with(compact('couponDetails'));
@@ -69,6 +69,6 @@ class CouponsController extends Controller
 
     public function deleteCoupon($id=null){
         Coupon::where(['id'=>$id])->delete();
-        return redirect()->back()->with('flash_message_success','Coupon eliminato con successo');
+        return redirect()->back()->with('flash_message_success','Coupon successfully deleted!');
     }
 }

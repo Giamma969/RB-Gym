@@ -100,7 +100,7 @@ class AdminController extends Controller
                 ->orwhere(['email'=>$data['user_email'],'developer'=>1])
                 ->count();
             if($usersCount == 0){
-                return redirect()->back()->with('flash_message_error','L\'Email non esiste!');
+                return redirect()->back()->with('flash_message_error','The email does not exist!');
             }
             //get user details
             $userDetails=User::where('email',$data['user_email'])->first();

@@ -90,7 +90,7 @@ class ProductsController extends Controller
 
             $product->status = $status;
             $product->save();  
-            return redirect()->back()->with('flash_message_success','Prodotto aggiunto con successo!');        
+            return redirect()->back()->with('flash_message_success','Product successfully added!');        
         }
         //Categories drop down start
         $categories= Category::where(['parent_id'=>0])->get();
@@ -136,10 +136,10 @@ class ProductsController extends Controller
                     $large_image_path= 'images/backend_images/products/large/'.$filename;
                     $medium_image_path= 'images/backend_images/products/medium/'.$filename;
                     $small_image_path= 'images/backend_images/products/small/'.$filename;
-                        //Resize image code
-                        Image::make($image_tmp)->save($large_image_path);
-                        Image::make($image_tmp)->resize(600,600)->save($medium_image_path);
-                        Image::make($image_tmp)->resize(300,300)->save($small_image_path);
+                    //Resize image code
+                    Image::make($image_tmp)->save($large_image_path);
+                    Image::make($image_tmp)->resize(600,600)->save($medium_image_path);
+                    Image::make($image_tmp)->resize(300,300)->save($small_image_path);
                 }   
             }else{
                 $filename = $data['current_image'];
@@ -166,7 +166,7 @@ class ProductsController extends Controller
            'product_name'=>$data['product_name'],'product_code'=>$data['product_code'],
            'product_color'=>$data['product_color'],'description'=>$data['description'], 'brand'=> $data['brand'],
            'price'=>$data['price'], 'image'=>$filename, 'stock'=> $data['stock'], 'status'=>$status]);
-           return redirect()->back()->with('flash_message_success','Prodotto aggiornato con successo!');        
+           return redirect()->back()->with('flash_message_success','Product successfully updated!');        
 
         }
         $productDetails= Product::where(['id'=>$id])->first();
@@ -212,95 +212,97 @@ class ProductsController extends Controller
         //unlink all alternative images
         $this->deleteAllAltImage($id);
         Product::where(['id'=>$id])->delete();
-        return redirect()->back()->with('flash_message_success','il prodotto è stato eliminato');
+        return redirect()->back()->with('flash_message_success','Product successfully deleted!');
     }
     //admin
     public function deleteProductImage($id=null){
-        //prendo l'immagine del prodotto
-        $productImage = Product::where(['id' => $id]) -> first();
+        //get product image
+        $productImage = Product::where(['id' => $id])->first();
+        
+        if($productImage->image != '' && $productImage->image != NULL){
+            //get image's paths
+            $large_image_path = 'images/backend_images/products/large/';
+            $medium_image_path = 'images/backend_images/products/medium/';
+            $small_image_path = 'images/backend_images/products/small/';
 
-        //prendo i percorsi dell'immagine
-        $large_image_path = 'images/backend_images/products/large/';
-        $medium_image_path = 'images/backend_images/products/medium/';
-        $small_image_path = 'images/backend_images/products/small/';
+            //delete large image if not exists in directory
+            if(file_exists($large_image_path.$productImage->image)){
+                unlink($large_image_path.$productImage->image);
+            }
 
-        //delete large image if not exists in directory
-        if(file_exists($large_image_path.$productImage->image)){
-            unlink($large_image_path.$productImage->image);
+            //delete medium image if not exists in directory
+            if(file_exists($medium_image_path.$productImage->image)){
+                unlink($medium_image_path.$productImage->image);
+            }
+
+            //delete small image if not exists in directory
+            if(file_exists($small_image_path.$productImage->image)){
+                unlink($small_image_path.$productImage->image);
+            }
+
+            //delete image from product table
+            Product::where(['id'=>$id])->update(['image'=>NULL]);
         }
-
-         //delete medium image if not exists in directory
-        if(file_exists($medium_image_path.$productImage->image)){
-            unlink($medium_image_path.$productImage->image);
-        }
-
-        //delete small image if not exists in directory
-        if(file_exists($small_image_path.$productImage->image)){
-            unlink($small_image_path.$productImage->image);
-        }
-
-        //elimina immagine dalla tabella prodotti
-        Product::where(['id'=>$id])->update(['image'=>NULL]);
-        return redirect()->back()->with('flash_message_success', ' Immagine del prodotto eliminata con successo!');
+        return redirect()->back()->with('flash_message_success', 'Product image successfully deleted!');
     }
     //admin
     public function deleteAllAltImage($product_id=null){
-        //prendo l'immagine del prodotto
+        //pget product image
         $productImage = DB::table('products_images')->where(['product_id' => $product_id])->get();
         //echo '<pre>'; print_r($productImage); die;
-        //prendo i percorsi dell'immagine
+        //get image's paths
         $large_image_path = 'images/backend_images/products/large/';
         $medium_image_path = 'images/backend_images/products/medium/';
         $small_image_path = 'images/backend_images/products/small/';
 
         foreach($productImage as $image){
-            //elimino large image se non esiste nella cartella
+            //delete large image if not exists in directory
             if(file_exists($large_image_path.$image->image)){
                 unlink($large_image_path.$image->image);
             }
 
-            //elimino medium image se non esiste nella cartella
+            //delete medium image if not exists in directory
             if(file_exists($medium_image_path.$image->image)){
                 unlink($medium_image_path.$image->image);
             }
 
 
-            //elimino small image se non esiste nella cartella
+           //delete small image if not exists in directory
             if(file_exists($small_image_path.$image->image)){
                 unlink($small_image_path.$image->image);
             }
             
-            //elimina immagine dalla tabella prodotti
+            //delete image from product table
             ProductsImage::where(['id'=>$image->id])->delete();
         }    
     }
     //admin
     public function deleteAltImage($id=null){
-        //prendo l'immagine del prodotto
+        //get product image
         $productImage = ProductsImage::where(['id' => $id]) -> first();
 
-        //prendo i percorsi dell'immagine
+        //get image's paths
         $large_image_path = 'images/backend_images/products/large/';
         $medium_image_path = 'images/backend_images/products/medium/';
         $small_image_path = 'images/backend_images/products/small/';
 
-        //elimino large image se non esiste nella cartella
+       //delete large image if not exists in directory
         if(file_exists($large_image_path.$productImage->image)){
             unlink($large_image_path.$productImage->image);
         }
 
-        //elimino medium image se non esiste nella cartella
+        //delete medium image if not exists in directory
         if(file_exists($medium_image_path.$productImage->image)){
             unlink($medium_image_path.$productImage->image);
         }
 
 
-        //elimino small image se non esiste nella cartella
+       //delete small image if not exists in directory
         if(file_exists($small_image_path.$productImage->image)){
             unlink($small_image_path.$productImage->image);
         }
 
-        //elimina immagine dalla tabella prodotti
+         //delete image from product table
         ProductsImage::where(['id'=>$id])->delete();
         return redirect()->back()->with('flash_message_success', ' Immagine alternativa del prodotto eliminata con successo!');
     }
@@ -326,7 +328,7 @@ class ProductsController extends Controller
                     $image->save();
                 }
             }
-            return redirect('admin/add-images/'.$id)->with('flash_message_success',' Immagine del prodotto inserita correttamente' ); 
+            return redirect('admin/add-images/'.$id)->with('flash_message_success','Product image inserted correctly!'); 
         }
         $productDetails = Product::find($id); 
         $productsImg = ProductsImage::where(['product_id' => $id])->get(); 
@@ -339,7 +341,7 @@ class ProductsController extends Controller
                 <td>".$img->id."</td>
                 <td>".$img->product_id."</td>
                 <td> <img width='150px' src='/images/backend_images/products/small/$img->image'></td>
-                <td>  <a  rel='$img->id' rel1='delete-alt-image'  href='javascript:' class='btn btn-danger btn-mini deleteRecord' title='Elimina immagine prodotto'>Elimina</a>
+                <td>  <a  rel='$img->id' rel1='delete-alt-image'  href='javascript:' class='btn btn-danger btn-mini deleteRecord' title='Delete product image'>Delete</a>
                 </td>
             </tr>";
         }
@@ -348,7 +350,7 @@ class ProductsController extends Controller
     }
     
     public function products(Request $request, $url = null){
-        //mostra la pagina 404 sel'URL della categoria non esiste
+        //show page 404 if the category URL does not exist
         $countCategory = Category::where(['url'=>$url, 'status'=>1])->count();
         if($countCategory==0)
             abort(404);
@@ -360,7 +362,7 @@ class ProductsController extends Controller
 
         $categoryDetails = Category::where(['url'=>$url])->first();
         if($categoryDetails->parent_id == 0){
-            //se l'URL è l'URL della categoria principale
+            //if the URL is the URL of the main category
             $subCategories= Category::where(['parent_id'=>$categoryDetails->id])->get();
             foreach($subCategories as $subcat){
                 $cat_ids[] = $subcat->id;
@@ -434,7 +436,7 @@ class ProductsController extends Controller
         
         $userCart = Cart::getProductsCart();
         // echo '<pre>'; print_r($userCart); die;
-        return view('products.listing')->with(compact('categories','categoryDetails','productsAll','url','brandArray','breadcrumb','userCart','url','count_products','end','start'));
+        return view('products.listing')->with(compact('categories','categoryDetails','productsAll','url','brandArray','breadcrumb','userCart','count_products','end','start'));
     }
 
 
@@ -462,8 +464,7 @@ class ProductsController extends Controller
         if($request->isMethod('post')){
             $data=$request->all();
             $categories = Category::with('categories')->where(['parent_id'=>0,'status'=>1])->get();
-            $search_product = $data['product'];
-            //$productsAll=Product::where('product_name','like', '%'.$search_product.'%')->orwhere('product_code',$search_product)->where('status',1)->paginate(3);
+            $search_product = $data['pattern'];
             $productsAll = Product::where(function($query) use($search_product){
                 $query->where('product_name','like','%'.$search_product.'%')
                         ->orWhere('product_code','like','%'.$search_product.'%')
@@ -472,9 +473,10 @@ class ProductsController extends Controller
                         ->orWhere('brand','like','%'.$search_product.'%');
             })->where('status',1)->get();
             $breadcrumb = "<a style=\"color:#333 !important;\" href='/'>Home</a> /
-            <a  style=\"color:#333 !important;\">". $data['product']."</a>";
+            <a  style=\"color:#333 !important;\">". $data['pattern']."</a>";
 
             $userCart = Cart::getProductsCart();
+           
             return view('products.listing')->with(compact('categories','productsAll','search_product','breadcrumb','userCart'));
         }
     }
@@ -491,7 +493,7 @@ class ProductsController extends Controller
 
         $relatedProducts = DB::table('products')
             ->where('products.id','!=',$id)
-            ->where(['category_id'=>$productDetails->category_id])
+            ->where(['category_id'=>$productDetails->category_id, 'products.status' =>1])
             ->join('categories','categories.id','=','products.category_id')
             ->select('categories.name as category_name','products.*')
             ->get();
@@ -519,7 +521,7 @@ class ProductsController extends Controller
         
         $userCart = Cart::getProductsCart();
         $categories= Category::with('categories')->where(['parent_id'=>0,'status'=>1])->get();
-        return view('products.detail')->with(compact('productDetails','categories','productAltImages','relatedProducts','breadcrumb','ratingAvg','countReviews','userCart','categories'));
+        return view('products.detail')->with(compact('productDetails','categories','productAltImages','relatedProducts','breadcrumb','ratingAvg','countReviews','userCart','categories','categoryDetails'));
     }
 
     public function addtocart(Request $request){
@@ -532,7 +534,7 @@ class ProductsController extends Controller
             $getProductsStock=DB::table('products')->where('id',$data['product_id'])->first();
             
             if($getProductsStock->stock < $data['quantity']){
-                return redirect()->back()->with('flash_message_error','Quantità del prodotto richiesta non disponibile');
+                return redirect()->back()->with('flash_message_error','Requested product quantity not available!');
             }
 
             if(Auth::check()){
@@ -564,7 +566,7 @@ class ProductsController extends Controller
         
 
             if($countProducts > 0){
-                return redirect()->back()->with('flash_message_error','Prodotto già presente nel carrello. Per modificare la quantità vai al carrello!');
+                return redirect()->back()->with('flash_message_error','Product already in the cart. To change the quantity go to the cart!');
             }else{
                 DB::table('products_carts')->insert([
                     'cart_id'=>$cart_id,
@@ -572,7 +574,7 @@ class ProductsController extends Controller
                     'product_quantity'=> $data ['quantity']
                 ]);
             }
-            return redirect()->back()->with('flash_message_success','Prodotto aggiunto al carrello!');
+            return redirect()->back()->with('flash_message_success','Product added to cart!');
         }
     }
 
@@ -594,7 +596,7 @@ class ProductsController extends Controller
         }
         $cart_id=$cartDetails->id;
         DB::table('products_carts')->where(['product_id'=> $id, 'cart_id'=>$cart_id])->delete();
-        return redirect('cart')->with('flash_message_success','Prodotto rimosso dal carrello');
+        return redirect('cart')->with('flash_message_success','Product removed from the cart!');
     }
 
 
@@ -617,9 +619,9 @@ class ProductsController extends Controller
         $updated_quantity = $productCart->product_quantity + $quantity;
         if($getStock >= $updated_quantity){
             DB::table('products_carts')->where(['product_id'=>$id, 'cart_id'=>$cart_id])->increment('product_quantity',$quantity);
-            return redirect('cart')->with('flash_message_success','Quantità del prodotto aggiornata con successo!');
+            return redirect('cart')->with('flash_message_success','Product quantity updated successfully!');
         }else{
-            return redirect('cart')->with('flash_message_error','Quantità del prodotto richiesta non disponibile!');
+            return redirect('cart')->with('flash_message_error','Requested product quantity not available!');
         }
         
     }
@@ -633,26 +635,26 @@ class ProductsController extends Controller
         $data = $request->all();
         $couponCount = Coupon::where('coupon_code', $data['coupon_code'])->count();
         if($couponCount == 0){
-            return redirect()->back()->with('flash_message_error','Il coupon non esiste!');
+            return redirect()->back()->with('flash_message_error','Coupon does not exists!');
         }else{
-            //esegui ulteriori controlli
+            //perform additional checks
             $couponDetails = Coupon::where('coupon_code', $data['coupon_code'])->first();
             
-            //controllo se il coupon è attivo
+            //check if coupon is active
             if($couponDetails->status == 0){
-                return redirect()->back()->with('flash_message_error','Questo coupon non è attivo!');
+                return redirect()->back()->with('flash_message_error','This coupon is not active!');
             }
             if($couponDetails->used == 1){
-                return redirect()->back()->with('flash_message_error','Questo coupon è già stato usato!');
+                return redirect()->back()->with('flash_message_error','This coupon has already been used!');
             }
 
-            //controllo la data di scadenza
+            //check expiry date
             $expiry_date = $couponDetails->expiry_date;
             $current_date = date('Y-m-d');
             if($expiry_date < $current_date){
-                return redirect()->back()->with('flash_message_error','Questo coupon è scaduto!');
+                return redirect()->back()->with('flash_message_error','This coupon has expired!');
             }
-            //il coupon è valido
+            //Coupon is valid
 
 
             if(Auth::check()){
@@ -675,14 +677,13 @@ class ProductsController extends Controller
                 $total_amount = $total_amount + ($item->price * $item->product_quantity);
             }
 
-            //controllo il tipo del coupon
             $couponAmount = $couponDetails->amount;
             $couponAmount = round($couponAmount, 2);
 
             Session::put('coupon_amount',$couponAmount);
             Session::put('coupon_code',$data['coupon_code']);
 
-            return redirect()->back()->with('flash_message_success','Codice coupon applicato con successo!');
+            return redirect()->back()->with('flash_message_success','Coupon code applied successfully!');
 
         }
     }
@@ -704,7 +705,7 @@ class ProductsController extends Controller
 
         $countCartProducts = DB::table('products_carts')->where(['cart_id'=>$cart_id])->count();
         if($countCartProducts == 0){
-            return redirect()->back()->with('flash_message_error','Non ci sono prodotti nel carrello!');
+            return redirect()->back()->with('flash_message_error','There are no products in the cart!');
         }
        
         $userCart = Cart::getProductsCart();
@@ -727,7 +728,7 @@ class ProductsController extends Controller
             if( empty($data['shipping_name']) || empty($data['shipping_surname']) || empty($data['shipping_country']) || 
             empty($data['shipping_province']) || empty($data['shipping_city']) || empty($data['shipping_address']) || 
             empty($data['shipping_pincode']) || empty($data['shipping_mobile']) ){
-                    return redirect()->back()->with('flash_message_error','Per favore compila tutti i campi!');
+                    return redirect()->back()->with('flash_message_error','Please fill in all fields!');
             }
 
             if($shippingCount > 0){
@@ -1086,7 +1087,7 @@ class ProductsController extends Controller
         if($request->isMethod('post')){
             $data=$request->all();
             Order::where('id',$data['order_id'])->update(['order_status'=>$data['order_status']]);
-            return redirect()->back()->with('flash_message_success','Stato dell\' ordine aggiornato con successo!');
+            return redirect()->back()->with('flash_message_success','Order status successfully updated!');
         }
     }
 
@@ -1130,7 +1131,7 @@ class ProductsController extends Controller
     public function addWishlist($product_id){
         //check if product is already in wishlist
         if(Product::checkIfWished($product_id))
-            return redirect()->back()->with('flash_message_error','Prodotto già presente nella wishlist!');
+            return redirect()->back()->with('flash_message_error','Product already present in the wishlist!');
 
         $session_id = Session::get('session_id');
         if(Auth::check()){
@@ -1156,13 +1157,13 @@ class ProductsController extends Controller
             'wish_id'=>$wish_id,
             'product_id'=> $product_id
         ]);
-        return redirect()->back()->with('flash_message_success','Prodotto aggiunto alla wishlist!');
+        return redirect()->back()->with('flash_message_success','Product added to the wishlist!');
     }
 
     public function removeWishlist($product_id){
         //check if product is not in wishlist
         if(Product::checkIfNotWished($product_id))
-            return redirect()->back()->with('flash_message_error','Prodotto non presente nella wishlist!');
+            return redirect()->back()->with('flash_message_error','Product not present in the wishlist!');
 
         $session_id = Session::get('session_id');
         if(Auth::check()){
@@ -1175,7 +1176,7 @@ class ProductsController extends Controller
         
         $wish_id = $wishDetails->id;
         DB::table('wish_products')->where(['wish_id'=>$wish_id, 'product_id'=>$product_id])->delete();
-        return redirect()->back()->with('flash_message_success','Prodotto rimosso dalla wishlist!');
+        return redirect()->back()->with('flash_message_success','Product removed from the wishlist!');
     }
 
     //admin

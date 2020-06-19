@@ -22,14 +22,14 @@ class UsersController extends Controller
         if($request->isMethod('post')){
             $data=$request->all();
             if(empty($data['email']) || empty($data['password'])){
-                return redirect()->back()->with('flash_message_error','Tutti i campi devono essere compilati');
+                return redirect()->back()->with('flash_message_error','Please fill in all fields!');
             }
 
             if(Auth::attempt(['email'=>$data['email'],'password'=>$data['password']])){
                 //check if account is actived
                 $userStatus = User::where('email',$data['email'])->first();
                 if($userStatus->status == 0){
-                    return redirect()->back()->with('flash_message_error','Il tuo account non è attivo. Ti abbiamo inviato una mail di conferma, attivalo ora!');
+                    return redirect()->back()->with('flash_message_error','Your account is not active. We have sent you a confirmation email!');
                 }
                 
                 Session::put('front_session',$data['email']);
@@ -59,7 +59,7 @@ class UsersController extends Controller
 
                 return redirect('/cart');
             }else{
-                return redirect()->back()->with('flash_message_error','Credenziali errate!');
+                return redirect()->back()->with('flash_message_error','Incorrect credentials!');
             }
         }
         Controller::createSession();
@@ -73,17 +73,17 @@ class UsersController extends Controller
             $data=$request->all();
             //controllo se l'utente già esiste
             if(empty($data['name']) || empty($data['surname']) || empty($data['email']) || empty($data['password']) || empty($data['confirm_password'])){
-                return redirect()->back()->with('flash_message_error','Tutti i campi devono essere compilati');
+                return redirect()->back()->with('flash_message_error','Please fill in all fields!');
             }
             $usersCount=User::where('email',$data['email'])->count();
             if($usersCount > 0)
-                return redirect()->back()->with('flash_message_error','Email già esistente!');
+                return redirect()->back()->with('flash_message_error','Email already exists!');
                 
             if(strlen($data['password'])<6 || strlen($data['confirm_password'])<6)
                 return redirect()->back()->with('flash_message_error','The password must be at least 6 characters long!');
 
             if($data['password'] != $data['confirm_password'])
-                return redirect()->back()->with('flash_message_error','Password non coincidenti!');
+                return redirect()->back()->with('flash_message_error','Passwords do not match!');
             
             
             $user=new User;
@@ -129,7 +129,7 @@ class UsersController extends Controller
         if($usersCount == 1){
             $userDetails = User::where('email',$email)->first();
             if($userDetails->status == 1){
-                return redirect('/user-login')->with('flash_message_success','Email dell\'account già attiva. Puoi effettuare il login!');
+                return redirect('/user-login')->with('flash_message_success','Account email already active. You can log in!');
             }else{
                 User::where('email',$email)->update(['status'=> 1,'email_verified_at' => DB::raw('now()')]);
                 //send welcome mail
@@ -137,7 +137,7 @@ class UsersController extends Controller
                 Mail::send('emails.welcome', $messageData, function($message) use($email){
                     $message->to($email)->subject('Welcome to RB-Gym');
                 });
-                return redirect('/user-login')->with('flash_message_success','Email dell\'account attivata con successo. Ora puoi effettuare il login!');
+                return redirect('/user-login')->with('flash_message_success','Account email successfully activated. Now you can log in!');
             }
         }else{
             abort(404);
@@ -150,7 +150,7 @@ class UsersController extends Controller
             $data = $request->all();
             $usersCount = User::where('email',$data['email'])->count();
             if($usersCount == 0){
-                return redirect()->back()->with('flash_message_error','L\'Email non esiste!');
+                return redirect()->back()->with('flash_message_error','Email does not exists!');
             }
             //get user details
             $userDetails=User::where('email',$data['email'])->first();
@@ -228,10 +228,10 @@ class UsersController extends Controller
                     'new_password' => $new_pwd,
                     'updated' => 1
                 ]);
-                return redirect()->back()->with('flash_message_success','Password modificata con successo!');
+                return redirect()->back()->with('flash_message_success','Password changed successfully!');
             }
             else{
-                return redirect()->back()->with('flash_message_error','La password corrente non è corretta!');
+                return redirect()->back()->with('flash_message_error','The current password is incorrect!');
             }
         }
         Controller::createSession();
@@ -300,17 +300,15 @@ class UsersController extends Controller
         
         if($request->isMethod('post')){
             $data=$request->all();
-            if( empty($data['name']) || empty($data['surname']) || empty($data['email']) ||
-                 empty($data['country']) || empty($data['province']) || empty($data['city']) || empty($data['address'])
-                 || empty($data['pincode']) || empty($data['mobile'])){
-                return redirect()->back()->with('flash_message_error','Tutti i campi devono essere compilati');
+            if( empty($data['name']) || empty($data['surname']) || empty($data['email']) || empty($data['country']) || empty($data['province']) || empty($data['city']) || empty($data['address'])|| empty($data['pincode']) || empty($data['mobile'])){
+                return redirect()->back()->with('flash_message_error','please fill in all fields!');
             }
 
             //check if email already exists
             $userEmailCount=User::where('email',$data['email'])->count();
             if($userEmailCount > 0){
                 if($userDetails->email != $data['email'])
-                    return redirect()->back()->with('flash_message_error','Email non disponibile');
+                    return redirect()->back()->with('flash_message_error','Email not available!');
             }
 
             if(!empty($data['email'])){
@@ -327,7 +325,7 @@ class UsersController extends Controller
             $bill_address->pincode=$data['pincode'];
             $bill_address->mobile=$data['mobile'];
             $bill_address->save();
-            return redirect()->back()->with('flash_message_success','Account aggiornato con successo!');
+            return redirect()->back()->with('flash_message_success','account successfully updated!');
         }
         Controller::createSession();
         $userCart = \App\Cart::getProductsCart();

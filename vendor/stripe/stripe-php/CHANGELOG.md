@@ -1,5 +1,22 @@
 # Changelog
 
+## 7.31.0 - 2020-05-01
+* [#927](https://github.com/stripe/stripe-php/pull/927) Add support for new tax IDs
+
+## 7.30.0 - 2020-04-29
+* [#924](https://github.com/stripe/stripe-php/pull/924) Add support for the `Price` resource and APIs
+
+## 7.29.0 - 2020-04-22
+* [#920](https://github.com/stripe/stripe-php/pull/920) Add support for the `Session` resource and APIs on the `BillingPortal` namespace
+
+## 7.28.1 - 2020-04-10
+* [#915](https://github.com/stripe/stripe-php/pull/915) Improve PHPdocs for many classes
+
+## 7.28.0 - 2020-04-03
+* [#912](https://github.com/stripe/stripe-php/pull/912) Preserve backwards compatibility for typoed `TYPE_ADJUSTEMENT` enum.
+* [#911](https://github.com/stripe/stripe-php/pull/911) Codegenerated PHPDoc for nested resources
+* [#902](https://github.com/stripe/stripe-php/pull/902) Update docstrings for nested resources
+
 ## 7.27.3 - 2020-03-18
 * [#899](https://github.com/stripe/stripe-php/pull/899) Convert keys to strings in `StripeObject::toArray()`
 

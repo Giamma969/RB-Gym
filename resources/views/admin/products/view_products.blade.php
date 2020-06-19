@@ -64,9 +64,9 @@
                     @endif
                   </td>
                   <td style="max-width:50px" class="center">
-                    <a style="width:80%;"  href="#myModal{{$product->id}}" data-toggle="modal" class="btn btn-success btn-mini" title="Visualizza">View</a>
-                    <a style="width:80%;" float="clear" href="{{ url('/admin/edit-product/'.$product->id)  }} " class="btn btn-primary btn-mini" title="Modifica">Edit</a>
-                    <a style="width:80%;" href="{{ url('/admin/add-images/'.$product->id)  }} " class="btn btn-info btn-mini" title="Aggiungi immagini">Add images </a>  
+                    <a style="width:80%;"  href="#myModal{{$product->id}}" data-toggle="modal" class="btn btn-success btn-mini" title="View">View</a>
+                    <a style="width:80%;" float="clear" href="{{ url('/admin/edit-product/'.$product->id)  }} " class="btn btn-primary btn-mini" title="Edit">Edit</a>
+                    <a style="width:80%;" href="{{ url('/admin/add-images/'.$product->id)  }} " class="btn btn-info btn-mini" title="Add images">Add images </a>  
                     <a style="width:80%; margin-top:-1px;" rel="{{ $product->id }}" rel1="delete-product"href="javascript:" class="btn btn-danger btn-mini deleteRecord">Delete</a>
                   </td> 
                 </tr>

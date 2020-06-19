@@ -8,11 +8,11 @@
     <div id="content-header">
         <div id="breadcrumb"> 
             <a href="index.html" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a> 
-            <a href="#">Ordini</a>
-            <a href="#" class="current">Visualizza ordini</a> 
+            <a href="#">Orders</a>
+            <a href="#" class="current">View orders</a> 
         </div>
 
-        <h1>Ordini</h1>
+        <h1>Orders</h1>
         @if(Session::has('flash_message_error'))
         <div class="alert alert-error alert-block">
             <button type="button" class="close" data-dismiss="alert">×</button>
@@ -33,7 +33,7 @@
             <div class="span12">
                 <div class="widget-box">
                     <div class="widget-title"> <span class="icon"><i class="icon-th"></i></span>
-                        <h5>Visualizza ordini</h5>
+                        <h5>View orders</h5>
                     </div>
                     <div class="widget-content nopadding">
                         <table class="table table-bordered data-table">

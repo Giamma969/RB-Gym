@@ -74,7 +74,7 @@
                         <div class="col-lg-6">
                             <div class="product-details">
                                 <div class="pd-title">
-                                    <span>oranges</span>
+                                    <span>{{$categoryDetails->name}}</span>
                                     <h3>{{$productDetails->product_name}}</h3>
                                 </div>
                                 <input id="avg" name="avg" type="hidden" value="{{ $ratingAvg }}">
@@ -96,27 +96,15 @@
                                     <p><!-- description --></p>
                                     <h4>€{{$productDetails->price}} <span>629.99</span></h4>
                                     <br>
-                                    <p><b>Brand:</b> {{ $productDetails ->brand }}</p>
-                                    <p><b>Condition:</b>New</p>
-                                    <p><b>Color:</b> {{ $productDetails ->product_color}}</p>
-                                    <p>@if($productDetails->stock > 0) {{$productDetails->stock}} in stock @else Out of stock @endif </p>
-                                </div>
-                                <div class="pd-color">
-                                    <h6>Color</h6>
-                                    <div class="pd-color-choose">
-                                        <div class="cc-item">
-                                            <input type="radio" id="cc-black">
-                                            <label for="cc-black"></label>
-                                        </div>
-                                        <div class="cc-item">
-                                            <input type="radio" id="cc-yellow">
-                                            <label for="cc-yellow" class="cc-yellow"></label>
-                                        </div>
-                                        <div class="cc-item">
-                                            <input type="radio" id="cc-violet">
-                                            <label for="cc-violet" class="cc-violet"></label>
-                                        </div>
-                                    </div>
+                                    <!-- <div class="p-code">Product code : {{$productDetails->product_code}}</div> -->
+                                    <p><b>Product code : {{$productDetails->product_code}}</b></p>
+                                    <p><b>Brand: </b> {{ $productDetails ->brand }}</p>
+                                    <p><b>Condition: </b>New</p>
+                                    <p><b>Color: </b> {{ $productDetails ->product_color}}</p>
+                                    <p><b>Availability: </b>@if($productDetails->stock > 0) {{$productDetails->stock}} in stock @else Out of stock @endif </p>
+                                    <ul class="pd-tags">
+                                        <li><span>CATEGORIES</span>: {{$categoryDetails->name}}</li>
+                                    </ul>
                                 </div>
                                 <div class="quantity">
                                     <div class="pro-qty">
@@ -126,12 +114,10 @@
                                         <button type="submit" class="primary-btn pd-cart">Add To Cart</button>
                                     @endif
                                 </div>
-                                <ul class="pd-tags">
-                                    <li><span>CATEGORIES</span>: More Accessories, Wallets & Cases</li>
-                                </ul>
+                                
                                 <div class="pd-share">
-                                    <div class="p-code">Product code : {{$productDetails->product_code}}</div>
-                                    <div class="pd-social">
+                                   
+                                    <div class="pd-social" style="margin-top: 20px!important;">
                                         <a href="#"><i class="ti-facebook"></i></a>
                                         <a href="#"><i class="ti-twitter-alt"></i></a>
                                         <a href="#"><i class="ti-linkedin"></i></a>
@@ -165,14 +151,9 @@
                             <div class="tab-pane fade-in active" id="tab-1" role="tabpanel">
                                 <div class="product-content">
                                     <div class="row">
-                                        <div class="col-lg-7">
-                                            <h5>Introduction</h5>
-                                            <p>{{$productDetails->description}}</p>
+                                        <div class="col-lg-12">
                                             <h5>Features</h5>
-                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
-                                                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-                                                ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-                                                aliquip ex ea commodo consequat. Duis aute irure dolor in </p>
+                                            <p>{{$productDetails->description}}</p>
                                         </div>
                                         <div class="col-lg-5">
                                             <img src="img/product-single/tab-desc.jpg" alt="">
@@ -184,34 +165,25 @@
                                 <div class="specification-table">
                                     <table>
                                         <tr>
-                                            <td class="p-catagory">Customer Rating</td>
+                                            <td class="p-catagory">Product Code</td>
                                             <td>
-                                                <div class="pd-rating">
-                                                    <i class="fa fa-star"></i>
-                                                    <i class="fa fa-star"></i>
-                                                    <i class="fa fa-star"></i>
-                                                    <i class="fa fa-star"></i>
-                                                    <i class="fa fa-star-o"></i>
-                                                    <span>(5)</span>
-                                                </div>
+                                                <div class="p-code">{{$productDetails->product_code}}</div>
                                             </td>
                                         </tr>
                                         <tr>
                                             <td class="p-catagory">Price</td>
                                             <td>
-                                                <div class="p-price">$495.00</div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td class="p-catagory">Add To Cart</td>
-                                            <td>
-                                                <div class="cart-add">+ add to cart</div>
+                                                <div class="p-price">€{{$productDetails->price}}</div>
                                             </td>
                                         </tr>
                                         <tr>
                                             <td class="p-catagory">Availability</td>
                                             <td>
-                                                <div class="p-stock">22 in stock</div>
+                                                @if($productDetails->stock > 0)
+                                                    <div class="p-stock">{{$productDetails->stock}} in stock</div>
+                                                @else
+                                                    <div class="p-stock">Not in stock</div>
+                                                @endif
                                             </td>
                                         </tr>
                                         <tr>
@@ -221,20 +193,8 @@
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td class="p-catagory">Size</td>
-                                            <td>
-                                                <div class="p-size">Xxl</div>
-                                            </td>
-                                        </tr>
-                                        <tr>
                                             <td class="p-catagory">Color</td>
-                                            <td><span class="cs-color"></span></td>
-                                        </tr>
-                                        <tr>
-                                            <td class="p-catagory">Sku</td>
-                                            <td>
-                                                <div class="p-code">00012</div>
-                                            </td>
+                                            <td><span class="p-stock">{{$productDetails->product_color}}</span></td>
                                         </tr>
                                     </table>
                                 </div>
@@ -323,25 +283,22 @@
                     <div class="col-lg-3 col-sm-6">
                         <div class="product-item">
                             <div class="pi-pic">
-                                <img src="{{asset('images/backend_images/products/medium/'.$item->image) }}" alt="">
+                                <a href="{{ url('product/'.$item->id) }}">
+                                    <img src="{{asset('images/backend_images/products/medium/'.$item->image) }}" alt="">
+                                </a>
                                 <div class="sale">Sale</div>
-                                <div class="icon">
-                                    @if(Product::checkIfWished($item->id))
-                                        <i class="fa fa-heart" aria-hidden="true"></i>
-                                    @else
-                                        <i class="fa fa-heart-o" aria-hidden="true"></i>
-                                    @endif
-                                </div>
+                                <div class="icon"></div>
                                 <ul>
-                                    <li class="w-icon active"><a href="#"><i class="icon_bag_alt"></i></a></li>
-                                    <li class="quick-view">
+                                    <li class="w-icon active">
                                         @if(Product::checkIfWished($item->id))
-                                            <a href="{{ url('/remove-wishlist/'.$item->id) }}">Remove wishlist</a>
+                                            <a href="{{ url('/remove-wishlist/'.$item->id) }}"><i class="icon_heart"  aria-hidden="true"></i></a>
                                         @else
-                                            <a href="{{ url('/add-wishlist/'.$item->id) }}">Add wishlist</a>
+                                            <a href="{{ url('/add-wishlist/'.$item->id) }}"><i class="icon_heart_alt"  aria-hidden="true"></i></a>
                                         @endif
                                     </li>
-                                    <li class="w-icon"><a href="#"><i class="fa fa-random"></i></a></li>
+                                    <li class="quick-view">
+                                        <a class="a_view_product" href="{{ url('product/'.$item->id) }}">View product</a>
+                                    </li>
                                 </ul>
                             </div>
                             <div class="pi-text">

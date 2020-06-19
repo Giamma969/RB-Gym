@@ -74,7 +74,7 @@ class BannersController extends Controller {
             }
 
             Banner::where('id',$id)->update(['status'=>$status, 'title'=>$data['title'], 'link'=>$data['link'],'image'=>$fileName]);
-            return redirect()->back()->with('flash_message_success', 'Banner modificato con successo!');
+            return redirect()->back()->with('flash_message_success', 'Banner successfully edited!');
         }
         $bannerDetails= Banner::where('id',$id)->first();
         return view('admin.banners.edit_banner')->with(compact('bannerDetails'));
@@ -88,7 +88,7 @@ class BannersController extends Controller {
     public function deleteBanner($id=null){
         Banner::deleteBannerImage($id);
         Banner::where(['id'=>$id])->delete();
-        return redirect()->back()->with('flash_message_success','Banner eliminato con successo!');
+        return redirect()->back()->with('flash_message_success','Banner successfully deleted!');
     }
     
 }

@@ -3,18 +3,25 @@
 namespace Stripe;
 
 /**
- * Plans define the base price, currency, and billing cycle for subscriptions. For
- * example, you might have a &lt;currency&gt;5&lt;/currency&gt;/month plan that
- * provides limited access to your products, and a
- * &lt;currency&gt;15&lt;/currency&gt;/month plan that allows full access.
+ * Plans define the base price, currency, and billing cycle for recurring purchases
+ * of products. Products help you track inventory or provisioning, and plans help
+ * you track pricing. Different physical goods or levels of service should be
+ * represented by products, and pricing options should be represented by plans.
+ * This approach lets you change prices without having to change your provisioning
+ * scheme.
  *
- * Related guide: <a
- * href="https://stripe.com/docs/billing/subscriptions/products-and-plans">Managing
- * Products and Plans</a>.
+ * For example, you might have a single &quot;gold&quot; product that has plans for
+ * $10/month, $100/year, €9/month, and €90/year.
+ *
+ * Related guides: <a
+ * href="https://stripe.com/docs/billing/subscriptions/set-up-subscription">Set up
+ * a subscription</a> and more about <a
+ * href="https://stripe.com/docs/billing/subscriptions/products-and-plans">products
+ * and plans</a>.
  *
  * @property string $id Unique identifier for the object.
  * @property string $object String representing the object's type. Objects of the same type share the same value.
- * @property bool $active Whether the plan is currently available for new subscriptions.
+ * @property bool $active Whether the plan can be used for new purchases.
  * @property null|string $aggregate_usage Specifies a usage aggregation strategy for plans of <code>usage_type=metered</code>. Allowed values are <code>sum</code> for summing up all usage during a period, <code>last_during_period</code> for using the last usage record reported within a period, <code>last_ever</code> for using the last usage record ever (across period bounds) or <code>max</code> which uses the usage record with the maximum reported usage during a period. Defaults to <code>sum</code>.
  * @property null|int $amount The amount in %s to be charged on the interval specified.
  * @property null|string $amount_decimal Same as <code>amount</code>, but contains a decimal value with at most 12 decimal places.

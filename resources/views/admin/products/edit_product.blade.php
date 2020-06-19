@@ -47,7 +47,7 @@
               <div class="control-group">
                 <label class="control-label">Product code</label>
                 <div class="controls">
-                  <input type="text" name="product_code" id="product_code" value="{{$productDetails->product_code}}" readonly readonly>
+                  <input type="text" name="product_code" id="product_code" value="{{$productDetails->product_code}}" readonly>
                   <input type="button" name="makeProductCode" id="makeProductCode" class="btn btn-success" value="Generate">
                 </div>
               </div>

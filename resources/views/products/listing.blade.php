@@ -86,9 +86,8 @@
 										<a href="{{ url('product/'.$product->id) }}">
 											<img src="{{asset('images/backend_images/products/medium/'.$product->image)}}" alt="">
 										</a>
-											<div class="sale">Sale</div>
-										<div class="icon">
-										</div>
+										<div class="sale">Sale</div>
+										<div class="icon"></div>
 										<ul>
 											<li class="w-icon active">
 												@if(Product::checkIfWished($product->id))

@@ -18,7 +18,7 @@
                     </div>
                     <div class="phone-service">
                         <i class="fa fa-phone"></i>
-                        +39 0863738210
+                        0862 4311
                     </div>
                 </div>
                 <div class="ht-right">
@@ -37,10 +37,9 @@
                         </select>
                     </div>
                     <div class="top-social">
-                        <a href="#"><i class="ti-facebook"></i></a>
-                        <a href="#"><i class="ti-twitter-alt"></i></a>
-                        <a href="#"><i class="ti-linkedin"></i></a>
-                        <a href="#"><i class="ti-pinterest"></i></a>
+                        <a href="https://www.facebook.com/" target="_blank"><i class="ti-facebook"></i></a>
+                        <a href="https://twitter.com/" target="_blank"><i class="ti-twitter-alt"></i></a>
+                        <a href="https://www.instagram.com/" target="_blank"><i class="ti-instagram"></i></a>
                     </div>
                 </div>
             </div>
@@ -48,27 +47,26 @@
         <div class="container">
             <div class="inner-header">
                 <div class="row">
-                    <div class="col-lg-2 col-md-2">
+                    <div class="col-lg-2 col-md-2" style="margin: -20px 0 0 -60px;">
                         <div class="logo">
                             <a href="{{url('/')}}">
-                                <img src="{{asset('images/frontend_images/logo.png')}}" alt="">
+                                <img src="{{asset('images/frontend_images/logo1.png')}}" alt="">
                             </a>
                         </div>
 					</div>
-					<div class="col-lg-7 col-md-7">
+					<div class="col-lg-7 col-md-7" style="margin-left:80px;">
 						<form action="{{ url('/search-products') }}" method="post">{{ csrf_field() }}
-							<div class="advanced-search">
-								<button type="button" class="category-btn">All Categories</button>
-
-									<div class="input-group">
-										<input type="text" name="product" placeholder="What do you need?">
-										<button type="submit"><i class="ti-search"></i></button>
-									</div>
-								
+							<div  class="advanced-search" >
+                                <div class="input-group" style="float:left;">
+                                    <input type="text" name="pattern" placeholder="What do you need?">
+                                </div>
+                                    <div style="float:right">
+                                    <button type="submit" class="button_search_listing"><i class="ti-search"></i></button>
+                                </div>
 							</div>
 						</form>
 					</div>
-                    <div class="col-lg-3 text-right col-md-3">
+                    <div class="col-lg-3 text-right col-md-3" style="margin-left:-50px;">
                         <ul class="nav-right">
                             <li class="heart-icon">
                                 <a href="{{url('/wishlist')}}">
@@ -159,12 +157,6 @@
                     <ul>
                         <li class="active"><a href="{{ url('/') }}">Home</a></li>
                         <li><a href="#">Outlet</a></li>
-                        <li><a href="#">Collection</a>
-                            <ul class="dropdown">
-                                <li><a href="#">Men's</a></li>
-                                <li><a href="#">Women's</a></li>
-                                <li><a href="#">Kid's</a></li>
-                            </ul>
                         </li>
                         @if(!empty(Auth::check()))
                         <li><a href="#">Account</a>

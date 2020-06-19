@@ -40,7 +40,7 @@ class IndexController extends Controller
 
 
         //***************SLIDER 2*********************
-        //get FORZA products if status==1
+        //get "Strength" products if status==1
         $slider3 = Category::where(['id'=>"13"])->first();
         if($slider3->status == "0"){
             $slider3 = DB::table('categories')->where(['parent_id'=>0, 'status'=>1])->first();
