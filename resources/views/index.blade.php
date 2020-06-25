@@ -22,38 +22,23 @@
 <!-- Hero Section Begin -->
 <section class="hero-section">
     <div class="hero-items owl-carousel">
-        <div class="single-hero-items set-bg" data-setbg="{{asset('images/frontend_images/hero-1.jpg')}}">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-5">
-                        <span>Bag,kids</span>
-                        <h1>Black friday</h1>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
-                            incididunt ut labore et dolore</p>
-                        <a href="#" class="primary-btn">Shop Now</a>
+        @foreach($banners as $banner)
+            <div class="single-hero-items set-bg" data-setbg="{{asset('images/frontend_images/banners/'.$banner->image)}}">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-5">
+                            <!-- <span>Bag,kids</span> -->
+                            <h1>{{$banner->title}}</h1>
+                            <p>{{$banner->description}}</p>
+                            <a href="{{ url('products/'.$banner->link) }}" class="primary-btn">Discover more</a>
+                        </div>
                     </div>
-                </div>
-                <div class="off-card">
-                    <h2>Sale <span>50%</span></h2>
+                    <!-- <div class="off-card">
+                        <h2>Sale <span>20%</span></h2>
+                    </div> -->
                 </div>
             </div>
-        </div>
-        <div class="single-hero-items set-bg" data-setbg="{{asset('images/frontend_images/hero-2.jpg')}}">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-5">
-                        <span>Bag,kids</span>
-                        <h1>Black friday</h1>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
-                            incididunt ut labore et dolore</p>
-                        <a href="#" class="primary-btn">Shop Now</a>
-                    </div>
-                </div>
-                <div class="off-card">
-                    <h2>Sale <span>50%</span></h2>
-                </div>
-            </div>
-        </div>
+        @endforeach
     </div>
 </section>
 <!-- Hero Section End -->
@@ -64,26 +49,32 @@
         <div class="row">
             <div class="col-lg-4">
                 <div class="single-banner">
-                    <img src="{{asset('images/frontend_images/banner-1.jpg')}}" alt="">
-                    <div class="inner-text">
-                        <h4>Men’s</h4>
-                    </div>
+                    <a href="{{asset('products/'.$first_grid->url)}}">
+                        <img src="{{asset('images/backend_images/homepages/'.$homepage->first_grid_image)}}" height="261px" width="392px" alt="">
+                        <div class="inner-text">
+                            <h4>{{$first_grid->name}}</h4>
+                        </div>
+                    </a>
                 </div>
             </div>
             <div class="col-lg-4">
                 <div class="single-banner">
-                    <img src="{{asset('images/frontend_images/banner-2.jpg')}}" alt="">
-                    <div class="inner-text">
-                        <h4>Women’s</h4>
-                    </div>
+                    <a href="{{asset('products/'.$second_grid->url)}}">
+                        <img src="{{asset('images/backend_images/homepages/'.$homepage->second_grid_image)}}" height="261px" width="392px" alt="">
+                        <div class="inner-text">
+                            <h4>{{$second_grid->name}}</h4>
+                        </div>
+                    </a>
                 </div>
             </div>
             <div class="col-lg-4">
                 <div class="single-banner">
-                    <img src="{{asset('images/frontend_images/banner-3.jpg')}}" alt="">
-                    <div class="inner-text">
-                        <h4>Kid’s</h4>
-                    </div>
+                    <a href="{{asset('products/'.$third_grid->url)}}">
+                        <img src="{{asset('images/backend_images/homepages/'.$homepage->third_grid_image)}}" height="261px" width="392px" alt="">
+                        <div class="inner-text">
+                            <h4>{{$third_grid->name}}</h4>
+                        </div>
+                    </a>
                 </div>
             </div>
         </div>
@@ -96,23 +87,23 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-lg-3">
-                <div class="product-large set-bg" data-setbg="{{asset('images/frontend_images/products/women-large.jpg')}}">
-                    <h2>{{$category_name2}}</h2>
-                    <a href="#">Discover More</a>
+                <div style="width:309px!important; height:620px!important;" class="product-large set-bg" data-setbg="{{asset('images/backend_images/homepages/'.$homepage->first_slider_image)}}">
+                    <h2>{{$first_slider->name}}</h2>
+                    <a href="{{ url('products/'.$first_slider->url) }}">Discover More</a>
                 </div>
             </div>
             <div class="col-lg-8 offset-lg-1">
                 <div class="filter-control">
-                    <ul></ul>
+                    <a href="{{ url('products/'.$first_slider->url) }}"><h2>{{$first_slider->name}}</h2></a>
                 </div>
                 <div class="product-slider owl-carousel">
-                    @foreach($products_slider2 as $product)
+                    @foreach($products_first_slider as $product)
                         <div class="product-item">
                             <div class="pi-pic">
                                 <a href="{{ url('product/'.$product->id) }}">
                                     <img src="{{asset('images/backend_images/products/medium/'.$product->image)}}" alt="">
                                 </a>
-                                    <div class="sale">Sale</div>
+                                @if($product->in_sale == 1)<div class="sale">Sale</div>@endif
                                 <div class="icon">
                                 </div>
                                 <ul>
@@ -134,8 +125,12 @@
                                     <h5>{{$product->product_name}}</h5>
                                 </a>
                                 <div class="product-price">
-                                    €{{$product->price}}
-                                    <span>$35.00</span>
+                                    @if($product->in_sale == 1)
+                                        €{{$product->new_price}}
+                                        <span>€{{$product->new_price}}</span>
+                                    @else
+                                        €{{$product->price}}
+                                    @endif
                                 </div>
                             </div>
                         </div>
@@ -147,42 +142,11 @@
 </section>
 <!-- Women Banner Section End -->
 
-<!-- Deal Of The Week Section Begin-->
-<section class="deal-of-week set-bg spad" data-setbg="{{asset('images/frontend_images/time-bg.jpg')}}">
-    <div class="container">
-        <div class="col-lg-6 text-center">
-            <div class="section-title">
-                <h2>Deal Of The Week</h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed<br /> do ipsum dolor sit amet,
-                    consectetur adipisicing elit </p>
-                <div class="product-price">
-                    $35.00
-                    <span>/ HanBag</span>
-                </div>
-            </div>
-            <div class="countdown-timer" id="countdown">
-                <div class="cd-item">
-                    <span>56</span>
-                    <p>Days</p>
-                </div>
-                <div class="cd-item">
-                    <span>12</span>
-                    <p>Hrs</p>
-                </div>
-                <div class="cd-item">
-                    <span>40</span>
-                    <p>Mins</p>
-                </div>
-                <div class="cd-item">
-                    <span>52</span>
-                    <p>Secs</p>
-                </div>
-            </div>
-            <a href="#" class="primary-btn">Shop Now</a>
-        </div>
-    </div>
+<!-- Middle image Section Begin-->
+<section class="deal-of-week set-bg spad" >
+    <img src="{{asset('images/backend_images/homepages/'.$homepage->middle_image)}}">
 </section>
-<!-- Deal Of The Week Section End -->
+<!-- Middle image Section End -->
 
 <!-- Man Banner Section Begin -->
 <section class="man-banner spad">
@@ -190,16 +154,16 @@
         <div class="row">
             <div class="col-lg-8">
                 <div class="filter-control">
-                    <ul></ul>
+                    <a href="{{ url('products/'.$second_slider->url) }}"><h2>{{$second_slider->name}}</h2></a>
                 </div>
                 <div class="product-slider owl-carousel">
-                    @foreach($products_slider3 as $product)
+                    @foreach($products_second_slider as $product)
                         <div class="product-item">
                             <div class="pi-pic">
                                 <a href="{{ url('product/'.$product->id) }}">
                                     <img src="{{asset('images/backend_images/products/medium/'.$product->image)}}" alt="">
                                 </a>
-                                    <div class="sale">Sale</div>
+                                    @if($product->in_sale)<div class="sale">Sale</div>@endif
                                 <div class="icon">
                                 </div>
                                 <ul>
@@ -221,8 +185,12 @@
                                     <h5>{{$product->product_name}}</h5>
                                 </a>
                                 <div class="product-price">
-                                    €{{$product->price}}
-                                    <span>$35.00</span>
+                                    @if($product->in_sale == 1)
+                                        €{{$product->new_price}}
+                                        <span>€{{$product->new_price}}</span>
+                                    @else
+                                        €{{$product->price}}
+                                    @endif
                                 </div>
                             </div>
                         </div>
@@ -230,9 +198,9 @@
                 </div>
             </div>
             <div class="col-lg-3 offset-lg-1">
-                <div class="product-large set-bg m-large" data-setbg="{{asset('images/frontend_images/products/man-large.jpg')}}">
-                    <h2>{{$category_name3}}</h2>
-                    <a href="#">Discover More</a>
+                <div style="width:309px!important; height:620px!important;" class="product-large set-bg m-large" data-setbg="{{asset('images/backend_images/homepages/'.$homepage->second_slider_image)}}">
+                    <h2>{{$second_slider->name}}</h2>
+                    <a href="{{ url('products/'.$second_slider->url) }}">Discover More</a>
                 </div>
             </div>
         </div>

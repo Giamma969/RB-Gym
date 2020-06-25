@@ -258,15 +258,6 @@ class UsersController extends Controller
             echo "true";
     }
 
-    public function checkUsername(Request $request){
-        $data=$request->all();
-        $usersCount=User::where('username',$data['username'])->count();
-        if($usersCount > 0)
-            echo "false";
-        else
-            echo "true";
-    }
-
     //admin
     public function viewUsers(){
         $usersDetails = DB::table('addresses')->where(['is_billing'=>1])

@@ -47,13 +47,6 @@
               </div>
 
               <div class="control-group">
-                <label class="control-label">Description</label>
-                <div class="controls">
-                  <textarea name="description" id="description"> </textarea>
-                </div>
-              </div>
-
-              <div class="control-group">
                 <label class="control-label">URL</label>
                 <div class="controls">
                   <input type="text" name="url" id="url">

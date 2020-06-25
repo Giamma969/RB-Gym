@@ -53,13 +53,17 @@ class ProductsController extends Controller
             $product->category_id= $data['category_id'];
             $product->product_name= $data['product_name'];
             $product->product_code= $data['product_code'];
-            $product->product_color= $data['product_color'];  
+           
+            if(!empty($data['description'])) {$product->description= $data['description'];}else{$product->description= '';}
+            if(!empty($data['product_color'])) {$product->product_color= $data['product_color'];}else{$product->product_color= '';}
+            if(!empty($data['width'])) {$product->width= $data['width'];}else{$product->width= '';}
+            if(!empty($data['height'])) {$product->height= $data['height'];}else{$product->height= '';}
+            if(!empty($data['depth'])) {$product->depth= $data['depth'];}else{$product->depth= '';}
+            if(!empty($data['material'])) {$product->material= $data['material'];}else{$product->material= '';}
+            if(!empty($data['weight'])) {$product->weight= $data['weight'];}else{$product->weight= '';}
+            if(!empty($data['maximum_load_supported'])) {$product->maximum_load_supported= $data['maximum_load_supported'];}else{$product->maximum_load_supported= '';}
 
-            if(!empty($data['description'])) {
-                $product->description= $data['description'];
-            }else{
-                $product->description= '';
-            }
+
 
             $product->brand = $data['brand'];
             $product->price= $data['price']; 
@@ -82,11 +86,7 @@ class ProductsController extends Controller
             }
             $product->stock = $data['stock'];
 
-            if(empty($data['status'])){
-                $status = 0;
-            }else{
-                $status = 1;
-            }
+            if(empty($data['status'])){$status = 0;}else{$status = 1;}
 
             $product->status = $status;
             $product->save();  
@@ -146,15 +146,16 @@ class ProductsController extends Controller
             }
                 
             
-        if(empty($data['description'])){
-            $data['description']="";
-        }
+        if(empty($data['description'])){ $data['description']="";}
+        if(empty($data['product_color'])) {$data['product_color']="";}
+        if(empty($data['width'])) {$data['width']="";}
+        if(empty($data['height'])) {$data['height']="";}
+        if(empty($data['depth'])) {$data['depth']="";}
+        if(empty($data['material'])) {$data['material']="";}
+        if(empty($data['weight'])) {$data['weight']="";}
+        if(empty($data['maximum_load_supported'])) {$data['maximum_load_supported']="";}
 
-        if(empty($data['status'])){
-            $status = 0;
-          }else{
-            $status = 1;
-          }
+        if(empty($data['status'])){$status = 0;}else{$status = 1;}
 
           //check if product code already exists
           $productCount=Product::where(['product_code'=>$data['product_code']])->count();
@@ -162,10 +163,23 @@ class ProductsController extends Controller
               return redirect()->back()->with('flash_message_error','Product code already exists!');
           } 
 
-          Product::where(['id'=>$id])->update(['category_id'=>$data['category_id'],
-           'product_name'=>$data['product_name'],'product_code'=>$data['product_code'],
-           'product_color'=>$data['product_color'],'description'=>$data['description'], 'brand'=> $data['brand'],
-           'price'=>$data['price'], 'image'=>$filename, 'stock'=> $data['stock'], 'status'=>$status]);
+          Product::where(['id'=>$id])->update([
+            'category_id'=>$data['category_id'],
+            'product_name'=>$data['product_name'],
+            'product_code'=>$data['product_code'],
+            'product_color'=>$data['product_color'],
+            'width'=>$data['width'],
+            'height'=>$data['height'],
+            'depth'=>$data['depth'],
+            'material'=>$data['material'],
+            'weight'=>$data['weight'],
+            'maximum_load_supported'=>$data['maximum_load_supported'],
+            'description'=>$data['description'], 
+            'brand'=> $data['brand'],
+            'price'=>$data['price'],
+            'image'=>$filename, 
+            'stock'=> $data['stock'], 
+            'status'=>$status]);
            return redirect()->back()->with('flash_message_success','Product successfully updated!');        
 
         }
@@ -304,7 +318,7 @@ class ProductsController extends Controller
 
          //delete image from product table
         ProductsImage::where(['id'=>$id])->delete();
-        return redirect()->back()->with('flash_message_success', ' Immagine alternativa del prodotto eliminata con successo!');
+        return redirect()->back()->with('flash_message_success', 'Product image successfully deleted!');
     }
     //admin
     public function addImages(Request $request, $id=null){
@@ -369,7 +383,8 @@ class ProductsController extends Controller
             }
             
             $productsAll= DB::table('products')->whereIn('products.category_id',$cat_ids)->where('products.status',1)
-                ->join('categories','categories.id','=','products.category_id')->select('products.*','categories.name as category_name');    
+                ->join('categories','categories.id','=','products.category_id')
+                ->select('products.*','categories.name as category_name');    
             // if($data['sorting'] ==  "price_asc")$productsAll->orderBy('products.price','asc');
                 
 
@@ -400,6 +415,9 @@ class ProductsController extends Controller
             $brand_test = explode('-', $_GET['brand']);
             $productsAll = $productsAll->whereIn('brand',$brand_test);
         }
+        
+        
+
         //total products for category
         $count_products = $productsAll->count();
         
@@ -432,10 +450,16 @@ class ProductsController extends Controller
             $start = 1 + (($current_page - 1) * Session::get('paginate'));
             $end = $products_currentpage +(($current_page - 1) * Session::get('paginate'));
         }
-       
-        
+        //if product is in sale add new field "new_price"
+        foreach($productsAll as $product){
+            if($product->in_sale == 1){
+                $new_price = DB::table('products_sales')->where('product_id',$product->id)->first();
+                $new_price = $new_price->price;
+                $product->new_price = $new_price;
+            }
+        }
+        // echo'<pre>'; print_r($productsAll); die;
         $userCart = Cart::getProductsCart();
-        // echo '<pre>'; print_r($userCart); die;
         return view('products.listing')->with(compact('categories','categoryDetails','productsAll','url','brandArray','breadcrumb','userCart','count_products','end','start'));
     }
 
@@ -459,7 +483,6 @@ class ProductsController extends Controller
         return redirect::to($finalUrl);
     }
     
-
     public function searchProducts(Request $request){
         if($request->isMethod('post')){
             $data=$request->all();
@@ -490,6 +513,13 @@ class ProductsController extends Controller
         
         //get product detail
         $productDetails = Product::where('id',$id)->first();
+        
+        if($productDetails->in_sale == 1){
+            $new_price = DB::table('products_sales')->where('product_id',$productDetails->id)->first();
+            $new_price = $new_price->price;
+            $productDetails->new_price = $new_price;
+        }
+        // echo'<pre>'; print_r($productDetails); die;
 
         $relatedProducts = DB::table('products')
             ->where('products.id','!=',$id)
@@ -497,6 +527,14 @@ class ProductsController extends Controller
             ->join('categories','categories.id','=','products.category_id')
             ->select('categories.name as category_name','products.*')
             ->get();
+
+        foreach($relatedProducts as $product){
+            if($product->in_sale == 1){
+                $new_price = DB::table('products_sales')->where('product_id',$product->id)->first();
+                $new_price = $new_price->price;
+                $product->new_price = $new_price;
+            }
+        }
         
         
         $categoryDetails = Category::where('id',$productDetails->category_id)->first();
@@ -537,11 +575,7 @@ class ProductsController extends Controller
                 return redirect()->back()->with('flash_message_error','Requested product quantity not available!');
             }
 
-            if(Auth::check()){
-                $user_id=Auth::user()->id;
-            }else{
-                $user_id = NULL;
-            }
+            if(Auth::check()){ $user_id=Auth::user()->id;}else{ $user_id = NULL; }
 
             $session_id = Session::get('session_id');
         
@@ -674,7 +708,15 @@ class ProductsController extends Controller
             $total_amount = 0;
 
             foreach($userCart as $item){
-                $total_amount = $total_amount + ($item->price * $item->product_quantity);
+                if($item->in_sale == 1){
+                    $new_price = DB::table('products_sales')->where('product_id',$item->id)->first();
+                    $new_price = $new_price->price;
+                    $item->new_price = $new_price;
+                    $total_amount = $total_amount + ($item->new_price * $item->product_quantity);
+                }else{
+                    $total_amount = $total_amount + ($item->price * $item->product_quantity);
+                }
+                
             }
 
             $couponAmount = $couponDetails->amount;
@@ -703,6 +745,7 @@ class ProductsController extends Controller
         $cartDetails=DB::table('cart')->where(['user_id'=>$user_id])->first();
         $cart_id=$cartDetails->id;
 
+        //check if there are any products in cart
         $countCartProducts = DB::table('products_carts')->where(['cart_id'=>$cart_id])->count();
         if($countCartProducts == 0){
             return redirect()->back()->with('flash_message_error','There are no products in the cart!');
@@ -769,10 +812,10 @@ class ProductsController extends Controller
         $shippingDetails = Address::where(['user_id'=>$user_id,'is_shipping'=>1])->first();
         $cartDetails=DB::table('cart')->where(['user_id'=>$user_id])->first();
         $cart_id=$cartDetails->id;
-        $userCart = DB::table('products_carts')->where(['cart_id'=>$cart_id])
-            ->join('products', 'products.id', '=', 'products_carts.product_id')
-            ->select('products.*','products_carts.cart_id','products_carts.product_quantity')
-            ->get();
+        // $userCart = DB::table('products_carts')->where(['cart_id'=>$cart_id])
+        //     ->join('products', 'products.id', '=', 'products_carts.product_id')
+        //     ->select('products.*','products_carts.cart_id','products_carts.product_quantity')
+        //     ->get();
         $countProduct = DB::table('products_carts')->where(['cart_id'=>$cart_id])->count();
 
 
@@ -858,12 +901,20 @@ class ProductsController extends Controller
 
             $order_id=DB::getPdo()->lastInsertId();
             $cartProducts = DB::table('products_carts')->where(['cart_id'=>$cart_id])->get();
-           
+            
+            // echo'<pre>'; print_r($cartProducts); die;
             foreach($cartProducts as $pro){
                 $cartPro = new OrdersProduct;
                 $cartPro->order_id=$order_id;
                 $cartPro->product_id=$pro->product_id;
                 $cartPro->product_quantity=$pro->product_quantity;
+                //check if product is in sale
+                if(DB::table('products')->where(['id'=>$pro->product_id,'in_sale'=>1])->exists()){
+                    $product_price = DB::table('products_sales')->where(['product_id'=>$pro->product_id])->first();
+                }else{
+                    $product_price = DB::table('products')->where(['id'=>$pro->product_id])->first();
+                }
+                $cartPro->product_price = $product_price->price;
                 $cartPro->save();
             }
 
@@ -878,8 +929,16 @@ class ProductsController extends Controller
                 $orderDetails=Order::find($order_id);
                 $productDetails = DB::table('orders_products')->where(['order_id'=>$order_id])
                     ->join('products', 'products.id', '=', 'orders_products.product_id')
-                    ->select('products.*','orders_products.product_quantity')
+                    ->select('products.*','orders_products.product_quantity', 'orders_products.product_price')
                     ->get();
+
+                // foreach($productDetails as $product){
+                //     if($product->in_sale == 1){
+                //         $new_price = DB::table('products_sales')->where('product_id',$product->id)->first();
+                //         $new_price = $new_price->price;
+                //         $product->new_price = $new_price;
+                //     }
+                // }
     
                 $coupon_id = $orderDetails->coupon_id;
                 $couponDetails= Coupon::find($coupon_id);
@@ -959,8 +1018,16 @@ class ProductsController extends Controller
         $shippingDetails = Address::where(['user_id'=>$user_id,'is_shipping'=>1])->first();
         $productDetails = DB::table('orders_products')->where(['order_id'=>$order_id])
             ->join('products', 'products.id', '=', 'orders_products.product_id')
-            ->select('products.*','orders_products.product_quantity')
+            ->select('products.*','orders_products.product_quantity','orders_products.product_price')
             ->get();
+
+        // foreach($productDetails as $product){
+        //     if($product->in_sale == 1){
+        //         $new_price = DB::table('products_sales')->where('product_id',$product->id)->first();
+        //         $new_price = $new_price->price;
+        //         $product->new_price = $new_price;
+        //     }
+        // }
 
         $coupon_id = $orderDetails->coupon_id;
         $couponDetails= Coupon::find($coupon_id);
@@ -993,19 +1060,22 @@ class ProductsController extends Controller
 
     public function userOrders(){
         $user_id=Auth::user()->id;
-        $orders=Order::with('orders')->where('user_id',$user_id)->orderBy('id','DESC')->get();
+        $orders=Order::with('orders')->where('user_id',$user_id)->orderBy('id','DESC')->get(); 
         $userCart = Cart::getProductsCart();
         $categories = Category::with('categories')->where(['parent_id'=>0,'status'=>1])->get();
         return view('orders.user_orders')->with(compact('orders','userCart','categories'));
     }
 
+    //da eliminare se si lascia così my orders
     public function userOrderDetails($order_id){
         $user_id=Auth::user()->id;
         $orderDetails=Order::with('orders')->where('id',$order_id)->first();
         $productsOrder = DB::table('orders_products')->where(['order_id'=>$order_id])
             ->join('products', 'products.id', '=', 'orders_products.product_id')
-            ->select('products.*','orders_products.product_quantity')
+            ->select('products.*','orders_products.product_quantity','orders_products.product_price')
             ->get();
+        echo'<pre>'; print_r($productsOrder); die;
+        
         $userCart = Cart::getProductsCart();
         return view('orders.user_order_details')->with(compact('productsOrder','orderDetails','userCart'));
 
@@ -1068,7 +1138,7 @@ class ProductsController extends Controller
 
         $productsOrder = DB::table('orders_products')->where(['order_id'=>$order_id])
             ->join('products', 'products.id', '=', 'orders_products.product_id')
-            ->select('products.*','orders_products.product_quantity')
+            ->select('products.*','orders_products.product_quantity','orders_products.product_price')
             ->get();
         
         //check if coupon has benn used

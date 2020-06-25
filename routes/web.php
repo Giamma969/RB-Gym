@@ -77,8 +77,6 @@ Route::match(['get','post'],'/forgot-password','UsersController@forgotPassword')
 
 //user confirm account
 Route::get('confirm/{code}','UsersController@confirmAccount');
-//check if username already exists
-Route::match(['get','post'],'/check-username','UsersController@checkUsername');
 //check if email already exists
 Route::match(['get','post'],'/check-email','UsersController@checkEmail');
 //users register form submit
@@ -170,6 +168,18 @@ Route::group(['middleware'=>['auth']],function(){
     Route::match(['get','post'],'/admin/edit-banner/{id}','BannersController@editBanner')->middleware(EditBanner::class);
     Route::get('/admin/view-banners','BannersController@viewBanners')->middleware(ViewBanners::class);
     Route::get('/admin/delete-banner/{id}','BannersController@deleteBanner')->middleware(DeleteBanner::class);
+
+    //Admin Homepages Routes
+    Route::match(['get','post'],'/admin/customize-homepage/{id}', 'HomepagesController@customizeHomepage');
+    Route::get('/admin/view-homepages','HomepagesController@viewHomepages');
+    
+    //Admin Sales Routes
+    Route::match(['get','post'],'/admin/add-sale', 'SalesController@addSale');
+    Route::match(['get','post'],'/admin/edit-sale/{id}','SalesController@editSale');
+    Route::match(['get','post'],'/admin/edit-products-sale/{id}','SalesController@editProductsSale');
+    Route::get('/admin/view-sales','SalesController@viewSales');
+    Route::get('/admin/delete-sale/{id}','SalesController@deleteSale');
+
 
     //Admin Orders Routes
     Route::get('/admin/view-orders','ProductsController@viewOrders')->middleware(ViewOrders::class);

@@ -1587,3 +1587,9 @@ div.dataTables_wrapper .ui-widget-header {
 }
 #sidebar .content{ display:none;}
 }
+
+.input_file{
+	color: black!important;
+	background-color: white!important;
+
+}

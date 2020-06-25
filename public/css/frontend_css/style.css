@@ -3880,12 +3880,13 @@ ol {
 }
 
 .login-form .group-input .gi-more .forget-pass {
-	float: right;
+	float: left;
 	line-height: 20px;
 	margin-top: -2px;
 	font-size: 14px;
 	color: #6B6B6B;
 }
+
 
 /* ------------------------------ Responsive Media Styles ---------------------------- */
 
@@ -4434,4 +4435,8 @@ ol {
 	border: 3px solid rgb(165,12,39); 
 	margin-top:-2px; 
 	border-bottom: 4px solid rgb(165,12,39)!important;
+}
+
+.forget-pass:hover, .or-login:hover{
+	color: rgb(165,12,39) !important ;
 }

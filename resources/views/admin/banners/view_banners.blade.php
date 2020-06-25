@@ -32,6 +32,7 @@
                 <tr>
                   <th>Banner ID</th>
                   <th>Title</th>
+                  <th>Description</th>
                   <th>Link</th>
                   <th>Image</th>
                   <th>Active</th>
@@ -43,6 +44,7 @@
                 <tr class="gradeX">
                   <td>{{$banner->id}}</td>
                   <td>{{$banner->title}}</td>
+                   <td>{{$banner->description}}</td>
                   <td>{{$banner->link}}</td>
                   <td>
                       @if(!empty($banner->image))
@@ -71,6 +73,7 @@
                   <div class="modal-body">
                     <p><b>Banner ID: </b> {{$banner->id}}</p>
                     <p><b>Title: </b> {{$banner->title}}</p>
+                    <p><b>Description: </b> {{$banner->description}}</p>
                     <p><b>Link: </b> {{$banner->link}}</p>
                     <p><b>Status: </b>
                       @if($banner->status == 0)

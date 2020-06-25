@@ -86,7 +86,7 @@
 										<a href="{{ url('product/'.$product->id) }}">
 											<img src="{{asset('images/backend_images/products/medium/'.$product->image)}}" alt="">
 										</a>
-										<div class="sale">Sale</div>
+										@if($product->in_sale == 1)<div class="sale">Sale</div>@endif
 										<div class="icon"></div>
 										<ul>
 											<li class="w-icon active">
@@ -106,10 +106,17 @@
 										<a href="{{ url('product/'.$product->id) }}">
 											<h5>{{$product->product_name}}</h5>
 										</a>
+										
 										<div class="product-price">
+											@if($product->in_sale == 1)
+												€{{$product->new_price}}
+												<span>€{{$product->price}}</span>
+											@else
 											€{{$product->price}}
-											<span>$35.00</span>
+											@endif
 										</div>
+										
+										
 									</div>
 								</div>
 							</div>

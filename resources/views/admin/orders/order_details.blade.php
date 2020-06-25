@@ -171,7 +171,7 @@
                     <td>{{ $product->product_name }}</td>
                     <td>{{ $product->brand }}</td>
                     <td>{{ $product->product_color }}</td>
-                    <td>{{ $product->price }}</td>
+                    <td>{{ $product->product_price }}</td>
                     <td>{{ $product->product_quantity }}</td>
                 </tr>
                 @endforeach

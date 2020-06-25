@@ -43,6 +43,13 @@
                   <input type="text" name="title" id="title" value="{{ $bannerDetails->title }}">
                 </div>
               </div>
+
+              <div class="control-group">
+                <label class="control-label">Description</label>
+                <div class="controls">
+                  <input type="text" name="description" id="description" value="{{ $bannerDetails->description }}">
+                </div>
+              </div>
               
               <div class="control-group">
                 <label class="control-label">Link</label>

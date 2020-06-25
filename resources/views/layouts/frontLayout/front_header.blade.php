@@ -18,7 +18,7 @@
                     </div>
                     <div class="phone-service">
                         <i class="fa fa-phone"></i>
-                        0862 4311
+                        +39 08624311
                     </div>
                 </div>
                 <div class="ht-right">
@@ -27,7 +27,7 @@
 						<a href="{{ url('/user-login') }}" class="login-panel"><i class="fa fa-lock"></i> Login</a>
 					@else
                         <a href="{{ url('/user-logout') }}" class="login-panel" style="margin-left:20px !important;"><i class="fa fa-sign-out "></i> Logout</a>
-                        <a href="{{ url('/account') }}" class="login-panel"><i class="fa fa-user"></i> Account</a>
+                        <a href="{{ url('/account-informations') }}" class="login-panel"><i class="fa fa-user"></i> Account</a>
 					@endif
                     <!-- <a href="#" class="login-panel"><i class="fa fa-user"></i>Login</a> -->
                     <div class="lan-selector">
@@ -93,7 +93,11 @@
                                                     </td>
                                                     <td class="si-text">
                                                         <div class="product-selected">
+                                                        @if($pro->in_sale == 1)
+                                                            <p>{{$pro->new_price}} x {{$pro->product_quantity}}</p>
+                                                        @else
                                                             <p>{{$pro->price}} x {{$pro->product_quantity}}</p>
+                                                        @endif
                                                             <h6><a href="{{ url('product/'.$pro->id) }}">{{$pro->product_name}}</a></h6>
                                                         </div>
                                                     </td>
@@ -101,7 +105,12 @@
                                                         <a href="{{ url('/cart/delete-product/'.$pro->id) }}" style="color:black;"><i class="ti-close"></i></a>
                                                     </td>
                                                 </tr>
-                                                <?php $total_amount = $total_amount+ ($pro->price * $pro->product_quantity);  ?>
+                                                @if($pro->in_sale == 1)
+                                                    <?php $total_amount = $total_amount+ ($pro->new_price * $pro->product_quantity);  ?>
+                                                @else
+                                                    <?php $total_amount = $total_amount+ ($pro->price * $pro->product_quantity);  ?>
+                                                @endif
+                                                
                                                 @endforeach
                                             </tbody>
                                         </table>
@@ -155,7 +164,7 @@
                 </div>
                 <nav class="nav-menu mobile-menu">
                     <ul>
-                        <li class="active"><a href="{{ url('/') }}">Home</a></li>
+                        <li><a href="{{ url('/') }}">Home</a></li> <!-- class="active" nel <li> per rendere attiva --> 
                         <li><a href="#">Outlet</a></li>
                         </li>
                         @if(!empty(Auth::check()))
@@ -164,13 +173,12 @@
                                 <li><a href="{{ url('/account-informations') }}">Account informations</a></li>
                                 <li><a href="{{ url('/update-user-pwd') }}">Update password</a></li>
                                 <li><a href="{{ url('/orders') }}">Your orders</a></li>
-                                <li><a href="#">Newsletter subscription</a></li>
-
                             </ul>
                         </li>
                         @endif
                         <li><a href="#">Pages</a>
                             <ul class="dropdown">
+                                <li><a href="{{url('/wishlist')}}">Wishlist</a></li>
                                 <li><a href="{{ url('./cart') }}">Shopping Cart</a></li>
                                 <li><a href="{{ url('/checkout') }}">Checkout</a></li>
 								@if(empty(Auth::check()))

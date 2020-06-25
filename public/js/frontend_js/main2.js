@@ -66,11 +66,6 @@ $().ready(function(){
 				minlength:2,
 				lettersonly:true
 			},
-			username:{
-				required:true,
-				minlength:6,
-				remote:"/check-username"
-			},
 			email:{
 				required:true,
 				email:true,
@@ -97,11 +92,6 @@ $().ready(function(){
 				required:"Inserisci il tuo cognome",
 				minlength:"Il cognome deve contenere almeno 2 caratteri",
 				lettersonly:"Il cognome deve contenere soltanto lettere"
-			},
-			username:{
-				required:"Inserisci un username",
-				minlength:"l'username deve contenere almeno 6 caratteri",
-				remote:"Username non disponibile!"
 			},			
 			email:{
 				required:"Inserisci il tuo indirizzo email",
@@ -131,11 +121,6 @@ $().ready(function(){
 				required:true,
 				minlength:2,
 				lettersonly:true
-			},
-			username:{
-				required:true,
-				minlength:6,
-				remote:"/check-username"
 			},
 			email:{
 				required:true,
@@ -179,11 +164,6 @@ $().ready(function(){
 				required:"Inserisci il tuo cognome",
 				minlength:"Il cognome deve contenere almeno 2 caratteri",
 				lettersonly:"Il cognome deve contenere soltanto lettere"
-			},
-			username:{
-				required:"Inserisci un username",
-				minlength:"l'username deve contenere almeno 6 caratteri",
-				remote:"Username non disponibile!"
 			},			
 			email:{
 				required:"Inserisci il tuo indirizzo email",

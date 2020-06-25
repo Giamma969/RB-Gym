@@ -151,11 +151,7 @@ class DevelopersController extends Controller
                 return redirect()->back()->with("flash_message_error","Email not available!");
 
             
-            if(empty($data['status'])){
-                $status = 0;
-            }else{
-                $status = 1;
-            }
+            if(empty($data['status'])){$status = 0;}else{$status = 1;}
 
             $groups_name = DB::table('groups')->select('groups.name')->get();
             $keys = array_keys($data);

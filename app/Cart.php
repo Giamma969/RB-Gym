@@ -38,6 +38,14 @@ class Cart extends Model
             ->select('products.*','products_carts.cart_id','products_carts.product_quantity')
             ->get();
 
+        foreach($userCart as $product){
+            if($product->in_sale == 1){
+                $new_price = DB::table('products_sales')->where('product_id',$product->id)->first();
+                $new_price = $new_price->price;
+                $product->new_price = $new_price;
+            }
+        }
+
         return $userCart;
     }
 }

@@ -406,12 +406,12 @@ $(document).ready(function(){
 		var id=$(this).attr('rel');
 		var deleteFunction = $(this).attr('rel1');
 		swal({ 
-			title: "Sei sicuro?",
-			text: "In seguito non lo puoi recuperare",
+			title: "Are you sure?",
+			text: "You can't recover it later.",
 			type: "warning",
 			showCancelButton: true,
 			confirmButtonClass: "btn-danger",
-			confirmButtonText: "Si, elimina!"
+			confirmButtonText: "Yes, delete it!"
 		},
 		function(){
 			window.location.href="/admin/"+ deleteFunction + "/" + id;
@@ -421,7 +421,7 @@ $(document).ready(function(){
 		var maxField = 10; //Input fields increment limitation
 		var addButton = $('.add_button'); //Add button selector
 		var wrapper = $('.field_wrapper'); //Input field wrapper
-		var fieldHTML = '<div style="margin-left:180px;"><input type="text" name="price[]" id="price" placeholder="Prezzo" style="120px; margin-top:2px;"/> <input type="text" name="stock[]" id="stock" placeholder="Stock" style="120px; margin-top:2px;"/><a href="javascript:void(0);" class="remove_button">Rimuovi</a></div>'; //New input field html 
+		var fieldHTML = '<div style="margin-left:180px;"><input type="text" name="price[]" id="price" placeholder="Price" style="120px; margin-top:2px;"/> <input type="text" name="stock[]" id="stock" placeholder="Stock" style="120px; margin-top:2px;"/><a href="javascript:void(0);" class="remove_button">Remove</a></div>'; //New input field html 
 		var x = 1; //Initial field counter is 1
 		
 		//Once add button is clicked

@@ -45,11 +45,11 @@
                         </div>
                         <div class="group-input gi-check">
                             <div class="gi-more">
-                                <label for="save-pass">
+                                <!-- <label for="save-pass">
                                     Save Password
                                     <input type="checkbox" id="save-pass">
                                     <span class="checkmark"></span>
-                                </label>
+                                </label> -->
                                 <a href="{{ url('/forgot-password') }}" class="forget-pass">Forgot your Password?</a>
                             </div>
                         </div>

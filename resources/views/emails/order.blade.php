@@ -30,7 +30,7 @@
                             <td>{{ $product->product_code}}</td>
                             <td>{{ $product->product_color}}</td>
                             <td>{{ $product->product_quantity}}</td>
-                            <td>{{ $product->price}}</td>
+                            <td>{{ $product->product_price}}</td>
                         </tr>
                     @endforeach
                     <tr>

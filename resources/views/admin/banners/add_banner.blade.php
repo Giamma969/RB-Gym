@@ -40,6 +40,13 @@
                   <input type="text" name="title" id="title">
                 </div>
               </div>
+
+              <div class="control-group">
+                <label class="control-label">Description</label>
+                <div class="controls">
+                  <input type="text" name="description" id="description">
+                </div>
+              </div>
               
               <div class="control-group">
                 <label class="control-label">Link</label>

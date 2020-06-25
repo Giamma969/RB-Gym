@@ -56,9 +56,9 @@
                                 </tr>
                                 <tr>
                                     <td class="th_user_orders">{{$date}}</td>
-                                    <td class="th_user_orders">{{ $order->id }}</td>
+                                    <td class="th_user_orders">{{$order->id}}</td>
                                     <td class="th_user_orders"></td>
-                                    <td class="th_user_orders">{{ $order->order_status }}</td>
+                                    <td class="th_user_orders">{{$order->order_status}}</td>
                                         
                                     
                                     
@@ -78,7 +78,7 @@
                                     @php 
                                         $product_name =Product::getProductName($product->product_id);
                                         $product_image =Product::getProductImage($product->product_id);
-                                        $product_price =Product::getProductPrice($product->product_id); 
+                                        $product_price =Product::getProductPrice($product->product_id, $order->id); 
 
                                     @endphp    
                                     <tr>
@@ -97,7 +97,7 @@
                                 <tr>
                                     <td class="th_user_orders"> </td>
                                     <td class="th_user_orders"> </td>
-                                    <td class="th_user_orders">Coupon doscount</td>
+                                    <td class="th_user_orders">Coupon discount</td>
                                     <td class="th_user_orders">Total</td>
                                     
                                 </tr>

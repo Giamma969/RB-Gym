@@ -15,8 +15,8 @@
 </div>
 <!--close-top-Header-menu-->
 <!--start-top-serch-->
-<div id="search">
+<!-- <div id="search">
   <input type="text" placeholder="Search..."/>
   <button type="submit" class="tip-bottom" title="Search"><i class="icon-search icon-white"></i></button>
-</div>
+</div> -->
 <!--close-top-serch-->

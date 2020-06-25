@@ -50,7 +50,11 @@
                         <input type="hidden" name="product_name" value="{{ $productDetails->product_name }}">
                         <input type="hidden" name="product_code" value="{{ $productDetails->product_code }}">
                         <input type="hidden" name="product_color" value="{{ $productDetails->product_color }}">
-                        <input type="hidden" name="price" value="{{ $productDetails->price }}">
+                        @if($productDetails->in_sale == 1)
+                            <input type="hidden" name="price" value="{{ $productDetails->new_price }}">
+                        @else
+                            <input type="hidden" name="price" value="{{ $productDetails->price }}">
+                        @endif
                         <div class="col-lg-6">
                             <div class="product-pic-zoom">
                                 <img class="product-big-img" src="{{asset('images/backend_images/products/large/'.$productDetails->image) }}" alt="">
@@ -94,7 +98,11 @@
                                 </div> -->
                                 <div class="pd-desc">
                                     <p><!-- description --></p>
-                                    <h4>€{{$productDetails->price}} <span>629.99</span></h4>
+                                    @if($productDetails->in_sale == 1)
+                                    <h4>€{{$productDetails->new_price}}  <span>€{{$productDetails->price}}</span></h4>
+                                    @else
+                                    <h4>€{{$productDetails->price}}</h4>
+                                    @endif
                                     <br>
                                     <!-- <div class="p-code">Product code : {{$productDetails->product_code}}</div> -->
                                     <p><b>Product code : {{$productDetails->product_code}}</b></p>
@@ -176,26 +184,76 @@
                                                 <div class="p-price">€{{$productDetails->price}}</div>
                                             </td>
                                         </tr>
+                                         <tr>
+                                            <td class="p-catagory">Brand</td>
+                                            <td>
+                                                <div class="p-code">{{$productDetails->brand}}</div>
+                                            </td>
+                                        </tr>
                                         <tr>
                                             <td class="p-catagory">Availability</td>
                                             <td>
                                                 @if($productDetails->stock > 0)
-                                                    <div class="p-stock">{{$productDetails->stock}} in stock</div>
+                                                    <div class="p-code">{{$productDetails->stock}} in stock</div>
                                                 @else
-                                                    <div class="p-stock">Not in stock</div>
+                                                    <div class="p-code">Not in stock</div>
                                                 @endif
                                             </td>
                                         </tr>
-                                        <tr>
-                                            <td class="p-catagory">Weight</td>
-                                            <td>
-                                                <div class="p-weight">1,3kg</div>
-                                            </td>
-                                        </tr>
+
+                                        @if(!empty($productDetails->product_color))
                                         <tr>
                                             <td class="p-catagory">Color</td>
-                                            <td><span class="p-stock">{{$productDetails->product_color}}</span></td>
+                                            <td><span class="p-code">{{$productDetails->product_color}}</span></td>
                                         </tr>
+                                        @endif
+                                        @if(!empty($productDetails->height) && !empty($productDetails->width) && !empty($productDetails->depth))
+                                            <tr>
+                                                <td class="p-catagory">Dimensions</td>
+                                                <td>
+                                                    <div class="p-code">{{$productDetails->height}} x {{$productDetails->width}} x {{$productDetails->depth}} cm</div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                        @elseif(!empty($productDetails->height) && !empty($productDetails->width) && empty($productDetails->depth))
+                                            <tr>
+                                                <td class="p-catagory">Dimensions</td>
+                                                <td>
+                                                    <div class="p-code">{{$productDetails->height}} x {{$productDetails->width}} cm</div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                        @endif
+
+                                        @if(!empty($productDetails->material))
+                                            <tr>
+                                                <td class="p-catagory">Material</td>
+                                                <td>
+                                                    <div class="p-code">{{$productDetails->material}}</div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                        @endif
+
+                                        @if(!empty($productDetails->weight))
+                                            <tr>
+                                                <td class="p-catagory">Weight</td>
+                                                <td>
+                                                    <div class="p-code">{{$productDetails->weight}} kg</div>
+                                                </td>
+                                            </tr>
+                                        @endif
+
+                                        @if(!empty($productDetails->maximum_load_supported))
+                                            <tr>
+                                                <td class="p-catagory">Maximum load supported</td>
+                                                <td>
+                                                    <div class="p-code">{{$productDetails->maximum_load_supported}} kg</div>
+                                                </td>
+                                            </tr>
+                                        @endif
+
+                                        
                                     </table>
                                 </div>
                             </div>
@@ -269,7 +327,7 @@
 
 <!-- Related Products Section End -->
 <div class="related-products spad">
-    <div class="container">
+    <div class="container-fluid">
         <div class="row">
             <div class="col-lg-12">
                 <div class="section-title">
@@ -278,43 +336,49 @@
             </div>
         </div>
         <div class="row">
-            @foreach($relatedProducts->chunk(4) as $chunk)
-                @foreach($chunk as $item)
-                    <div class="col-lg-3 col-sm-6">
-                        <div class="product-item">
-                            <div class="pi-pic">
-                                <a href="{{ url('product/'.$item->id) }}">
-                                    <img src="{{asset('images/backend_images/products/medium/'.$item->image) }}" alt="">
-                                </a>
-                                <div class="sale">Sale</div>
-                                <div class="icon"></div>
-                                <ul>
-                                    <li class="w-icon active">
-                                        @if(Product::checkIfWished($item->id))
-                                            <a href="{{ url('/remove-wishlist/'.$item->id) }}"><i class="icon_heart"  aria-hidden="true"></i></a>
-                                        @else
-                                            <a href="{{ url('/add-wishlist/'.$item->id) }}"><i class="icon_heart_alt"  aria-hidden="true"></i></a>
-                                        @endif
-                                    </li>
-                                    <li class="quick-view">
-                                        <a class="a_view_product" href="{{ url('product/'.$item->id) }}">View product</a>
-                                    </li>
-                                </ul>
-                            </div>
-                            <div class="pi-text">
-                                <div class="catagory-name">{{$item->category_name}}</div>
-                                <a href="{{ url('product/'.$item->id) }}">
-                                    <h5>{{$item->product_name}}</h5>
-                                </a>
-                                <div class="product-price">
+            <div class="col-lg-12">
+            <div class="product-slider owl-carousel">
+            @foreach($relatedProducts as $item)
+                
+                    <div class="product-item">
+                        <div class="pi-pic">
+                            <a href="{{ url('product/'.$item->id) }}">
+                                <img src="{{asset('images/backend_images/products/medium/'.$item->image) }}" alt="">
+                            </a>
+                            @if($item->in_sale == 1)<div class="sale">Sale</div>@endif
+                            <div class="icon"></div>
+                            <ul>
+                                <li class="w-icon active">
+                                    @if(Product::checkIfWished($item->id))
+                                        <a href="{{ url('/remove-wishlist/'.$item->id) }}"><i class="icon_heart"  aria-hidden="true"></i></a>
+                                    @else
+                                        <a href="{{ url('/add-wishlist/'.$item->id) }}"><i class="icon_heart_alt"  aria-hidden="true"></i></a>
+                                    @endif
+                                </li>
+                                <li class="quick-view">
+                                    <a class="a_view_product" href="{{ url('product/'.$item->id) }}">View product</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="pi-text">
+                            <div class="catagory-name">{{$item->category_name}}</div>
+                            <a href="{{ url('product/'.$item->id) }}">
+                                <h5>{{$item->product_name}}</h5>
+                            </a>
+                            <div class="product-price">
+                                @if($item->in_sale == 1)
+                                    {{$item->new_price}}
+                                <span>€{{$item->price}}</span>
+                                @else
                                     {{$item->price}}
-                                    <span>$35.00</span>
-                                </div>
+                                @endif
                             </div>
                         </div>
                     </div>
-                @endforeach
+                
             @endforeach
+            </div>
+            </div>
         </div>
     </div>
 </div>

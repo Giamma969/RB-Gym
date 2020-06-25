@@ -99,8 +99,14 @@
                                 <li>Product <span>Total</span></li>
                                 <?php $total_amount=0; ?>
                                 @foreach($userCart as $cart)
-                                <li class="fw-normal">{{$cart->product_name}} x {{$cart->product_quantity}} <span>€{{$cart->price * $cart->product_quantity}}</span></li>
-                                <?php $total_amount = $total_amount +($cart->price * $cart->product_quantity); ?>
+                                    @if($cart->in_sale == 1)
+                                        <li class="fw-normal">{{$cart->product_name}} x {{$cart->product_quantity}} <span>€{{$cart->new_price * $cart->product_quantity}}</span></li>
+                                        <?php $total_amount = $total_amount +($cart->new_price * $cart->product_quantity); ?>
+                                    @else
+                                        <li class="fw-normal">{{$cart->product_name}} x {{$cart->product_quantity}} <span>€{{$cart->price * $cart->product_quantity}}</span></li>
+                                        <?php $total_amount = $total_amount +($cart->price * $cart->product_quantity); ?>
+                                    @endif
+                                
                                 @endforeach
                                 <li class="fw-normal">Subtotal<span>€{{$total_amount}}</span></li>
                                 <li class="fw-normal">Shipping cost<span>€0</span></li>

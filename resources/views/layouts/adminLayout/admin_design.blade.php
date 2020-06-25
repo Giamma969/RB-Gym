@@ -54,6 +54,15 @@
         minDate: 0,
         dateFormat: 'yyyy/mm/dd' 
     });
+    $("#start_date").datepicker({ 
+        minDate: 0,
+        dateFormat: 'yyyy/mm/dd' 
+    });
+    $("#end_date").datepicker({ 
+        minDate: 0,
+        dateFormat: 'yyyy/mm/dd' 
+    });
+
   });
 </script>
 

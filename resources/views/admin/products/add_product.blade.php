@@ -73,7 +73,49 @@
               </div>
 
               <div class="control-group">
-                <label class="control-label">Price</label>
+                <label class="control-label">Height (cm)</label>
+                <div class="controls">
+                  <input type="number" min="0" name="height" id="height">
+                </div>
+              </div>
+
+              <div class="control-group">
+                <label class="control-label">Width (cm)</label>
+                <div class="controls">
+                  <input type="number" min="0" name="width" id="width">
+                </div>
+              </div>
+
+              <div class="control-group">
+                <label class="control-label">Depth (cm)</label>
+                <div class="controls">
+                  <input type="number" min="0" name="depth" id="depth">
+                </div>
+              </div>
+
+              <div class="control-group">
+                <label class="control-label">Material</label>
+                <div class="controls">
+                  <input type="text" name="material" id="material">
+                </div>
+              </div>
+
+              <div class="control-group">
+                <label class="control-label">Weight (Kg)</label>
+                <div class="controls">
+                  <input type="number" min="0" step="0.01" name="weight" id="weight">
+                </div>
+              </div>
+
+              <div class="control-group">
+                <label class="control-label">Maximum load supported (Kg)</label>
+                <div class="controls">
+                  <input type="number" min="0" step="0.01" name="maximum_load_supported" id="maximum_load_supported">
+                </div>
+              </div>
+
+              <div class="control-group">
+                <label class="control-label">Price (€)</label>
                 <div class="controls">
                   <input type="number" min="0" step="0.01" name="price" id="price">
                 </div>

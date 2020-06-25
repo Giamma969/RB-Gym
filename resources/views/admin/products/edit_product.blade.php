@@ -2,7 +2,7 @@
 @section('content')
 <div id="content">
   <div id="content-header">
-    <div id="breadcrumb"> <a href="index.html" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a> <a href="#">Products</a> <a href="#" class="current">Add Product</a> </div>
+    <div id="breadcrumb"> <a href="index.html" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a> <a href="#">Products</a> <a href="#" class="current">Edit Product</a> </div>
     <h1>Products</h1>
     @if(Session::has('flash_message_error'))
       <div class="alert alert-error alert-block">
@@ -67,7 +67,7 @@
               </div>
 
               <div class="control-group">
-                <label class="control-label">Price</label>
+                <label class="control-label">Price (€)</label>
                 <div class="controls">
                   <input type="number" min="0" step="0.01" name="price" id="price" value="{{$productDetails->price}}">
                 </div>
@@ -84,6 +84,48 @@
                 <label class="control-label">Brand</label>
                 <div class="controls">
                   <input type="text" name="brand" id="brand" value="{{$productDetails->brand}}">
+                </div>
+              </div>
+
+              <div class="control-group">
+                <label class="control-label">Height (cm)</label>
+                <div class="controls">
+                  <input type="number" min="0" name="height" id="height" value="{{$productDetails->height}}">
+                </div>
+              </div>
+
+              <div class="control-group">
+                <label class="control-label">Width (cm)</label>
+                <div class="controls">
+                  <input type="number" min="0" name="width" id="width" value="{{$productDetails->width}}">
+                </div>
+              </div>
+
+              <div class="control-group">
+                <label class="control-label">Depth (cm)</label>
+                <div class="controls">
+                  <input type="number" min="0" name="depth" id="depth" value="{{$productDetails->depth}}">
+                </div>
+              </div>
+
+              <div class="control-group">
+                <label class="control-label">Material</label>
+                <div class="controls">
+                  <input type="text" name="material" id="material" value="{{$productDetails->material}}">
+                </div>
+              </div>
+
+              <div class="control-group">
+                <label class="control-label">Weight (Kg)</label>
+                <div class="controls">
+                  <input type="number" min="0" step="0.01" name="weight" id="weight" value="{{$productDetails->weight}}">
+                </div>
+              </div>
+
+              <div class="control-group">
+                <label class="control-label">Maximum load supported (Kg)</label>
+                <div class="controls">
+                  <input type="number" min="0" step="0.01" name="maximum_load_supported" id="maximum_load_supported" value="{{$productDetails->maximum_load_supported}}">
                 </div>
               </div>
 

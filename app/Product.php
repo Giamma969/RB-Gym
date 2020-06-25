@@ -184,10 +184,11 @@ class Product extends Model
         return $product_image;
     }
 
-    public static function getProductPrice($id){
-        if(DB::table('products')->where('id',$id)->exists()){
-            $productDetails = DB::table('products')->where('id',$id)->first();
-            $product_price = $productDetails->price;
+    public static function getProductPrice($product_id, $order_id){
+        if(DB::table('products')->where('id',$product_id)->exists()){
+            $productDetails = DB::table('products')->where('id',$product_id)->first();
+            $product_price = DB::table('orders_products')->where(['order_id'=>$order_id, 'product_id'=>$product_id])->first();
+            $product_price = $product_price->product_price; 
         }else{
             $product_price = "";
         }

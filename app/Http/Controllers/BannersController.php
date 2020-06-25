@@ -16,6 +16,7 @@ class BannersController extends Controller {
             $banner= new Banner;
             $banner->title= $data['title'];
             $banner->link= $data['link'];
+            $banner->description= $data['description'];
 
             if(empty($data['status'])){
                 $status = 0;
@@ -29,7 +30,7 @@ class BannersController extends Controller {
                     $extension= $image_tmp->getClientOriginalExtension();
                     $fileName= rand(111,99999).'.'.$extension;
                     $banner_path= 'images/frontend_images/banners/'.$fileName;                   
-                    Image::make($image_tmp)->resize(1240,370)->save($banner_path);
+                    Image::make($image_tmp)->resize(1920,728)->save($banner_path);
                     $banner->image=$fileName;
                 }
             }
@@ -60,6 +61,10 @@ class BannersController extends Controller {
                 $data['link'] ='';
             }
 
+             if(empty($data['description'])){
+                $data['description'] ='';
+            }
+
             if($request->hasfile('image')){
                 Banner::deleteBannerImage($id);
                 $image_tmp= Input::file('image');
@@ -67,13 +72,13 @@ class BannersController extends Controller {
                     $extension= $image_tmp->getClientOriginalExtension();
                     $fileName= rand(111,99999).'.'.$extension;
                     $banner_path= 'images/frontend_images/banners/'.$fileName;                   
-                    Image::make($image_tmp)->resize(1140,340)->save($banner_path);
+                    Image::make($image_tmp)->resize(1920,728)->save($banner_path);
                 }
             }else{
                 $fileName=$data['current_image'];
             }
 
-            Banner::where('id',$id)->update(['status'=>$status, 'title'=>$data['title'], 'link'=>$data['link'],'image'=>$fileName]);
+            Banner::where('id',$id)->update(['status'=>$status, 'title'=>$data['title'], 'description'=>$data['description'], 'link'=>$data['link'],'image'=>$fileName]);
             return redirect()->back()->with('flash_message_success', 'Banner successfully edited!');
         }
         $bannerDetails= Banner::where('id',$id)->first();

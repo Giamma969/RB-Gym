@@ -53,7 +53,7 @@
                                 <tr>
                                     <td class="cart-pic first-row">
                                         <a href="{{ url('product/'.$product->id) }}">
-                                            <img src="{{asset('images/backend_images/products/small/'.$product->image)}}" alt="">
+                                            <img src="{{asset('images/backend_images/products/small/'.$product->image)}}" alt="" width="100px;">
                                         </a>
                                     </td>
                                     <td class="cart-title first-row">
@@ -62,7 +62,7 @@
                                         </a>
                                         <p>Code: {{ $product->product_code}}</p>
                                     </td>
-                                    <td class="p-price first-row">€{{ $product->price }}</td>
+                                    <td class="p-price first-row">@if($product->in_sale) €{{ $product->new_price }} @else €{{ $product->price }} @endif</td>
                                     <td class="qua-col first-row">
                                         <div class="quantity">
                                             @if($product->product_quantity > 1 ) 
@@ -73,10 +73,18 @@
                                             
                                         </div>
                                     </td>
-                                    <td class="total-price first-row">€{{ $product->price * $product->product_quantity }}</td>
+                                    @if($product->in_sale)
+                                        <td class="total-price first-row">€{{ $product->new_price * $product->product_quantity }}</td>
+                                    @else
+                                        <td class="total-price first-row">€{{ $product->price * $product->product_quantity }}</td>
+                                    @endif
                                     <td class="close-td first-row"><a href="{{ url('/cart/delete-product/'.$product->id) }}" style="color:black;"><i class="ti-close"></i></a></td>                                   
                                 </tr>
-                                <?php $total_amount = $total_amount+ ($product->price * $product->product_quantity);  ?>
+                                @if($product->in_sale)
+                                    <?php $total_amount = $total_amount+ ($product->new_price * $product->product_quantity);  ?>
+                                @else
+                                    <?php $total_amount = $total_amount+ ($product->price * $product->product_quantity);  ?>
+                                @endif
                             @endforeach
                         </tbody>
                     </table>

@@ -21,11 +21,9 @@
                 </div>
                 <div class="col-lg-2 offset-lg-1">
                     <div class="footer-widget">
-                        <h5>Information</h5>
+                        <h5>Informations</h5>
                         <ul>
                             <li><a class="a_footer" href="#">About Us</a></li>
-                            <li><a class="a_footer" href="{{ url('/faq') }}">FAQs</a></li>
-                            <li><a class="a_footer" href="{{ url('/contact-us') }}">Contact Us</a></li>
                             <li><a class="a_footer" href="#">Privacy Policy</a></li>
                             <li><a class="a_footer" href="#">Cookie Policy</a></li>
                         </ul>
@@ -42,16 +40,25 @@
                         </ul>
                     </div>
                 </div>
-                <div class="col-lg-4">
-                    <div class="newslatter-item">
+                <div class="col-lg-2">
+                    <div class="footer-widget">
+                        <h5>Help</h5>
+                        <ul>
+                            <li><a class="a_footer" href="{{ url('/faq') }}">FAQs</a></li>
+                            <li><a class="a_footer" href="{{ url('/contact-us') }}">Contact Us</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- <div class="col-lg-4"> -->
+                    <!-- <div class="newslatter-item">
                         <h5>Join Our Newsletter Now</h5>
                         <p>Get E-mail updates about our latest shop and special offers.</p>
                         <form action="#" class="subscribe-form">
                             <input type="text" placeholder="Enter Your Mail">
                             <button type="button">Subscribe</button>
                         </form>
-                    </div>
-                </div>
+                    </div> -->
+                <!-- </div> -->
             </div>
         </div>
         <div class="copyright-reserved">

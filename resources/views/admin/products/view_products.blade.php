@@ -39,7 +39,7 @@
                   <th>Price</th>
                   <th>Stock</th>
                   <th>Description code</th>
-                  <!-- <th>Image</th> -->
+                  <th>Image</th>
                   <th>Active</th>
                   <th>Operations</th>
                 </tr>
@@ -56,6 +56,8 @@
                   <td>{{$product->price}}</td>
                   <td>{{$product->stock}}</td>
                   <td> <div style="overflow:auto; max-height:100px!important; max-width:25ch;">{{$product->description}}</div></td>
+                  <td><img src="{{asset('images/backend_images/products/small/'.$product->image)}}" alt="" width="50px;">
+                  </td>
                   <td>
                     @if($product->status == 0)
                         <span style="color:red">Inactive</span>
@@ -81,6 +83,12 @@
                   <p><b>Product name: </b> {{$product->product_name}}</p>
                   <p><b>Product code: </b> {{$product->product_code}}</p>
                   <p><b>Product color: </b> {{$product->product_color}}</p>
+                  <p><b>Height: </b> {{$product->height}}</p>
+                  <p><b>Width: </b> {{$product->width}}</p>
+                  <p><b>Depth: </b> {{$product->depth}}</p>
+                  <p><b>Material: </b> {{$product->material}}</p>
+                  <p><b>Weight: </b> {{$product->weight}}</p>
+                  <p><b>Maximum load supported: </b> {{$product->maximum_load_supported}}</p>
                   <p><b>Brand: </b> {{$product->brand}}</p>
                   <p><b>Price: </b> {{$product->price}}</p>
                   <p><b>Stock: </b> {{$product->stock}}</p>
