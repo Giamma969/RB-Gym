@@ -3,6 +3,12 @@
 	@if(!empty($url))
 		<input type="hidden" name="url" value="{{ $url }}">
 	@endif
+	@if(!empty($pattern))
+		<input type="hidden" name="pattern" value="{{ $pattern }}">
+	@endif
+	@if(!empty($outlet))
+		<input type="hidden" name="outlet" value="{{ $outlet }}">
+	@endif
 	<!-- START CATGEORIES -->
 	<div class="filter-widget">
 		<h4 class="fw-title">Categories</h4>
@@ -27,7 +33,7 @@
 
 
 	<!-- START BRAND -->
-	@if(!empty($url))
+	@if(!empty($url) || !empty($pattern) || !empty($outlet)) 
 		<div class="filter-widget">
 			<h4 class="fw-title">Brand</h4>
 			<div class="fw-brand-check">
@@ -54,6 +60,7 @@
 			</div>
 		</div>
 	@endif
+
 	<!-- END BRAND -->
 </form>
 

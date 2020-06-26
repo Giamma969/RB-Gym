@@ -8,6 +8,7 @@ use DB;
 
 class CouponsController extends Controller
 {
+    //admin
     public function addCoupon(Request $request){
         if($request->isMethod('post')){
             $data=$request->all();

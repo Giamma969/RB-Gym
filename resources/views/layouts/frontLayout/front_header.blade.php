@@ -12,13 +12,17 @@
         <div class="header-top">
             <div class="container">
                 <div class="ht-left">
-                    <div class="mail-service">
+                    <div class="mail-service" style="padding-right: 115px;">
                         <i class="fa fa-envelope"></i>
-                        info@rb-gym.com
+                        @if(!empty($cmsDetails->email))
+                            {{$cmsDetails->email}}
+                        @endif
                     </div>
                     <div class="phone-service">
                         <i class="fa fa-phone"></i>
-                        +39 08624311
+                        @if(!empty($cmsDetails->phone))
+                            {{$cmsDetails->phone}}
+                        @endif
                     </div>
                 </div>
                 <div class="ht-right">
@@ -37,9 +41,15 @@
                         </select>
                     </div>
                     <div class="top-social">
-                        <a href="https://www.facebook.com/" target="_blank"><i class="ti-facebook"></i></a>
-                        <a href="https://twitter.com/" target="_blank"><i class="ti-twitter-alt"></i></a>
-                        <a href="https://www.instagram.com/" target="_blank"><i class="ti-instagram"></i></a>
+                        @if(!empty($cmsDetails->facebook))
+                            <a href="{{$cmsDetails->facebook}}" target="_blank"><i class="ti-facebook"></i></a>
+                        @endif
+                        @if(!empty($cmsDetails->twitter))
+                            <a href="{{$cmsDetails->twitter}}" target="_blank"><i class="ti-twitter-alt"></i></a>
+                        @endif
+                        @if(!empty($cmsDetails->instagram))
+                            <a href="{{$cmsDetails->instagram}}" target="_blank"><i class="ti-instagram"></i></a>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -47,15 +57,18 @@
         <div class="container">
             <div class="inner-header">
                 <div class="row">
-                    <div class="col-lg-2 col-md-2" style="margin: -20px 0 0 -60px;">
+                    <div class="col-lg-2 col-md-2" style="margin: -10px 0 0 0px;">
                         <div class="logo">
-                            <a href="{{url('/')}}">
-                                <img src="{{asset('images/frontend_images/logo1.png')}}" alt="">
-                            </a>
+                            @if(!empty($cmsDetails->instagram))
+                                <a href="{{url('/')}}">
+                                    <img src="{{asset('images/frontend_images/logo/'.$cmsDetails->logo)}}" alt="">
+                                </a>
+                            @endif
                         </div>
 					</div>
-					<div class="col-lg-7 col-md-7" style="margin-left:80px;">
-						<form action="{{ url('/search-products') }}" method="post">{{ csrf_field() }}
+					<div class="col-lg-7 col-md-7" style="margin-left:81px;">
+
+						<form action="{{ url('/search-products') }}" method="get">{{ csrf_field() }}
 							<div  class="advanced-search" >
                                 <div class="input-group" style="float:left;">
                                     <input type="text" name="pattern" placeholder="What do you need?">
@@ -66,7 +79,7 @@
 							</div>
 						</form>
 					</div>
-                    <div class="col-lg-3 text-right col-md-3" style="margin-left:-50px;">
+                    <div class="col-lg-3 text-right col-md-3" style="margin-left:-100px;">
                         <ul class="nav-right">
                             <li class="heart-icon">
                                 <a href="{{url('/wishlist')}}">
@@ -165,12 +178,12 @@
                 <nav class="nav-menu mobile-menu">
                     <ul>
                         <li><a href="{{ url('/') }}">Home</a></li> <!-- class="active" nel <li> per rendere attiva --> 
-                        <li><a href="#">Outlet</a></li>
+                        <li><a href="{{ url('/outlet') }}">Outlet</a></li>
                         </li>
                         @if(!empty(Auth::check()))
                         <li><a href="#">Account</a>
                             <ul class="dropdown">
-                                <li><a href="{{ url('/account-informations') }}">Account informations</a></li>
+                                <li><a href="{{ url('/account-informations') }}">Account information</a></li>
                                 <li><a href="{{ url('/update-user-pwd') }}">Update password</a></li>
                                 <li><a href="{{ url('/orders') }}">Your orders</a></li>
                             </ul>

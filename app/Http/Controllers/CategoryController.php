@@ -38,7 +38,6 @@ class CategoryController extends Controller
     $levels = Category::where(['parent_id'=>0])->get();
       return view('admin.categories.add_category')->with(compact('levels'));
   }
-
   public function editCategory(Request $request, $id = null){
     if($request->isMethod('post')) {
       $data = $request->all();

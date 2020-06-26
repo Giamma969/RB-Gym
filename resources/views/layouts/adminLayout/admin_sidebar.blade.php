@@ -20,6 +20,13 @@
         <li  <?php if(preg_match("/view-products/i", $url)) { ?> class="active" <?php } ?>><a href="{{url('/admin/view-products')}}">View products</a></li>
       </ul>
     </li>
+    
+    <li class="submenu"> <a href="#"><i class="icon icon-th-list"></i> <span>Brands</span> </a>
+      <ul <?php if(preg_match("/brand/i", $url)) { ?> style="display: block;" <?php } ?>>
+        <li <?php if(preg_match("/add-brand/i", $url)) { ?> class="active" <?php } ?>><a href="{{url('/admin/add-brand')}}">Add brand</a></li>
+        <li <?php if(preg_match("/view-brands/i", $url)) { ?> class="active" <?php } ?>><a href="{{url('/admin/view-brands')}}">View brands</a></li>
+      </ul>
+    </li>
 
     <li class="submenu"> <a href="#"><i class="icon icon-th-list"></i> <span>Coupons</span> </a>
       <ul <?php if(preg_match("/coupon/i", $url)) { ?> style="display: block;" <?php } ?>>
@@ -83,6 +90,12 @@
     <li class="submenu"> <a href="#"><i class="icon icon-th-list"></i> <span>Services</span> </a>
       <ul <?php if(preg_match("/services/i", $url)) { ?> style="display: block;" <?php } ?>>
       <li <?php if(preg_match("/view-services/i", $url)) { ?> class="active" <?php } ?>><a href="{{url('/admin/view-services')}}">View services</a></li>
+      </ul>
+    </li>
+
+    <li class="submenu"> <a href="#"><i class="icon icon-th-list"></i> <span>CMS</span> </a>
+      <ul <?php if(preg_match("/cms/i", $url)) { ?> style="display: block;" <?php } ?>>
+        <li <?php if(preg_match("/view-cms/i", $url)) { ?> class="active" <?php } ?>><a href="{{url('/admin/view-cms')}}">View CMS</a></li>
       </ul>
     </li>
 

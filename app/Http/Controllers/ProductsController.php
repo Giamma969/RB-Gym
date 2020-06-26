@@ -4,9 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
+use Image;
 use Auth;
 use Session;
-use Image;
 use DB;
 use DateTime;
 use App\Category;
@@ -102,9 +102,9 @@ class ProductsController extends Controller
                 $categories_dropdown .= "<option value='".$sub_cat->id."'>&nbsp;--&nbsp;".$sub_cat->name."</option>";
            } 
         }
-        
+        $brands = DB::table('brands')->get();
         //Categories drop down start
-        return view('admin.products.add_product')->with(compact('categories_dropdown'));
+        return view('admin.products.add_product')->with(compact('categories_dropdown','brands'));
 
 
     }
@@ -117,14 +117,14 @@ class ProductsController extends Controller
             $count_name = DB::table('products')->where('product_name', $data['product_name'])->count();
             $current_name = DB::table('products')->where('id', $id)->first();
             $current_name=$current_name->product_name;
-            if($count_name > 0 && $data['product_name']!==$current_name)
+            if($count_name > 0 && $data['product_name'] != $current_name)
                 return redirect()->back()->with("flash_message_error","Product name not available!");
             
             //check if product code exists
             $count_code = DB::table('products')->where('product_code', $data['product_code'])->count();
             $current_code = DB::table('products')->where('id', $id)->first();
             $current_code=$current_code->product_code;
-            if($count_code > 0 && $data['product_code']!==$current_code)
+            if($count_code > 0 && $data['product_code'] != $current_code)
                 return redirect()->back()->with("flash_message_error","Product code not available!");
             
             if($request->hasfile('image')){
@@ -146,16 +146,16 @@ class ProductsController extends Controller
             }
                 
             
-        if(empty($data['description'])){ $data['description']="";}
-        if(empty($data['product_color'])) {$data['product_color']="";}
-        if(empty($data['width'])) {$data['width']="";}
-        if(empty($data['height'])) {$data['height']="";}
-        if(empty($data['depth'])) {$data['depth']="";}
-        if(empty($data['material'])) {$data['material']="";}
-        if(empty($data['weight'])) {$data['weight']="";}
-        if(empty($data['maximum_load_supported'])) {$data['maximum_load_supported']="";}
+            if(empty($data['description'])){ $data['description']="";}
+            if(empty($data['product_color'])) {$data['product_color']="";}
+            if(empty($data['width'])) {$data['width']="";}
+            if(empty($data['height'])) {$data['height']="";}
+            if(empty($data['depth'])) {$data['depth']="";}
+            if(empty($data['material'])) {$data['material']="";}
+            if(empty($data['weight'])) {$data['weight']="";}
+            if(empty($data['maximum_load_supported'])) {$data['maximum_load_supported']="";}
 
-        if(empty($data['status'])){$status = 0;}else{$status = 1;}
+            if(empty($data['status'])){$status = 0;}else{$status = 1;}
 
           //check if product code already exists
           $productCount=Product::where(['product_code'=>$data['product_code']])->count();
@@ -205,7 +205,8 @@ class ProductsController extends Controller
             }
 
         }
-        return view('admin.products.edit_product')->with(compact('productDetails','categories_dropdown'));
+        $brands = DB::table('brands')->get();
+        return view('admin.products.edit_product')->with(compact('productDetails','categories_dropdown','brands'));
         
     }
     //admin
@@ -364,53 +365,67 @@ class ProductsController extends Controller
     }
     
     public function products(Request $request, $url = null){
-        //show page 404 if the category URL does not exist
-        $countCategory = Category::where(['url'=>$url, 'status'=>1])->count();
-        if($countCategory==0)
-            abort(404);
         
+        // $search_product = 0;
         if(empty(Session::get('sorting'))){ Session::put('sorting',"alpha"); }
         if(empty(Session::get('paginate'))){ Session::put('paginate',"9"); }
-
         $categories = Category::with('categories')->where(['parent_id'=>0,'status'=>1])->get();
 
-        $categoryDetails = Category::where(['url'=>$url])->first();
-        if($categoryDetails->parent_id == 0){
-            //if the URL is the URL of the main category
-            $subCategories= Category::where(['parent_id'=>$categoryDetails->id])->get();
-            foreach($subCategories as $subcat){
-                $cat_ids[] = $subcat->id;
+        if(DB::table('categories')->where('url',$url)->exists()){
+            $countCategory = Category::where(['url'=>$url, 'status'=>1])->count();
+            if($countCategory==0)
+                abort(404);
+
+            $categoryDetails = Category::where(['url'=>$url])->first();
+            if($categoryDetails->parent_id == 0){
+                //if the URL is the URL of the main category
+                $subCategories= Category::where(['parent_id'=>$categoryDetails->id])->get();
+                foreach($subCategories as $subcat){
+                    $cat_ids[] = $subcat->id;
+                }
+                
+                $productsAll= DB::table('products')->whereIn('products.category_id',$cat_ids)->where('products.status',1)
+                    ->join('categories','categories.id','=','products.category_id')
+                    ->select('products.*','categories.name as category_name');    
+                // if($data['sorting'] ==  "price_asc")$productsAll->orderBy('products.price','asc');
+                    
+
+                $brandArray=DB::table('products')->select(DB::raw('brand'))->whereIn('products.category_id',$cat_ids)
+                    ->where('products.status',1)->join('categories','categories.id','=','products.category_id')
+                    ->select('products.*','categories.name as category_name')->groupBy('brand')->get();
+                $breadcrumb= "<a style=\"color:#333 !important;\" href='/'>Home</a> / <a style=\"color:#333 !important;\" href='".$categoryDetails->url."'>".$categoryDetails->name."</a>";
+                
+            }else{
+                //se l'URL è l'URL della sottocategoria
+                $brandArray=DB::table('products')->select(DB::raw('brand'))
+                    ->where(['products.category_id'=>$categoryDetails->id, 'products.status'=>1])
+                    ->join('categories','categories.id','=','products.category_id')
+                    ->select('products.*','categories.name as category_name')->groupBy('brand')->get();
+                
+                $productsAll = DB::table('products')->where(['products.category_id'=>$categoryDetails->id])
+                    ->where('products.status',1)->join('categories','categories.id','=','products.category_id')
+                    ->select('products.*','categories.name as category_name');//->orderBy('products.id','Desc');
+                    //->get()
+                    
+
+                $mainCategory = Category::where('id',$categoryDetails->parent_id)->first();
+                $breadcrumb= "<a style=\"color:#333 !important;\" href='/'>Home</a> 
+                            / <a style=\"color:#333 !important;\" href='".$mainCategory->url."'>".$mainCategory->name."</a> / 
+                            <a  style=\"color:#333 !important;\" href='".$categoryDetails->url."'>".$categoryDetails->name."</a>";
             }
-            
-            $productsAll= DB::table('products')->whereIn('products.category_id',$cat_ids)->where('products.status',1)
-                ->join('categories','categories.id','=','products.category_id')
-                ->select('products.*','categories.name as category_name');    
-            // if($data['sorting'] ==  "price_asc")$productsAll->orderBy('products.price','asc');
-                
-
-            $brandArray=DB::table('products')->select(DB::raw('brand'))->whereIn('products.category_id',$cat_ids)
-                ->where('products.status',1)->join('categories','categories.id','=','products.category_id')
-                ->select('products.*','categories.name as category_name')->groupBy('brand')->get();
-            $breadcrumb= "<a style=\"color:#333 !important;\" href='/'>Home</a> / <a style=\"color:#333 !important;\" href='".$categoryDetails->url."'>".$categoryDetails->name."</a>";
-            
-        }else{
-            //se l'URL è l'URL della sottocategoria
-            $brandArray=DB::table('products')->select(DB::raw('brand'))
-                ->where(['products.category_id'=>$categoryDetails->id, 'products.status'=>1])
-                ->join('categories','categories.id','=','products.category_id')
-                ->select('products.*','categories.name as category_name')->groupBy('brand')->get();
-            
-            $productsAll = DB::table('products')->where(['products.category_id'=>$categoryDetails->id])
-                ->where('products.status',1)->join('categories','categories.id','=','products.category_id')
-                ->select('products.*','categories.name as category_name');//->orderBy('products.id','Desc');
-                //->get()
-                
-
-            $mainCategory = Category::where('id',$categoryDetails->parent_id)->first();
-            $breadcrumb= "<a style=\"color:#333 !important;\" href='/'>Home</a> 
-                        / <a style=\"color:#333 !important;\" href='".$mainCategory->url."'>".$mainCategory->name."</a> / 
-                        <a  style=\"color:#333 !important;\" href='".$categoryDetails->url."'>".$categoryDetails->name."</a>";
         }
+            // else{
+        //     $search_product = 1;
+        //     $productsAll = Product::where(function($query) use($url){
+        //         $query->where('product_name','like','%'.$url.'%')
+        //                 ->orWhere('product_code','like','%'.$url.'%')
+        //                 ->orWhere('description','like','%'.$url.'%')
+        //                 ->orWhere('product_color','like','%'.$url.'%')
+        //                 ->orWhere('brand','like','%'.$url.'%');
+        //     })->join('categories','categories.id','=','products.category_id')->where('products.status',1)->where('categories.status',1)->select('products.*','categories.name as category_name');
+        // }
+
+        
         if(!empty($_GET['brand'])){
             $brand_test = explode('-', $_GET['brand']);
             $productsAll = $productsAll->whereIn('brand',$brand_test);
@@ -423,22 +438,26 @@ class ProductsController extends Controller
         
         if($request->isMethod('post')){
             $data=$request->all();
-            Session::put('paginate', $data['paginate']);
-            switch ($data['sorting']) {
-                case "alpha":
-                    Session::put('sorting', "alpha");
-                    break;
-                case "price_asc":
-                    Session::put('sorting', "price_asc");
-                    break;
-                case "price_desc":
-                    Session::put('sorting', "price_desc");
-                    break;
-                case "recent":
-                    Session::put('sorting', "recent");
-                    break;
+            if(!empty($data['paginate'])){
+                Session::put('paginate', $data['paginate']);
+                switch ($data['sorting']) {
+                    case "alpha":
+                        Session::put('sorting', "alpha");
+                        break;
+                    case "price_asc":
+                        Session::put('sorting', "price_asc");
+                        break;
+                    case "price_desc":
+                        Session::put('sorting', "price_desc");
+                        break;
+                    case "recent":
+                        Session::put('sorting', "recent");
+                        break;
+                }
             }
         }
+        // $data=$request->all();
+        // echo'<pre>'; print_r($data); die;
         
         $productsAll = Product::setListingDetails($productsAll);
         $start = 0;
@@ -458,9 +477,15 @@ class ProductsController extends Controller
                 $product->new_price = $new_price;
             }
         }
+       
         // echo'<pre>'; print_r($productsAll); die;
         $userCart = Cart::getProductsCart();
-        return view('products.listing')->with(compact('categories','categoryDetails','productsAll','url','brandArray','breadcrumb','userCart','count_products','end','start'));
+        $cmsDetails = DB::table('cms')->where('id',1)->first();
+        // if($search_product == 1){
+        //     return view('products.listing')->with(compact('categories','productsAll','url','userCart','count_products','end','start','search_product'));}
+        // else{
+            return view('products.listing')->with(compact('categories','categoryDetails','productsAll','url','brandArray','breadcrumb','userCart','count_products','end','start','cmsDetails'));
+        // }
     }
 
 
@@ -468,6 +493,7 @@ class ProductsController extends Controller
         $data=$request->all();
         //echo'<pre>'; print_r($data); die;
         $brandUrl="";
+        $finalUrl="";
         if(!empty($data['brandFilter'])){
             foreach($data['brandFilter'] as $brand){
                 if(empty($brandUrl)){
@@ -477,31 +503,206 @@ class ProductsController extends Controller
                 }
             }
         }
-        $finalUrl="products/".$data['url']."?".$brandUrl;
+        
+        if(!empty($data['url']))
+            $finalUrl="products/".$data['url']."?".$brandUrl;
+        if(!empty($data['pattern']))
+            $finalUrl="search-products?".$data['pattern']."?".$brandUrl;
+        if(!empty($data['outlet']))
+            $finalUrl="outlet"."?".$brandUrl;
         
 
         return redirect::to($finalUrl);
     }
     
-    public function searchProducts(Request $request){
-        if($request->isMethod('post')){
-            $data=$request->all();
-            $categories = Category::with('categories')->where(['parent_id'=>0,'status'=>1])->get();
-            $search_product = $data['pattern'];
-            $productsAll = Product::where(function($query) use($search_product){
-                $query->where('product_name','like','%'.$search_product.'%')
-                        ->orWhere('product_code','like','%'.$search_product.'%')
-                        ->orWhere('description','like','%'.$search_product.'%')
-                        ->orWhere('product_color','like','%'.$search_product.'%')
-                        ->orWhere('brand','like','%'.$search_product.'%');
-            })->where('status',1)->get();
-            $breadcrumb = "<a style=\"color:#333 !important;\" href='/'>Home</a> /
-            <a  style=\"color:#333 !important;\">". $data['pattern']."</a>";
 
-            $userCart = Cart::getProductsCart();
-           
-            return view('products.listing')->with(compact('categories','productsAll','search_product','breadcrumb','userCart'));
+    public function searchProducts(Request $request){
+        if($request->isMethod('get')){
+            $data=$request->all();
+            
+            //  echo'<pre>'; print_r($data); die;
+            
+            if(empty(Session::get('sorting'))){ Session::put('sorting',"alpha"); }
+            if(empty(Session::get('paginate'))){ Session::put('paginate',"9"); }
+            
+            if(!empty($data['pattern']))
+                $pattern = $data['pattern'];
+            else{
+                if(empty($data['brand'])){
+                    for($i=0; $i<1; $i++)
+                        $pattern = key($data);
+                }else{
+                    for($i=0; $i<1; $i++)
+                        $pattern = key($data);
+                    $pattern = substr($pattern, 0, strlen($pattern)-1);
+                }
+            }
+                
+
+            $productsAll = Product::where(function($query) use($pattern){
+                $query->where('product_name','like','%'.$pattern.'%')
+                        ->orWhere('product_code','like','%'.$pattern.'%')
+                        ->orWhere('description','like','%'.$pattern.'%')
+                        ->orWhere('product_color','like','%'.$pattern.'%')
+                        ->orWhere('brand','like','%'.$pattern.'%');
+            })->join('categories','categories.id','=','products.category_id')->where('products.status',1)->where('categories.status',1)->select('products.*','categories.name as category_name');
+
+            $brandArray= Product::where(function($query) use($pattern){
+                $query->where('product_name','like','%'.$pattern.'%')
+                        ->orWhere('product_code','like','%'.$pattern.'%')
+                        ->orWhere('description','like','%'.$pattern.'%')
+                        ->orWhere('product_color','like','%'.$pattern.'%')
+                        ->orWhere('brand','like','%'.$pattern.'%');
+            })->join('categories','categories.id','=','products.category_id')->where('products.status',1)->where('categories.status',1)->select('products.*','categories.name as category_name')->groupBy('brand')->get();
+
+            if(!empty($_GET['brand'])){
+                // echo'<pre>'; print_r($_GET['brand']); die;
+                $brand_test = explode('-', $_GET['brand']);
+                $productsAll = $productsAll->whereIn('brand',$brand_test);
+            }
+            //total products found
+            $count_products = $productsAll->count();
+
+            if(!empty($data['paginate'])){
+                Session::put('paginate', $data['paginate']);
+            }
+
+            if(!empty($data['sorting'])){
+                switch ($data['sorting']) {
+                    case "alpha":
+                        Session::put('sorting', "alpha");
+                        break;
+                    case "price_asc":
+                        Session::put('sorting', "price_asc");
+                        break;
+                    case "price_desc":
+                        Session::put('sorting', "price_desc");
+                        break;
+                    case "recent":
+                        Session::put('sorting', "recent");
+                        break;
+                }
+            }
         }
+        
+
+        $productsAll = Product::setListingDetails($productsAll);
+        $start = 0;
+        $end = 0;
+        $products_currentpage=$productsAll->count();
+        $current_page=$productsAll->currentPage();
+        $multiple_pages=$productsAll->hasPages();
+        if($count_products != 0){
+            $start = 1 + (($current_page - 1) * Session::get('paginate'));
+            $end = $products_currentpage +(($current_page - 1) * Session::get('paginate'));
+        }
+        //if product is in sale add new field "new_price"
+        foreach($productsAll as $product){
+            if($product->in_sale == 1){
+                $new_price = DB::table('products_sales')->where('product_id',$product->id)->first();
+                $new_price = $new_price->price;
+                $product->new_price = $new_price;
+            }
+        }
+        if(!empty($data['pattern']))
+            $productsAll->withPath('?'.$data['pattern']);
+        else
+            $productsAll->withPath('?'.$pattern);
+        
+        
+        
+        $userCart = Cart::getProductsCart();
+        $categories = Category::with('categories')->where(['parent_id'=>0,'status'=>1])->get();
+        $cmsDetails = DB::table('cms')->where('id',1)->first();
+        
+        return view('products.listing_search')->with(compact('categories','productsAll','pattern','userCart','count_products','end','start','brandArray','cmsDetails'));
+
+    }
+
+    public function outlet(Request $request){
+        $outlet = 1;
+        if($request->isMethod('get')){
+            $data=$request->all();
+            
+            //  echo'<pre>'; print_r($data); die;
+            
+            if(empty(Session::get('sorting'))){ Session::put('sorting',"alpha"); }
+            if(empty(Session::get('paginate'))){ Session::put('paginate',"9"); }
+                
+
+            $productsAll = DB::table('products')
+                ->where('products.in_sale',1)
+                ->join('categories','categories.id','=','products.category_id')
+                ->where('products.status',1)
+                ->where('categories.status',1)
+                ->select('products.*','categories.name as category_name');
+               
+            
+            $brandArray = DB::table('products')
+                ->where('in_sale',1)
+                ->join('categories','categories.id','=','products.category_id')
+                ->where('products.status',1)
+                ->where('categories.status',1)
+                ->select('products.*','categories.name as category_name')
+                ->groupBy('brand')
+                ->get();
+
+            if(!empty($_GET['brand'])){
+                // echo'<pre>'; print_r($_GET['brand']); die;
+                $brand_test = explode('-', $_GET['brand']);
+                $productsAll = $productsAll->whereIn('brand',$brand_test);
+            }
+            //total products found
+            $count_products = $productsAll->count();
+
+            if(!empty($data['paginate'])){
+                Session::put('paginate', $data['paginate']);
+            }
+
+            if(!empty($data['sorting'])){
+                switch ($data['sorting']) {
+                    case "alpha":
+                        Session::put('sorting', "alpha");
+                        break;
+                    case "price_asc":
+                        Session::put('sorting', "price_asc");
+                        break;
+                    case "price_desc":
+                        Session::put('sorting', "price_desc");
+                        break;
+                    case "recent":
+                        Session::put('sorting', "recent");
+                        break;
+                }
+            }
+        }
+        
+
+        $productsAll = Product::setListingDetails($productsAll);
+        $start = 0;
+        $end = 0;
+        $products_currentpage=$productsAll->count();
+        $current_page=$productsAll->currentPage();
+        $multiple_pages=$productsAll->hasPages();
+        if($count_products != 0){
+            $start = 1 + (($current_page - 1) * Session::get('paginate'));
+            $end = $products_currentpage +(($current_page - 1) * Session::get('paginate'));
+        }
+        //if product is in sale add new field "new_price"
+        foreach($productsAll as $product){
+            if($product->in_sale == 1){
+                $new_price = DB::table('products_sales')->where('product_id',$product->id)->first();
+                $new_price = $new_price->price;
+                $product->new_price = $new_price;
+            }
+        }
+        
+        $userCart = Cart::getProductsCart();
+        $categories = Category::with('categories')->where(['parent_id'=>0,'status'=>1])->get();
+        $cmsDetails = DB::table('cms')->where('id',1)->first();
+        
+        return view('products.listing_outlet')->with(compact('categories','productsAll','userCart','count_products','end','start','brandArray','outlet','cmsDetails'));
+    
     }
 
     public function product($id = null){
@@ -519,7 +720,7 @@ class ProductsController extends Controller
             $new_price = $new_price->price;
             $productDetails->new_price = $new_price;
         }
-        // echo'<pre>'; print_r($productDetails); die;
+       
 
         $relatedProducts = DB::table('products')
             ->where('products.id','!=',$id)
@@ -535,6 +736,8 @@ class ProductsController extends Controller
                 $product->new_price = $new_price;
             }
         }
+        //  echo'<pre>'; print_r($relatedProducts); die;
+
         
         
         $categoryDetails = Category::where('id',$productDetails->category_id)->first();
@@ -559,7 +762,9 @@ class ProductsController extends Controller
         
         $userCart = Cart::getProductsCart();
         $categories= Category::with('categories')->where(['parent_id'=>0,'status'=>1])->get();
-        return view('products.detail')->with(compact('productDetails','categories','productAltImages','relatedProducts','breadcrumb','ratingAvg','countReviews','userCart','categories','categoryDetails'));
+        $cmsDetails = DB::table('cms')->where('id',1)->first();
+
+        return view('products.detail')->with(compact('productDetails','categories','productAltImages','relatedProducts','breadcrumb','ratingAvg','countReviews','userCart','categories','categoryDetails','cmsDetails'));
     }
 
     public function addtocart(Request $request){
@@ -614,7 +819,8 @@ class ProductsController extends Controller
 
     public function cart(){
         $userCart = Cart::getProductsCart();
-        return view('products.cart')->with(compact('userCart'));
+        $cmsDetails = DB::table('cms')->where('id',1)->first();
+        return view('products.cart')->with(compact('userCart','cmsDetails'));
     }
 
     public function deleteCartProduct($id=null){
@@ -742,6 +948,7 @@ class ProductsController extends Controller
         $userDetails=User::find($user_id);
         $countries=Country::get();
         $bill_address = DB::table('addresses')->where(['user_id'=>$user_id, 'is_billing'=>1])->first();
+        // echo'<pre>'; print_r($bill_address); die;
         $cartDetails=DB::table('cart')->where(['user_id'=>$user_id])->first();
         $cart_id=$cartDetails->id;
 
@@ -796,12 +1003,13 @@ class ProductsController extends Controller
             return redirect()->action('ProductsController@orderReview');
         }
         $userCart = Cart::getProductsCart();
+        $cmsDetails = DB::table('cms')->where('id',1)->first();
         if($shippingCount > 0){
             $shippingDetails = Address::where(['user_id'=>$user_id, 'is_shipping'=>1])->first();
-            return view('products.checkout')->with(compact('userDetails','countries','shippingCount','shippingDetails','bill_address','userCart'));
+            return view('products.checkout')->with(compact('userDetails','countries','shippingCount','shippingDetails','bill_address','userCart','cmsDetails'));
         }
        
-        return view('products.checkout')->with(compact('userDetails','countries','shippingCount','bill_address','userCart'));
+        return view('products.checkout')->with(compact('userDetails','countries','shippingCount','bill_address','userCart','cmsDetails'));
        
     }
 
@@ -827,7 +1035,8 @@ class ProductsController extends Controller
         
         //$countProduct = DB::table('cart')->where(['user_id'=>$user_id])->count();
         $userCart = Cart::getProductsCart();
-        return view('products.order_review')->with(compact('userDetails','shippingDetails','userCart','countProduct','userCart'));
+        $cmsDetails = DB::table('cms')->where('id',1)->first();
+        return view('products.order_review')->with(compact('userDetails','shippingDetails','userCart','countProduct','userCart','cmsDetails'));
     }
 
     public function placeOrder(Request $request){
@@ -993,7 +1202,8 @@ class ProductsController extends Controller
         Coupon::where('coupon_code',$coupon_code)->update(['used'=> 1]);
 
         $userCart = Cart::getProductsCart();
-        return view('orders.thanks')->with(compact('userCart'));
+        $cmsDetails = DB::table('cms')->where('id',1)->first();
+        return view('orders.thanks')->with(compact('userCart','cmsDetails'));
     }
 
     public function thanksPayment(){
@@ -1049,21 +1259,24 @@ class ProductsController extends Controller
         });
 
         $userCart = Cart::getProductsCart();
+        $cmsDetails = DB::table('cms')->where('id',1)->first();
             
-        return view('orders.thanks_payment')->with(compact('order_id','userCart'));
+        return view('orders.thanks_payment')->with(compact('order_id','userCart','cmsDetails'));
     }
 
     public function payment(){
         $userCart = Cart::getProductsCart();
-        return view('orders.payment')->with(compact('userCart'));
+        $cmsDetails = DB::table('cms')->where('id',1)->first();
+        return view('orders.payment')->with(compact('userCart','cmsDetails'));
     }
 
     public function userOrders(){
         $user_id=Auth::user()->id;
         $orders=Order::with('orders')->where('user_id',$user_id)->orderBy('id','DESC')->get(); 
         $userCart = Cart::getProductsCart();
+        $cmsDetails = DB::table('cms')->where('id',1)->first();
         $categories = Category::with('categories')->where(['parent_id'=>0,'status'=>1])->get();
-        return view('orders.user_orders')->with(compact('orders','userCart','categories'));
+        return view('orders.user_orders')->with(compact('orders','userCart','categories','cmsDetails'));
     }
 
     //da eliminare se si lascia così my orders
@@ -1077,7 +1290,8 @@ class ProductsController extends Controller
         echo'<pre>'; print_r($productsOrder); die;
         
         $userCart = Cart::getProductsCart();
-        return view('orders.user_order_details')->with(compact('productsOrder','orderDetails','userCart'));
+        $cmsDetails = DB::table('cms')->where('id',1)->first();
+        return view('orders.user_order_details')->with(compact('productsOrder','orderDetails','userCart','cmsDetails'));
 
     }
 
@@ -1192,10 +1406,20 @@ class ProductsController extends Controller
             ->join('products', 'products.id', '=', 'wish_products.product_id')
             ->select('products.*')
             ->get();
+        
+        //if product is in sale add new field "new_price"
+        foreach($productsWish as $product){
+            if($product->in_sale == 1){
+                $new_price = DB::table('products_sales')->where('product_id',$product->id)->first();
+                $new_price = $new_price->price;
+                $product->new_price = $new_price;
+            }
+        }
     
         $categories = Category::with('categories')->where(['parent_id'=>0, 'status'=>1])->get();
         $userCart = Cart::getProductsCart();
-        return view('products.wishlist')->with(compact('productsWish','categories','userCart')); 
+        $cmsDetails = DB::table('cms')->where('id',1)->first();
+        return view('products.wishlist')->with(compact('productsWish','categories','userCart','cmsDetails')); 
     }
 
     public function addWishlist($product_id){
@@ -1275,13 +1499,15 @@ class ProductsController extends Controller
             return redirect()->back()->with('flash_message_success','Request successfully sent. We will reply as soon as possible!');
         }
         $userCart = Cart::getProductsCart();
-        return view('help.contact_us')->with(compact('userCart'));
+        $cmsDetails = DB::table('cms')->where('id',1)->first();
+        return view('help.contact_us')->with(compact('userCart','cmsDetails'));
     }
 
     public function faq(){
         $userCart = Cart::getProductsCart();
+        $cmsDetails = DB::table('cms')->where('id',1)->first();
         $faqs = DB::table('faqs')->where('status',1)->select('faqs.question','faqs.answer')->get();
-        return view('help.faq')->with(compact('userCart','faqs'));
+        return view('help.faq')->with(compact('userCart','faqs','cmsDetails'));
     }
 
 }

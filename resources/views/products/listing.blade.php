@@ -1,10 +1,6 @@
 @php
 	use App\Product;
-	if(empty($search_product)){
 		$productSubcatCount= Product::productSubcatCount($categoryDetails->id);
-	}else{
-		$count_search_product = Product::countSearchProducts($search_product);
-	}
 @endphp
 
 @extends('layouts.frontLayout.front_design')
@@ -45,12 +41,10 @@
 			</div>
 			<div class="col-lg-9 order-1 order-lg-2">
 				<div class="filter-widget" style="margin-bottom:5px;">
-				@if(!empty($search_product))
-					<h4 style="text-align:center; font-size:30px;" class="fw-title" >Products for "{{ $search_product }}"</h4>
-				@else
+				
 					<h4 style="text-align:center; font-size:30px;" class="fw-title" >{{ $categoryDetails->name }}</h4>
 				</div>
-				@endif
+				
 				<div class="product-show-option">
 					<div class="row">
 						<div class="col-lg-7 col-md-7">

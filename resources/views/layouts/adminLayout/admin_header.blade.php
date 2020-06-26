@@ -1,6 +1,10 @@
 <!--Header-part-->
 <div id="header">
-  <h1><a href="{{ url('/admin/dashboard')}}">Admin RB-Gym</a></h1>
+  <div style="padding-left: 18px; padding-top: 10px;">
+    <a href="{{ url('/admin/dashboard')}}">
+      <img width="180px"src="{{asset('images/frontend_images/logo6.png')}}" alt="">
+    </a>
+  </div>
 </div>
 <!--close-Header-part-->
 

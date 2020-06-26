@@ -65,10 +65,16 @@
                 </div>
               </div>
               
+              
               <div class="control-group">
                 <label class="control-label">Brand</label>
                 <div class="controls">
-                  <input type="text" name="brand" id="brand">
+                  <select name="brand" style="width: 220px;">
+                    <option value="0">Select a brand</option>
+                    @foreach($brands as $brand)
+                      <option value="{{ $brand->name }}"> {{ $brand->name }} </option>
+                    @endforeach
+                  </select>
                 </div>
               </div>
 

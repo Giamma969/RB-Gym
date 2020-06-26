@@ -79,11 +79,16 @@
                   <input type="number" min="0" name="stock" id="stock" value="{{$productDetails->stock}}">
                 </div>
               </div>
-              
+
               <div class="control-group">
                 <label class="control-label">Brand</label>
                 <div class="controls">
-                  <input type="text" name="brand" id="brand" value="{{$productDetails->brand}}">
+                  <select name="brand" style="width: 220px;">
+                    <option value="0">Select a brand</option>
+                    @foreach($brands as $brand)
+                      <option value="{{ $brand->name }}" @if($productDetails->brand == $brand->name) selected @endif> {{ $brand->name }} </option>
+                    @endforeach
+                  </select>
                 </div>
               </div>
 

@@ -27,9 +27,17 @@
 @endif
 <section id="do_action">
     <div class="container">
-        <div class="heading" align="center" >
-            <h3>YOUR ORDER HAS BEEN PLACED</h3>
-            <p>Your order number is {{ Session::get('order_id') }} and total payble about is € {{ Session::get('grand_total') }}</p>
+        <div class="heading" style="text-align:left; padding:50px 280px 50px 280px;">
+            <h3>Your order has been placed. </h3><h3>Thanks for choosing us!</h3>
+            <p>Your order number is <b>{{ Session::get('order_id') }}</b> and total payble about is <b>€ {{ Session::get('grand_total') }}</b>.</p>
+             
+            <p></p> 
+            <p>In the section "<a class="a_footer" style="color: #c4c4c4;" href="{{ url('/orders') }}">Your orders</a>" you can check the status of your order at any time.</p>
+
+            <p>For any information do not hesitate to contact us at , we are always at your disposal.</p>
+
+            <p>Cordially RB-Gym Team</p>
+            
         </div>
     </div>
 </section>

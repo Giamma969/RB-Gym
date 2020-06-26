@@ -54,6 +54,10 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/','IndexController@index');
 //Category/Listing page
 Route::match(['get','post'],'/products/{url}','ProductsController@products');
+//Search products route
+Route::match(['get','post'],'/search-products','ProductsController@searchProducts');
+//Outlet  route
+Route::match(['get','post'],'/outlet','ProductsController@outlet');
 //Products filter page
 Route::match(['get','post'],'/products-filter', 'ProductsController@filter');
 //Product detail page
@@ -85,12 +89,16 @@ Route::match(['get','post'],'/user-register','UsersController@register');
 Route::match(['get','post'],'/user-login','UsersController@login');
 //users logout
 Route::get('/user-logout','UsersController@logout');
-//Search products route
-Route::post('/search-products','ProductsController@searchProducts');
+//Brand
+Route::get('/brand/{name}','BrandsController@showBrand');
 //contact us
 Route::match(['get','post'],'/contact-us','ProductsController@contactUs');
 //FAQ
 Route::get('/faq','ProductsController@faq');
+//About us 
+Route::get('/about-us','CmsController@aboutUs');
+//Privacy policy us 
+Route::get('/privacy','CmsController@privacy');
 
 
 
@@ -126,11 +134,6 @@ Route::group(['middleware'=>['frontlogin']],function(){
     Route::post('/cart/apply-coupon','ProductsController@applyCoupon');
     //forget coupon
     Route::get('cart/forget-coupon','ProductsController@forgetCoupon');
-
-
-   
-    
-    
 });
 
 
@@ -157,11 +160,17 @@ Route::group(['middleware'=>['auth']],function(){
     Route::get('/admin/delete-alt-image/{id}','ProductsController@deleteAltImage')->middleware(AltImagesProduct::class);
     Route::match(['get','post'], 'admin/add-images/{id}', 'ProductsController@addImages')->middleware(AltImagesProduct::class);
 
-    //Admin Coupon Routes
+    //Admin Coupons Routes
     Route::match(['get','post'], '/admin/add-coupon', 'CouponsController@addCoupon')->middleware(AddCoupon::class);
     Route::match(['get','post'], '/admin/edit-coupon/{id}', 'CouponsController@editCoupon')->middleware(EditCoupon::class);
     Route::get('/admin/delete-coupon/{id}','CouponsController@deleteCoupon')->middleware(DeleteCoupon::class);
     Route::get('/admin/view-coupons','CouponsController@viewCoupons')->middleware(ViewCoupons::class);
+
+    //Admin Brands Routes
+    Route::match(['get','post'],'/admin/add-brand', 'BrandsController@addBrand');
+    Route::match(['get','post'],'/admin/edit-brand/{name}','BrandsController@editBrand');
+    Route::get('/admin/view-brands','BrandsController@viewBrands');
+    Route::get('/admin/delete-brand/{name}','BrandsController@deleteBrand');
 
     //Admin Banners Routes
     Route::match(['get','post'],'/admin/add-banner', 'BannersController@addBanner')->middleware(AddBanner::class);
@@ -172,6 +181,10 @@ Route::group(['middleware'=>['auth']],function(){
     //Admin Homepages Routes
     Route::match(['get','post'],'/admin/customize-homepage/{id}', 'HomepagesController@customizeHomepage');
     Route::get('/admin/view-homepages','HomepagesController@viewHomepages');
+
+    //Admin CMS Routes
+    Route::match(['get','post'],'/admin/edit-cms/{id}', 'CmsController@editCms');
+    Route::get('/admin/view-cms','CmsController@viewCms');
     
     //Admin Sales Routes
     Route::match(['get','post'],'/admin/add-sale', 'SalesController@addSale');

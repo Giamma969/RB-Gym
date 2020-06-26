@@ -64,7 +64,8 @@ class UsersController extends Controller
         }
         Controller::createSession();
         $userCart = \App\Cart::getProductsCart();
-        return view('users.login')->with(compact('userCart'));
+        $cmsDetails = DB::table('cms')->where('id',1)->first();
+        return view('users.login')->with(compact('userCart','cmsDetails'));
 
     }
 
@@ -120,7 +121,8 @@ class UsersController extends Controller
         }
         Controller::createSession();
         $userCart = \App\Cart::getProductsCart();
-        return view('users.register')->with(compact('userCart'));
+        $cmsDetails = DB::table('cms')->where('id',1)->first();
+        return view('users.register')->with(compact('userCart','cmsDetails'));
     }
 
     public function confirmAccount($email){
@@ -188,7 +190,8 @@ class UsersController extends Controller
         }
         Controller::createSession();
         $userCart = \App\Cart::getProductsCart();
-        return view('users.forgot_password')->with(compact('userCart'));
+        $cmsDetails = DB::table('cms')->where('id',1)->first();
+        return view('users.forgot_password')->with(compact('userCart','cmsDetails'));
     }
 
     public function chkUserPassword(Request $request){
@@ -237,7 +240,8 @@ class UsersController extends Controller
         Controller::createSession();
         $userCart = \App\Cart::getProductsCart();
         $categories= Category::with('categories')->where(['parent_id'=>0,'status'=>1])->get();
-        return view('users.update_password')->with(compact('userCart','categories'));
+        $cmsDetails = DB::table('cms')->where('id',1)->first();
+        return view('users.update_password')->with(compact('userCart','categories','cmsDetails'));
 
     }
 
@@ -267,6 +271,7 @@ class UsersController extends Controller
         return view('admin.users.view_users')->with(compact('usersDetails'));
     }
 
+    //admin
     public function editUserStatus(Request $request, $id){
         if($request->isMethod('post')){
             $data = $request->all();
@@ -320,8 +325,9 @@ class UsersController extends Controller
         }
         Controller::createSession();
         $userCart = \App\Cart::getProductsCart();
+        $cmsDetails = DB::table('cms')->where('id',1)->first();
         $categories= Category::with('categories')->where(['parent_id'=>0,'status'=>1])->get();
-        return view('users.account_informations')->with(compact('countries','userDetails','bill_address','userCart','categories'));
+        return view('users.account_informations')->with(compact('countries','userDetails','bill_address','userCart','categories','cmsDetails'));
     }
 
     

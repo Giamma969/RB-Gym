@@ -77,6 +77,7 @@ class DevelopersController extends Controller
             $billing_id=DB::getPdo()->lastInsertId();
             DB::table('users')->where(['id'=>$user_id])->update(['billing_id'=>$billing_id]);
 
+            
             //send password by email
             $email=$data['developer_email'];
             $messageData = ['email'=>$data['developer_email'], 'name'=>$data['developer_name'], 

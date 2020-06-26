@@ -15,11 +15,29 @@ class AdminController extends Controller
     public function login(Request $request){
         if($request-> isMethod ('post')){
             $data=$request-> input();
+            
             //check if user is the admin
             if (Auth::attempt(['email'=>$data['email'],'password'=>$data['password'],'admin'=>'1', 'status'=>'1'])){
                 Session::put('admin_session', $data['email']);
                 $new_session=str_random(40);
                 Session::put('admin_session_id',$new_session);
+                $user_id=Auth::user()->id;
+                //create empty cart if first login
+                $countCart=DB::table('cart')->where(['user_id'=>$user_id])->count();
+                if($countCart==0){
+                    DB::table('cart')->insert([
+                        'user_id'=> $user_id,
+                        'session_id'=> $new_session
+                    ]);
+                }
+                //create empty wishlist if first login
+                $countWish=DB::table('wishlists')->where(['user_id'=>$user_id])->count();
+                if($countWish ==0){
+                    DB::table('wishlists')->insert([
+                        'user_id'=> $user_id,
+                        'session_id'=> $new_session
+                    ]);
+                }
                 return redirect('/admin/dashboard');
             }
             //check if user is a developer
@@ -27,11 +45,29 @@ class AdminController extends Controller
                 Session::put('dev_session', $data['email']);
                 $new_session=str_random(40);
                 Session::put('dev_session_id',$new_session);
+                $user_id=Auth::user()->id;
+                //create empty cart if first login
+                $countCart=DB::table('cart')->where(['user_id'=>$user_id])->count();
+                if($countCart==0){
+                    DB::table('cart')->insert([
+                        'user_id'=> $user_id,
+                        'session_id'=> $new_session
+                    ]);
+                }
+                //create empty wishlist if first login
+                $countWish=DB::table('wishlists')->where(['user_id'=>$user_id])->count();
+                if($countWish ==0){
+                    DB::table('wishlists')->insert([
+                        'user_id'=> $user_id,
+                        'session_id'=> $new_session
+                    ]);
+                }
                 return redirect('/admin/dashboard');
             }
             else{
                 return redirect('/admin')->with('flash_message_error', 'invalid Email or Password');
             }
+
         }
    	    return view('admin.admin_login');
     }

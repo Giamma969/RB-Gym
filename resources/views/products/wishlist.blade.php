@@ -35,22 +35,8 @@
 				@include('layouts.frontLayout.front_sidebar')
 			</div>
 			<div class="col-lg-9 order-1 order-lg-2">
-				<div class="product-show-option">
-					<div class="row">
-						<div class="col-lg-7 col-md-7">
-							<div class="select-option">
-								<select class="sorting">
-									<option value="">Default Sorting</option>
-								</select>
-								<select class="p-show">
-									<option value="">Show:</option>
-								</select>
-							</div>
-						</div>
-						<div class="col-lg-5 col-md-5 text-right">
-							<p>Show 01- 09 Of 36 Product</p>
-						</div>
-					</div>
+				<div class="filter-widget" style="margin-bottom:50px;">
+					<h4 style="text-align:center; font-size:30px;" class="fw-title" >Your wishlist</h4>
 				</div>
 				<div class="product-list">
 					<div class="row">
@@ -61,7 +47,7 @@
 										<a href="{{ url('product/'.$product->id) }}">
 											<img src="{{asset('images/backend_images/products/medium/'.$product->image)}}" alt="">
 										</a>
-											<div class="sale">Sale</div>
+											@if($product->in_sale == 1)<div class="sale">Sale</div>@endif
 										<div class="icon">
 										</div>
 										<ul>
@@ -83,8 +69,12 @@
 											<h5>{{$product->product_name}}</h5>
 										</a>
 										<div class="product-price">
+											@if($product->in_sale == 1)
+												€{{$product->new_price}}
+												<span>€{{$product->price}}</span>
+											@else
 											€{{$product->price}}
-											<span>$35.00</span>
+											@endif
 										</div>
 									</div>
 								</div>

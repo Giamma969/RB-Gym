@@ -286,6 +286,9 @@ $().ready(function(){
 		eyeImg: "/images/frontend_images/eye.svg"
 	});
 
+});
+
+$().ready(function(){
 	//copy billing address to account address script
 	$('#copyAddress').on('click',function(){
 		if(this.checked){
@@ -309,11 +312,7 @@ $().ready(function(){
 			$('#shipping_mobile').val('');
 		}
 	});
-	
-	// $('.show_paginate').niceSelect();
-
 });
-
 
 function selectPaymentMethod(){
 	if($('#Credit-debit-card').is(':checked') || $('#COD').is(':checked') ){

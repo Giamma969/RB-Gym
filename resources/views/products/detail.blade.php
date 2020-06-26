@@ -106,7 +106,7 @@
                                     <br>
                                     <!-- <div class="p-code">Product code : {{$productDetails->product_code}}</div> -->
                                     <p><b>Product code : {{$productDetails->product_code}}</b></p>
-                                    <p><b>Brand: </b> {{ $productDetails ->brand }}</p>
+                                    @if(!empty($productDetails->brand))<p><b>Brand: </b> {{ $productDetails->brand }}</p>@endif
                                     <p><b>Condition: </b>New</p>
                                     <p><b>Color: </b> {{ $productDetails ->product_color}}</p>
                                     <p><b>Availability: </b>@if($productDetails->stock > 0) {{$productDetails->stock}} in stock @else Out of stock @endif </p>
@@ -126,9 +126,15 @@
                                 <div class="pd-share">
                                    
                                     <div class="pd-social" style="margin-top: 20px!important;">
-                                        <a href="#"><i class="ti-facebook"></i></a>
-                                        <a href="#"><i class="ti-twitter-alt"></i></a>
-                                        <a href="#"><i class="ti-linkedin"></i></a>
+                                        @if(!empty($cmsDetails->facebook))
+                                            <a href="{{$cmsDetails->facebook}}" target="_blank"><i class="ti-facebook"></i></a>
+                                        @endif
+                                        @if(!empty($cmsDetails->twitter))
+                                            <a href="{{$cmsDetails->twitter}}" target="_blank"><i class="ti-twitter-alt"></i></a>
+                                        @endif
+                                        @if(!empty($cmsDetails->instagram))
+                                            <a href="{{$cmsDetails->instagram}}" target="_blank"><i class="ti-instagram"></i></a>
+                                        @endif
                                     </div>
                                     @if(Product::checkIfWished($productDetails->id))
                                         <a href="{{ url('/remove-wishlist/'.$productDetails->id) }}" class="primary-btn pd-cart">Remove to Wishlist</a>
@@ -161,7 +167,7 @@
                                     <div class="row">
                                         <div class="col-lg-12">
                                             <h5>Features</h5>
-                                            <p>{{$productDetails->description}}</p>
+                                            <p style="white-space:pre-wrap;">{{$productDetails->description}}</p>
                                         </div>
                                         <div class="col-lg-5">
                                             <img src="img/product-single/tab-desc.jpg" alt="">
@@ -185,10 +191,12 @@
                                             </td>
                                         </tr>
                                          <tr>
+                                         @if(!empty($productDetails->brand))
                                             <td class="p-catagory">Brand</td>
                                             <td>
                                                 <div class="p-code">{{$productDetails->brand}}</div>
                                             </td>
+                                        @endif
                                         </tr>
                                         <tr>
                                             <td class="p-catagory">Availability</td>
@@ -284,7 +292,7 @@
                                                             {{$review->rating}}
                                                         </div>
                                                         <h5 style="margin-bottom:0px;">{{$review->title}}</h5>
-                                                        <div class="at-reply">{{$review->description}}</div>
+                                                        <div class="at-reply" style="white-space:pre-wrap;">{{$review->description}}</div>
                                                     </div>
                                                 </div>
                                                 <hr>
@@ -337,47 +345,45 @@
         </div>
         <div class="row">
             <div class="col-lg-12">
-            <div class="product-slider owl-carousel">
-            @foreach($relatedProducts as $item)
-                
-                    <div class="product-item">
-                        <div class="pi-pic">
-                            <a href="{{ url('product/'.$item->id) }}">
-                                <img src="{{asset('images/backend_images/products/medium/'.$item->image) }}" alt="">
-                            </a>
-                            @if($item->in_sale == 1)<div class="sale">Sale</div>@endif
-                            <div class="icon"></div>
-                            <ul>
-                                <li class="w-icon active">
-                                    @if(Product::checkIfWished($item->id))
-                                        <a href="{{ url('/remove-wishlist/'.$item->id) }}"><i class="icon_heart"  aria-hidden="true"></i></a>
+                <div class="product-slider owl-carousel">
+                    @foreach($relatedProducts as $item)
+                        <div class="product-item">
+                            <div class="pi-pic">
+                                <a href="{{ url('product/'.$item->id) }}">
+                                    <img src="{{asset('images/backend_images/products/medium/'.$item->image) }}" alt="">
+                                </a>
+                                @if($item->in_sale == 1)<div class="sale">Sale</div>@endif
+                                <div class="icon"></div>
+                                <ul>
+                                    <li class="w-icon active">
+                                        @if(Product::checkIfWished($item->id))
+                                            <a href="{{ url('/remove-wishlist/'.$item->id) }}"><i class="icon_heart"  aria-hidden="true"></i></a>
+                                        @else
+                                            <a href="{{ url('/add-wishlist/'.$item->id) }}"><i class="icon_heart_alt"  aria-hidden="true"></i></a>
+                                        @endif
+                                    </li>
+                                    <li class="quick-view">
+                                        <a class="a_view_product" href="{{ url('product/'.$item->id) }}">View product</a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="pi-text">
+                                <div class="catagory-name">{{$item->category_name}}</div>
+                                <a href="{{ url('product/'.$item->id) }}">
+                                    <h5>{{$item->product_name}}</h5>
+                                </a>
+                                <div class="product-price">
+                                    @if($item->in_sale == 1)
+                                        {{$item->new_price}}
+                                    <span>€{{$item->price}}</span>
                                     @else
-                                        <a href="{{ url('/add-wishlist/'.$item->id) }}"><i class="icon_heart_alt"  aria-hidden="true"></i></a>
+                                        {{$item->price}}
                                     @endif
-                                </li>
-                                <li class="quick-view">
-                                    <a class="a_view_product" href="{{ url('product/'.$item->id) }}">View product</a>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="pi-text">
-                            <div class="catagory-name">{{$item->category_name}}</div>
-                            <a href="{{ url('product/'.$item->id) }}">
-                                <h5>{{$item->product_name}}</h5>
-                            </a>
-                            <div class="product-price">
-                                @if($item->in_sale == 1)
-                                    {{$item->new_price}}
-                                <span>€{{$item->price}}</span>
-                                @else
-                                    {{$item->price}}
-                                @endif
+                                </div>
                             </div>
                         </div>
-                    </div>
-                
-            @endforeach
-            </div>
+                    @endforeach
+                </div>
             </div>
         </div>
     </div>

@@ -208,46 +208,46 @@
 </section>
 <!-- Man Banner Section End -->
 
-<!-- Instagram Section Begin -->
-<div class="instagram-photo">
-    <div class="insta-item set-bg" data-setbg="{{asset('images/frontend_images/insta-1.jpg')}}">
-        <div class="inside-text">
-            <i class="ti-instagram"></i>
-            <h5><a href="#">colorlib_Collection</a></h5>
+
+<!-- <section class="man-banner spad"> -->
+    <div class="container-fluid" style="margin-top:200px;">
+        <div class="row">
+            <div class="col-lg-12" style="background-color:rgb(235,235,235);">
+                <div class="filter-control">
+                    <h2>Our brands</h2>
+                </div>
+                <div class="logo-carousel owl-carousel">
+                    @foreach($brands as $brand)
+                        <div class="product-item">
+                            <div class="pi-pic">
+                                <a href="{{ url('brand/'.$brand->name) }}">
+                                    <img src="{{asset('images/backend_images/brands/medium/'.$brand->logo)}}" alt="">
+                                </a>
+                                <div class="icon">
+                                </div>
+                                <ul></ul>
+                            </div>
+                            <div class="pi-text">
+                                <!-- <div class="catagory-name">{{$brand->name}}</div> -->
+                                <a href="{{ url('brand/'.$brand->name) }}">
+                                    <h5>{{$brand->name}}</h5>
+                                </a>
+                                
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+            <!-- <div class="col-lg-3 offset-lg-1">
+                <div style="width:309px!important; height:620px!important;" class="product-large set-bg m-large" data-setbg="{{asset('images/backend_images/homepages/'.$homepage->second_slider_image)}}">
+                    <h2>{{$second_slider->name}}</h2>
+                    <a href="{{ url('products/'.$second_slider->url) }}">Discover More</a>
+                </div>
+            </div> -->
         </div>
     </div>
-    <div class="insta-item set-bg" data-setbg="{{asset('images/frontend_images/insta-2.jpg')}}">
-        <div class="inside-text">
-            <i class="ti-instagram"></i>
-            <h5><a href="#">colorlib_Collection</a></h5>
-        </div>
-    </div>
-    <div class="insta-item set-bg" data-setbg="{{asset('images/frontend_images/insta-3.jpg')}}">
-        <div class="inside-text">
-            <i class="ti-instagram"></i>
-            <h5><a href="#">colorlib_Collection</a></h5>
-        </div>
-    </div>
-    <div class="insta-item set-bg" data-setbg="{{asset('images/frontend_images/insta-4.jpg')}}">
-        <div class="inside-text">
-            <i class="ti-instagram"></i>
-            <h5><a href="#">colorlib_Collection</a></h5>
-        </div>
-    </div>
-    <div class="insta-item set-bg" data-setbg="{{asset('images/frontend_images/insta-5.jpg')}}">
-        <div class="inside-text">
-            <i class="ti-instagram"></i>
-            <h5><a href="#">colorlib_Collection</a></h5>
-        </div>
-    </div>
-    <div class="insta-item set-bg" data-setbg="{{asset('images/frontend_images/insta-6.jpg')}}">
-        <div class="inside-text">
-            <i class="ti-instagram"></i>
-            <h5><a href="#">colorlib_Collection</a></h5>
-        </div>
-    </div>
-</div>
-<!-- Instagram Section End -->
+<!-- </section> -->
+
 
 <!-- Latest Blog Section Begin -->
 <section class="latest-blog spad">

@@ -39,33 +39,39 @@
                             classical Latin literature from 45 BC, maki years old.</p>
                     </div>
                     <div class="contact-widget">
-                        <div class="cw-item">
-                            <div class="ci-icon">
-                                <i class="ti-location-pin"></i>
+                        @if(!empty($cmsDetails->address))
+                            <div class="cw-item">
+                                <div class="ci-icon">
+                                    <i class="ti-location-pin"></i>
+                                </div>
+                                <div class="ci-text">
+                                    <span>Address:</span>
+                                    <p>{{$cmsDetails->address}}</p>
+                                </div>
                             </div>
-                            <div class="ci-text">
-                                <span>Address:</span>
-                                <p>Via Vetoio, 48, 67100 Coppito AQ</p>
+                        @endif
+                        @if(!empty($cmsDetails->phone))
+                            <div class="cw-item">
+                                <div class="ci-icon">
+                                    <i class="ti-mobile"></i>
+                                </div>
+                                <div class="ci-text">
+                                    <span>Phone:</span>
+                                    <p>{{$cmsDetails->phone}}</p>
+                                </div>
                             </div>
-                        </div>
-                        <div class="cw-item">
-                            <div class="ci-icon">
-                                <i class="ti-mobile"></i>
+                        @endif
+                        @if(!empty($cmsDetails->email))
+                            <div class="cw-item">
+                                <div class="ci-icon">
+                                    <i class="ti-email"></i>
+                                </div>
+                                <div class="ci-text">
+                                    <span>Email:</span>
+                                    <p>{{$cmsDetails->email}}</p>
+                                </div>
                             </div>
-                            <div class="ci-text">
-                                <span>Phone:</span>
-                                <p>+39 333 32 333 32</p>
-                            </div>
-                        </div>
-                        <div class="cw-item">
-                            <div class="ci-icon">
-                                <i class="ti-email"></i>
-                            </div>
-                            <div class="ci-text">
-                                <span>Email:</span>
-                                <p>rb-gym@info.com</p>
-                            </div>
-                        </div>
+                        @endif
                     </div>
                 </div>
                 <div class="col-lg-6 offset-lg-1">

@@ -4341,8 +4341,10 @@ ol {
 }
 .a_sidebar:hover{
 	color: rgb(165,12,39) !important ;
-	line-height:2 !important;
-	font-size: 20px !important;
+	/* color: rgb(251,251,251) !important ; */
+	/* background-color: rgb(95,95,95) !important ; */
+	/* line-height:2 !important; */
+	/* font-size: 20px !important; */
 	text-decoration: underline;
 }
 .a_footer:hover{
