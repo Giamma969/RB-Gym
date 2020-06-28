@@ -32,7 +32,7 @@
         <div class="row-fluid">
             <div class="span12">
                 <div class="widget-box">
-                    <div class="widget-title"> <span class="icon"><i class="icon-th"></i></span>
+                    <div class="widget-title"> <span class="icon"><i class="icon-shopping-cart"></i></span>
                         <h5>View orders</h5>
                     </div>
                     <div class="widget-content nopadding">
@@ -67,7 +67,7 @@
                                         </td>
                                         <td class="center">{{$order->grand_total}}</td>
                                         <td class="center">{{$order->order_status}}</td>
-                                        <td class="center">{{$order->payment_method}}</td>
+                                        <td class="center">@if($order->payment_method == "COD")Cash on delivery @endif</td>
                                         <td style="max-width:50px;" class="center">
                                             <a style="width:80%;"  href="#myModal{{$order->id}}" data-toggle="modal" class="btn btn-success btn-mini" title="View">View</a>
                                             <a style="max-width:80%;" target="_blank" href="{{ url('admin/view-order/'.$order->id)}}" class="btn btn-primary btn-mini" title="View">View order details</a>

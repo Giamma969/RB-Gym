@@ -63,7 +63,7 @@ class CouponsController extends Controller
     }
 
     public function viewCoupons(){
-        $coupons = Coupon::get();
+        $coupons = Coupon::orderBy('id','desc')->get();
         return view('admin.coupons.view_coupons')->with(compact('coupons'));
     }
 

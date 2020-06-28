@@ -21,41 +21,43 @@
     <div class="row-fluid">
       <div class="span12">
         <div class="widget-box">
-          <div class="widget-title"> <span class="icon"> <i class="icon-info-sign"></i> </span>
+          <div class="widget-title"> <span class="icon"> <i class="icon-picture"></i> </span>
             <h5>Edit banner</h5>
           </div>
           <div class="widget-content nopadding">
             <form enctype="multipart/form-data" class="form-horizontal" method="post" action="{{url('/admin/edit-banner/'.$bannerDetails->id)}}" name="edit_banner" id="edit_banner" novalidate="novalidate"> {{csrf_field()}}
               
-                <div class="control-group">
-                    <label class="control-label">Banner image</label>
-                    <div class="controls">
-                    <input type="file" name="image" id="image">
-                    @if(!empty($bannerDetails->image))
-                        <input type="hidden" name="current_image" value="{{ $bannerDetails->image }}">
-                    @endif
-                    </div>
-                </div>
+                
 
               <div class="control-group">
                 <label class="control-label">Title</label>
                 <div class="controls">
-                  <input type="text" name="title" id="title" value="{{ $bannerDetails->title }}">
-                </div>
-              </div>
-
-              <div class="control-group">
-                <label class="control-label">Description</label>
-                <div class="controls">
-                  <input type="text" name="description" id="description" value="{{ $bannerDetails->description }}">
+                  <input type="text" name="title" id="title" value="{{ $bannerDetails->title }}" style="width:500px;">
                 </div>
               </div>
               
               <div class="control-group">
                 <label class="control-label">Link</label>
                 <div class="controls">
-                  <input type="text" name="link" id="link" value="{{ $bannerDetails->link }}">
+                  <input type="text" name="link" id="link" value="{{ $bannerDetails->link }}" style="width:500px;">
                 </div>
+              </div>
+
+              <div class="control-group">
+                <label class="control-label">Description</label>
+                <div class="controls">
+                  <textarea class="textarea_banner" name="description" id="description">{{ $bannerDetails->description }}</textarea>
+                </div>
+              </div>
+
+              <div class="control-group">
+                  <label class="control-label">Banner image</label>
+                  <div class="controls">
+                  <input type="file" name="image" id="image">
+                  @if(!empty($bannerDetails->image))
+                      <input type="hidden" name="current_image" value="{{ $bannerDetails->image }}">
+                  @endif
+                  </div>
               </div>
               
               <div class="control-group">

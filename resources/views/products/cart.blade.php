@@ -92,7 +92,7 @@
                 <div class="row">
                     <div class="col-lg-4">
                         <div class="cart-buttons">
-                            <a href="#" class="primary-btn continue-shop">Continue shopping</a>
+                            <a href="{{ url('/') }}" class="primary-btn continue-shop">Continue shopping</a>
                         </div>
                         <div class="discount-coupon">
                             <h6>Discount Codes</h6>

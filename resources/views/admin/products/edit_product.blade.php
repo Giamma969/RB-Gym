@@ -21,7 +21,7 @@
     <div class="row-fluid">
       <div class="span12">
         <div class="widget-box">
-          <div class="widget-title"> <span class="icon"> <i class="icon-info-sign"></i> </span>
+          <div class="widget-title"> <span class="icon"> <i class="icon-briefcase"></i> </span>
             <h5>Edit Product</h5>
           </div>
           <div class="widget-content nopadding">
@@ -33,6 +33,18 @@
                   <select name="category_id" style="width: 220px;">
                     <?php echo $categories_dropdown;?>
                     
+                  </select>
+                </div>
+              </div>
+
+               <div class="control-group">
+                <label class="control-label">Brand</label>
+                <div class="controls">
+                  <select name="brand" style="width: 220px;">
+                    <option value="0">Select a brand</option>
+                    @foreach($brands as $brand)
+                      <option value="{{ $brand->name }}" @if($productDetails->brand == $brand->name) selected @endif> {{ $brand->name }} </option>
+                    @endforeach
                   </select>
                 </div>
               </div>
@@ -59,78 +71,68 @@
                 </div>
               </div>
 
-              <div class="control-group">
-                <label class="control-label">Description</label>
-                <div class="controls">
-                  <textarea name="description" id="description">{{$productDetails->description}}</textarea>
-                </div>
-              </div>
-
-              <div class="control-group">
-                <label class="control-label">Price (€)</label>
-                <div class="controls">
-                  <input type="number" min="0" step="0.01" name="price" id="price" value="{{$productDetails->price}}">
-                </div>
-              </div>
-
-              <div class="control-group">
-                <label class="control-label">Stock</label>
-                <div class="controls">
-                  <input type="number" min="0" name="stock" id="stock" value="{{$productDetails->stock}}">
-                </div>
-              </div>
-
-              <div class="control-group">
-                <label class="control-label">Brand</label>
-                <div class="controls">
-                  <select name="brand" style="width: 220px;">
-                    <option value="0">Select a brand</option>
-                    @foreach($brands as $brand)
-                      <option value="{{ $brand->name }}" @if($productDetails->brand == $brand->name) selected @endif> {{ $brand->name }} </option>
-                    @endforeach
-                  </select>
-                </div>
-              </div>
-
-              <div class="control-group">
-                <label class="control-label">Height (cm)</label>
-                <div class="controls">
-                  <input type="number" min="0" name="height" id="height" value="{{$productDetails->height}}">
-                </div>
-              </div>
-
-              <div class="control-group">
-                <label class="control-label">Width (cm)</label>
-                <div class="controls">
-                  <input type="number" min="0" name="width" id="width" value="{{$productDetails->width}}">
-                </div>
-              </div>
-
-              <div class="control-group">
-                <label class="control-label">Depth (cm)</label>
-                <div class="controls">
-                  <input type="number" min="0" name="depth" id="depth" value="{{$productDetails->depth}}">
-                </div>
-              </div>
-
-              <div class="control-group">
+               <div class="control-group">
                 <label class="control-label">Material</label>
                 <div class="controls">
                   <input type="text" name="material" id="material" value="{{$productDetails->material}}">
                 </div>
               </div>
 
+
+              <div class="control-group">
+                <label class="control-label">Description</label>
+                <div class="controls">
+                  <textarea class="textarea_admin" name="description" id="description">{{$productDetails->description}}</textarea>
+                </div>
+              </div>
+
+              <div class="control-group">
+                <label class="control-label">Price (€)</label>
+                <div class="controls">
+                  <input class="price_form" type="number" min="0" step="0.01" name="price" id="price" value="{{$productDetails->price}}">
+                </div>
+              </div>
+
               <div class="control-group">
                 <label class="control-label">Weight (Kg)</label>
                 <div class="controls">
-                  <input type="number" min="0" step="0.01" name="weight" id="weight" value="{{$productDetails->weight}}">
+                  <input class="price_form" type="number" min="0" step="0.01" name="weight" id="weight" value="{{$productDetails->weight}}">
                 </div>
               </div>
 
               <div class="control-group">
                 <label class="control-label">Maximum load supported (Kg)</label>
                 <div class="controls">
-                  <input type="number" min="0" step="0.01" name="maximum_load_supported" id="maximum_load_supported" value="{{$productDetails->maximum_load_supported}}">
+                  <input class="price_form" type="number" min="0" step="0.01" name="maximum_load_supported" id="maximum_load_supported" value="{{$productDetails->maximum_load_supported}}">
+                </div>
+              </div>
+
+
+              <div class="control-group">
+                <label class="control-label">Height (cm)</label>
+                <div class="controls">
+                  <input class="price_form" type="number" min="0" name="height" id="height" value="{{$productDetails->height}}">
+                </div>
+              </div>
+
+              <div class="control-group">
+                <label class="control-label">Width (cm)</label>
+                <div class="controls">
+                  <input class="price_form" type="number" min="0" name="width" id="width" value="{{$productDetails->width}}">
+                </div>
+              </div>
+
+              <div class="control-group">
+                <label class="control-label">Depth (cm)</label>
+                <div class="controls">
+                  <input class="price_form" type="number" min="0" name="depth" id="depth" value="{{$productDetails->depth}}">
+                </div>
+              </div>
+              
+              <div class="control-group">
+                <label class="control-label">Stock</label>
+                <div class="controls">
+                  <input class="price_form" type="number" min="0" name="stock" id="stock" value="{{$productDetails->stock}}">
                 </div>
               </div>
 

@@ -41,6 +41,29 @@ use App\Http\Middleware\EditGroup;
 use App\Http\Middleware\DeleteGroup;
 use App\Http\Middleware\ViewServices;
 
+use App\Http\Middleware\ViewBrands;
+use App\Http\Middleware\AddBrand;
+use App\Http\Middleware\EditBrand;
+use App\Http\Middleware\DeleteBrand;
+use App\Http\Middleware\ViewHomepages;
+use App\Http\Middleware\CustomizeHomepage;
+use App\Http\Middleware\AddSale;
+use App\Http\Middleware\EditSale;
+use App\Http\Middleware\DeleteSale;
+use App\Http\Middleware\ViewSales;
+use App\Http\Middleware\ProductsSale;
+use App\Http\Middleware\ViewShippingCharges;
+use App\Http\Middleware\EditShippingCharges;
+use App\Http\Middleware\ViewCms;
+use App\Http\Middleware\EditCms;
+use App\Http\Middleware\ViewMessages;
+use App\Http\Middleware\EditMessage;
+use App\Http\Middleware\ViewFaqs;
+use App\Http\Middleware\AddFaq;
+use App\Http\Middleware\EditFaq;
+use App\Http\Middleware\DeleteFaq;
+
+
 
 Auth::routes();
 
@@ -125,7 +148,10 @@ Route::group(['middleware'=>['frontlogin']],function(){
     //paypal page
     Route::get('/payment','ProductsController@payment');  
     //user orders page
-    Route::get('/orders','ProductsController@userOrders'); 
+    Route::get('/orders','ProductsController@userOrders');
+    //details product ordered
+    Route::post('/product-ordered','ProductsController@productOrdered');
+
     //user ordered products page
     Route::get('/orders/{id}','ProductsController@userOrderDetails');
     //add review
@@ -167,10 +193,10 @@ Route::group(['middleware'=>['auth']],function(){
     Route::get('/admin/view-coupons','CouponsController@viewCoupons')->middleware(ViewCoupons::class);
 
     //Admin Brands Routes
-    Route::match(['get','post'],'/admin/add-brand', 'BrandsController@addBrand');
-    Route::match(['get','post'],'/admin/edit-brand/{name}','BrandsController@editBrand');
-    Route::get('/admin/view-brands','BrandsController@viewBrands');
-    Route::get('/admin/delete-brand/{name}','BrandsController@deleteBrand');
+    Route::match(['get','post'],'/admin/add-brand', 'BrandsController@addBrand')->middleware(AddBrand::class);
+    Route::match(['get','post'],'/admin/edit-brand/{name}','BrandsController@editBrand')->middleware(EditBrand::class);
+    Route::get('/admin/view-brands','BrandsController@viewBrands')->middleware(ViewBrands::class);
+    Route::get('/admin/delete-brand/{name}','BrandsController@deleteBrand')->middleware(DeleteBrand::class);
 
     //Admin Banners Routes
     Route::match(['get','post'],'/admin/add-banner', 'BannersController@addBanner')->middleware(AddBanner::class);
@@ -179,19 +205,23 @@ Route::group(['middleware'=>['auth']],function(){
     Route::get('/admin/delete-banner/{id}','BannersController@deleteBanner')->middleware(DeleteBanner::class);
 
     //Admin Homepages Routes
-    Route::match(['get','post'],'/admin/customize-homepage/{id}', 'HomepagesController@customizeHomepage');
-    Route::get('/admin/view-homepages','HomepagesController@viewHomepages');
+    Route::match(['get','post'],'/admin/customize-homepage/{id}', 'HomepagesController@customizeHomepage')->middleware(CustomizeHomepage::class);
+    Route::get('/admin/view-homepages','HomepagesController@viewHomepages')->middleware(ViewHomepages::class);
 
     //Admin CMS Routes
-    Route::match(['get','post'],'/admin/edit-cms/{id}', 'CmsController@editCms');
-    Route::get('/admin/view-cms','CmsController@viewCms');
+    Route::match(['get','post'],'/admin/edit-cms/{id}', 'CmsController@editCms')->middleware(EditCms::class);
+    Route::get('/admin/view-cms','CmsController@viewCms')->middleware(ViewCms::class);
     
+    //Admin Shipping charges Routes
+    Route::match(['get','post'],'/admin/edit-shipping-charges/{id}', 'ShippingChargesController@editSippingCharges')->middleware(EditShippingCharges::class);
+    Route::get('/admin/view-shipping-charges','ShippingChargesController@viewSippingCharges')->middleware(ViewShippingCharges::class);
+
     //Admin Sales Routes
-    Route::match(['get','post'],'/admin/add-sale', 'SalesController@addSale');
-    Route::match(['get','post'],'/admin/edit-sale/{id}','SalesController@editSale');
-    Route::match(['get','post'],'/admin/edit-products-sale/{id}','SalesController@editProductsSale');
-    Route::get('/admin/view-sales','SalesController@viewSales');
-    Route::get('/admin/delete-sale/{id}','SalesController@deleteSale');
+    Route::match(['get','post'],'/admin/add-sale', 'SalesController@addSale')->middleware(AddSale::class);
+    Route::match(['get','post'],'/admin/edit-sale/{id}','SalesController@editSale')->middleware(EditSale::class);
+    Route::match(['get','post'],'/admin/edit-products-sale/{id}','SalesController@editProductsSale')->middleware(ProductsSale::class);
+    Route::get('/admin/view-sales','SalesController@viewSales')->middleware(ViewSales::class);
+    Route::get('/admin/delete-sale/{id}','SalesController@deleteSale')->middleware(DeleteSale::class);
 
 
     //Admin Orders Routes
@@ -205,7 +235,7 @@ Route::group(['middleware'=>['auth']],function(){
 
     //Admin users route
     Route::get('/admin/view-users','UsersController@viewUsers')->middleware(ViewUsers::class);
-    Route::match(['get','post'],'/admin/edit-user-status/{id}','UsersController@editUserStatus');
+    Route::match(['get','post'],'/admin/edit-user-status/{id}','UsersController@editUserStatus')->middleware(ViewUsers::class);
 
 
     //Admin reviews route
@@ -228,14 +258,14 @@ Route::group(['middleware'=>['auth']],function(){
     Route::match(['get','post'],'/admin/view-services','ServicesController@viewServices')->middleware(ViewServices::class);
 
     //Admin - Messages routes
-    Route::get('/admin/view-messages','MessagesController@viewMessages');
-    Route::match(['get','post'],'/admin/edit-message/{id}','MessagesController@editMessage');
+    Route::get('/admin/view-messages','MessagesController@viewMessages')->middleware(ViewMessages::class);
+    Route::match(['get','post'],'/admin/edit-message/{id}','MessagesController@editMessage')->middleware(EditMessage::class);
 
     //Admin - Faqs
-    Route::get('/admin/view-faqs','FaqsController@viewFaqs');
-    Route::match(['get','post'], '/admin/add-faq', 'FaqsController@addFaq');
-    Route::match(['get','post'], '/admin/edit-faq/{id}', 'FaqsController@editFaq');
-    Route::get('/admin/delete-faq/{id}','FaqsController@deleteFaq');
+    Route::get('/admin/view-faqs','FaqsController@viewFaqs')->middleware(ViewFaqs::class);
+    Route::match(['get','post'], '/admin/add-faq', 'FaqsController@addFaq')->middleware(AddFaq::class);
+    Route::match(['get','post'], '/admin/edit-faq/{id}', 'FaqsController@editFaq')->middleware(EditFaq::class);
+    Route::get('/admin/delete-faq/{id}','FaqsController@deleteFaq')->middleware(DeleteFaq::class);
 
 
 });

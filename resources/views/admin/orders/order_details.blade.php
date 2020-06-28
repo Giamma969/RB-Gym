@@ -26,7 +26,7 @@
     <div class="row-fluid">
         <div class="span6">
             <div class="widget-box">
-                <div class="widget-title"> <span class="icon"><i class="icon-time"></i></span>
+                <div class="widget-title"> <span class="icon"><i class="icon-shopping-cart"></i></span>
                     <h5>Order details</h5>
                 </div>
                 <div class="widget-content nopadding">
@@ -66,14 +66,14 @@
                             </tr>
                             <tr>
                                 <td class="taskDesc">Payment method</td>
-                                <td class="taskStatus">{{ $orderDetails->payment_method }}</td>
+                                <td class="taskStatus">@if($orderDetails->payment_method == "COD")Cash on delivery @endif</td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
             </div>
             <div class="widget-box">
-                <div class="widget-title"> <span class="icon"><i class="icon-time"></i></span>
+                <div class="widget-title"> <span class="icon"><i class="icon-envelope"></i></span>
                     <h5>Billing address</h5>
                 </div>
                 <div class="widget-content">
@@ -90,7 +90,7 @@
         </div>
         <div class="span6">
             <div class="widget-box">
-                <div class="widget-title"> <span class="icon"><i class="icon-time"></i></span>
+                <div class="widget-title"> <span class="icon"><i class="icon-user"></i></span>
                     <h5>Customer details</h5>
                 </div>
                 <div class="widget-content nopadding">
@@ -109,13 +109,13 @@
                 </div>
             </div>
             <div class="widget-box">
-                <div class="widget-title"> <span class="icon"><i class="icon-time"></i></span>
+                <div class="widget-title"> <span class="icon"><i class="icon-cog"></i></span>
                     <h5>Update order status</h5>
                 </div>
                 <div class="widget-content">
                     <form action="{{ url('admin/update-order-status')}}" method="post">{{ csrf_field() }}
                         <input type="hidden" name="order_id" value="{{ $orderDetails->id }}">
-                        <table width="100%">
+                        <table width="60%">
                             <tr>
                                 <td>
                                     <select name="order_status" id="order_status" class="control-label" required>
@@ -136,7 +136,7 @@
                 </div>
             </div>
             <div class="widget-box" style="margin-top:86px;">
-                <div class="widget-title"> <span class="icon"><i class="icon-time"></i></span>
+                <div class="widget-title"> <span class="icon"><i class="icon-envelope"></i></span>
                     <h5>Shipping address</h5>
                 </div>
                 <div class="widget-content">

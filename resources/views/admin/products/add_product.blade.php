@@ -21,7 +21,7 @@
     <div class="row-fluid">
       <div class="span12">
         <div class="widget-box">
-          <div class="widget-title"> <span class="icon"> <i class="icon-info-sign"></i> </span>
+          <div class="widget-title"> <span class="icon"> <i class="icon-briefcase"></i> </span>
             <h5>Add product</h5>
           </div>
           <div class="widget-content nopadding">
@@ -33,6 +33,18 @@
                   <select name="category_id" style="width: 220px;">
                     <?php echo $categories_dropdown;?>
                    </select>
+                </div>
+              </div>
+
+              <div class="control-group">
+                <label class="control-label">Brand</label>
+                <div class="controls">
+                  <select name="brand" style="width: 220px;">
+                    <option value="0">Select a brand</option>
+                    @foreach($brands as $brand)
+                      <option value="{{ $brand->name }}"> {{ $brand->name }} </option>
+                    @endforeach
+                  </select>
                 </div>
               </div>
               
@@ -57,47 +69,6 @@
                   <input type="text" name="product_color" id="product_color">
                 </div>
               </div>
-              
-              <div class="control-group">
-                <label class="control-label">Description</label>
-                <div class="controls">
-                  <textarea name="description" id="description"> </textarea>
-                </div>
-              </div>
-              
-              
-              <div class="control-group">
-                <label class="control-label">Brand</label>
-                <div class="controls">
-                  <select name="brand" style="width: 220px;">
-                    <option value="0">Select a brand</option>
-                    @foreach($brands as $brand)
-                      <option value="{{ $brand->name }}"> {{ $brand->name }} </option>
-                    @endforeach
-                  </select>
-                </div>
-              </div>
-
-              <div class="control-group">
-                <label class="control-label">Height (cm)</label>
-                <div class="controls">
-                  <input type="number" min="0" name="height" id="height">
-                </div>
-              </div>
-
-              <div class="control-group">
-                <label class="control-label">Width (cm)</label>
-                <div class="controls">
-                  <input type="number" min="0" name="width" id="width">
-                </div>
-              </div>
-
-              <div class="control-group">
-                <label class="control-label">Depth (cm)</label>
-                <div class="controls">
-                  <input type="number" min="0" name="depth" id="depth">
-                </div>
-              </div>
 
               <div class="control-group">
                 <label class="control-label">Material</label>
@@ -105,32 +76,59 @@
                   <input type="text" name="material" id="material">
                 </div>
               </div>
+              
+              <div class="control-group">
+                <label class="control-label">Description</label>
+                <div class="controls">
+                  <textarea class="textarea_admin" name="description" id="description"> </textarea>
+                </div>
+              </div>
+              
+              <div class="control-group">
+                <label class="control-label">Price (€)</label>
+                <div class="controls">
+                  <input type="number" min="0" step="0.01" name="price" id="price" class="price_form">
+                </div>
+              </div>
 
               <div class="control-group">
                 <label class="control-label">Weight (Kg)</label>
                 <div class="controls">
-                  <input type="number" min="0" step="0.01" name="weight" id="weight">
+                  <input type="number" min="0" step="0.01" name="weight" id="weight" class="price_form">
                 </div>
               </div>
 
               <div class="control-group">
-                <label class="control-label">Maximum load supported (Kg)</label>
+                <label class="control-label">Max load supported (Kg)</label>
                 <div class="controls">
-                  <input type="number" min="0" step="0.01" name="maximum_load_supported" id="maximum_load_supported">
+                  <input type="number" min="0" step="0.01" name="maximum_load_supported" id="maximum_load_supported" class="price_form">
+                </div>
+              </div>
+              <div class="control-group">
+                <label class="control-label">Height (cm)</label>
+                <div class="controls">
+                  <input type="number" min="0" name="height" id="height" class="price_form">
                 </div>
               </div>
 
               <div class="control-group">
-                <label class="control-label">Price (€)</label>
+                <label class="control-label">Width (cm)</label>
                 <div class="controls">
-                  <input type="number" min="0" step="0.01" name="price" id="price">
+                  <input type="number" min="0" name="width" id="width" class="price_form">
+                </div>
+              </div>
+
+              <div class="control-group">
+                <label class="control-label">Depth (cm)</label>
+                <div class="controls">
+                  <input type="number" min="0" name="depth" id="depth" class="price_form">
                 </div>
               </div>
 
               <div class="control-group">
                 <label class="control-label">Stock</label>
                 <div class="controls">
-                  <input type="number" min="0" name="stock" id="stock">
+                  <input type="number" min="0" name="stock" id="stock" class="price_form">
                 </div>
               </div>
               

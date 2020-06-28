@@ -22,7 +22,7 @@
     <div class="row-fluid">
       <div class="span12">
         <div class="widget-box">
-          <div class="widget-title"> <span class="icon"> <i class="icon-info-sign"></i> </span>
+          <div class="widget-title"> <span class="icon"> <i class="icon-briefcase"></i> </span>
             <h5>Add product images</h5>
           </div>
           <div class="widget-content nopadding">
@@ -64,7 +64,7 @@
       <div class="span12">
 
         <div class="widget-box">
-          <div class="widget-title"> <span class="icon"><i class="icon-th"></i></span>
+          <div class="widget-title"> <span class="icon"><i class="icon-picture"></i></span>
             <h5>View images</h5>
           </div>
           <div class="widget-content nopadding">

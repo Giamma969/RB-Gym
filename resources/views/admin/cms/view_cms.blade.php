@@ -23,7 +23,7 @@
       <div class="span12">
 
         <div class="widget-box">
-          <div class="widget-title"> <span class="icon"><i class="icon-th"></i></span>
+          <div class="widget-title"> <span class="icon"><i class="icon-bullhorn"></i></span>
             <h5>View CMS</h5>
           </div>
           <div class="widget-content nopadding">

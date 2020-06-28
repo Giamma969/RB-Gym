@@ -43,7 +43,7 @@ class FaqsController extends Controller
     }
     
     public function viewFaqs(){
-        $faqs = DB::table('faqs')->get();
+        $faqs = DB::table('faqs')->orderBy('id','desc')->get();
         return view('admin.faqs.view_faqs')->with(compact('faqs'));
     }
 

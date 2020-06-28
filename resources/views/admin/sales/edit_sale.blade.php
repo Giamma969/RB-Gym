@@ -21,7 +21,7 @@
         <div class="row-fluid">
             <div class="span12">
                 <div class="widget-box">
-                    <div class="widget-title"> <span class="icon"> <i class="icon-info-sign"></i> </span>
+                    <div class="widget-title"> <span class="icon"> <i class="icon-bullhorn"></i> </span>
                         <h5>Edit sale</h5>
                     </div>
                     <div class="widget-content nopediting">
@@ -48,7 +48,7 @@
                             <div class="control-group">
                                 <label class="control-label">Amount</label>
                                 <div class="controls">
-                                <input type="number" name="amount" min="0" id="amount" value="{{$saleDetails->amount}}">
+                                <input type="number" name="amount" min="0" id="amount" value="{{$saleDetails->amount}}" class="height_width_form">
                                 </div>
                             </div>
 

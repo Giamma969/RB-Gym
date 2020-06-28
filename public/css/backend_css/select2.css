@@ -34,6 +34,7 @@ Version: 3.2 Timestamp: Mon Sep 10 10:38:04 PDT 2012
     -webkit-background-clip: padding-box;
     background-clip: padding-box;
     border: 1px solid #aaa;
+    border-radius: 3px !important;
     display: block;
     overflow: hidden;
     white-space: nowrap;

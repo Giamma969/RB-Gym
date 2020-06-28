@@ -55,12 +55,7 @@
     <script src="{{asset('js/frontend_js/main.js')}}"></script>
     <script src="{{asset('js/frontend_js/main2.js')}}"></script>
     <script src="{{asset('js/frontend_js/passtrength.js')}}"></script>
-    <script src="https://js.stripe.com/v3/"></script>
-    <!-- <script src="https://js.stripe.com/v2/"></script> -->
-    <script src="{{asset('js/frontend_js/stripe_payment.js')}}"></script>
-    <!-- <script src="{{asset('js/frontend_js/jquery.validate.js')}}"></script>     -->
-
-    
+    <!-- <script src="{{asset('js/frontend_js/jquery.validate.js')}}"></script> -->
     <!-- <script src="//code.jquery.com/jquery-1.11.1.min.js"></script> -->
   
 </body>

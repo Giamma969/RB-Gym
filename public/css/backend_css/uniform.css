@@ -415,8 +415,8 @@ div.uploader span.action {
   width: 85px;
   text-align: center;
   text-shadow: #fff 0px 1px 0px;
-  background-color: #fff;
-  font-size: 11px;
+  background-color:rgb(248,248,248);
+  font-size: 13px;
   font-weight: bold;
 }
 
@@ -555,9 +555,9 @@ div.uploader {
 }
 
 div.uploader span.action {
-  float: left;
+  /* float: left; */
   display: inline;
-  padding: 2px 0px;
+  padding: 2px 0px 0px 12px;
   overflow: hidden;
   cursor: pointer;
 }

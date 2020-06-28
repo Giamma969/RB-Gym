@@ -21,7 +21,7 @@
     <div class="row-fluid">
       <div class="span12">
         <div class="widget-box">
-          <div class="widget-title"> <span class="icon"> <i class="icon-info-sign"></i> </span>
+          <div class="widget-title"> <span class="icon"> <i class="icon-question-sign"></i> </span>
             <h5>Edit faq</h5>
           </div>
           <div class="widget-content nopadding">
@@ -30,14 +30,14 @@
               <div class="control-group">
                 <label class="control-label">Question</label>
                 <div class="controls">
-                    <textarea name="question" id="question" style="width:70%; height:20px;" required>{{$faqDetails->question}}</textarea>
+                    <textarea name="question" id="question" class="paragraph_cms" required>{{$faqDetails->question}}</textarea>
                 </div>
               </div>
 
               <div class="control-group">
                 <label class="control-label">Answer</label>
                 <div class="controls">
-                    <textarea name="answer" id="answer" style="width:70%; height:100px;" required>{{$faqDetails->answer}}</textarea>
+                    <textarea name="answer" id="answer" class="textarea_admin" required>{{$faqDetails->answer}}</textarea>
                 </div>
               </div>
 

@@ -23,7 +23,7 @@
             <div class="span12">
                 <div class="widget-box">
                     <div class="widget-title" style="border-top:1px solid #CDCDCD; border-bottom:0px;"> 
-                        <span class="icon"> <i class="icon-info-sign"></i> </span>
+                        <span class="icon"> <i class="icon-bullhorn"></i> </span>
                         <h5>Edit products sale</h5>
                     </div>
                     <div class="widget-content nopadding">
@@ -54,13 +54,11 @@
                             
                             
                             <!-- Products permissions -->
-                            <div class="widget-title" style="clear:left; border-top:1px solid #CDCDCD; border-bottom:0px;"> 
+                            <div class="widget-title" style="clear:left; border-top:1px solid #CDCDCD; border-bottom:0px;">
+                                <span class="icon"> <i class="icon-briefcase"></i> </span> 
                                 <h5>Select the products to be discounted by id</h5>
                             </div>
                             
-
-                            
-
                             @foreach($products as $product)
                                 <div class="control-group" style="float:left;">
                                     <label class="control-label">{{$product->id}}</label>

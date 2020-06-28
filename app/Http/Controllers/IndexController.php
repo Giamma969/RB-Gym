@@ -106,8 +106,9 @@ class IndexController extends Controller
         $banners = DB::table('banners')->where('status',1)->get();
         $brands = DB::table('brands')->where('logo','<>', NULL)->get();
         $cmsDetails = DB::table('cms')->where('id',1)->first();
+        $shippingDetails = DB::table('shipping_charges')->where('id',1)->first();
 
-        return view('index')->with(compact('productsAll','categories','banners','userCart','homepage','first_grid','second_grid','third_grid','first_slider','second_slider','products_first_slider','products_second_slider','banners','brands','cmsDetails'));
+        return view('index')->with(compact('productsAll','categories','banners','userCart','homepage','first_grid','second_grid','third_grid','first_slider','second_slider','products_first_slider','products_second_slider','banners','brands','cmsDetails','shippingDetails'));
     }
     
 }

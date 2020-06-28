@@ -1125,8 +1125,8 @@ form {
 	margin-bottom: 0;
 }
 .form-horizontal .control-group {
-	border-top: 1px solid #ffffff;
-	border-bottom: 1px solid #eeeeee;
+	/* border-top: 1px solid #ffffff;
+	border-bottom: 1px solid #eeeeee; */
 	margin-bottom: 0;
 }
 .form-horizontal .control-group:last-child {
@@ -1592,4 +1592,37 @@ div.dataTables_wrapper .ui-widget-header {
 	color: black!important;
 	background-color: white!important;
 
+}
+
+input{
+	border-radius: 3px !important;
+}
+.select_admin{
+	width:220px;
+}
+
+.textarea_admin{
+	width: 600px;
+	height: 200px;
+}
+
+.textarea_banner{
+	width: 500px;
+	height: 150px;
+}
+
+.height_width_form{
+	width:7ch;
+}
+
+.price_form{
+	width:9ch;
+}
+
+.expiry_date{
+	width:11ch;
+}
+
+.paragraph_cms{
+	width: 600px;
 }

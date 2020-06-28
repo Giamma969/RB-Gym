@@ -81,7 +81,7 @@ class CategoryController extends Controller
   }
    public function viewCategories(Request $request){
     
-    $categories= Category::get();
+    $categories= Category::orderBy('id','desc')->get();
     $categories= json_decode(json_encode($categories));
     /*echo "<pre>";print_r($categories); die;*/
     return view('admin.categories.view_categories')->with(compact('categories'));

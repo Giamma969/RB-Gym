@@ -8,7 +8,7 @@ use DB;
 class SalesController extends Controller
 {
     public function viewSales(){
-        $sales = DB::table('sales')->get();
+        $sales = DB::table('sales')->orderBy('id','desc')->get();
         return view('admin.sales.view_sales')->with(compact('sales'));
     }
 

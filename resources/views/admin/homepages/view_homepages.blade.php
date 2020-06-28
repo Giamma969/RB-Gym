@@ -23,7 +23,7 @@
       <div class="span12">
 
         <div class="widget-box">
-          <div class="widget-title"> <span class="icon"><i class="icon-th"></i></span>
+          <div class="widget-title"> <span class="icon"><i class="icon-home"></i></span>
             <h5>View homepages</h5>
           </div>
           <div class="widget-content nopadding">

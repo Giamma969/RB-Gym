@@ -69,12 +69,16 @@
 					<div class="col-lg-7 col-md-7" style="margin-left:81px;">
 
 						<form action="{{ url('/search-products') }}" method="get">{{ csrf_field() }}
-							<div  class="advanced-search" >
-                                <div class="input-group" style="float:left;">
+							<div  class="advanced-search" style="max-width:86%;">
+                                <div class="input-group" style="float:left; max-width: 98% !important;">
                                     <input type="text" name="pattern" placeholder="What do you need?">
-                                </div>
-                                    <div style="float:right">
                                     <button type="submit" class="button_search_listing"><i class="ti-search"></i></button>
+                                </div>
+                                    <div style="float:right;" >
+                                                                        
+
+                                    <!--   -->
+                                    <!-- <a class="button_search_listing" onclick="javascript:this.form.submit()"><i class="ti-search"></i></a> -->
                                 </div>
 							</div>
 						</form>

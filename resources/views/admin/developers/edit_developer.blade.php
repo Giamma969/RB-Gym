@@ -21,7 +21,7 @@
         <div class="row-fluid">
             <div class="span12">
                 <div class="widget-box">
-                    <div class="widget-title"> <span class="icon"> <i class="icon-info-sign"></i> </span>
+                    <div class="widget-title"> <span class="icon"> <i class="icon-laptop"></i> </span>
                         <h5>Edit developer</h5>
                     </div>
                     <div class="widget-content nopadding">
@@ -62,7 +62,7 @@
                                     </select>
                                 </div>
                             </div>-->
-                            <div class="widget-title"> <span class="icon"> <i class="icon-info-sign"></i> </span>
+                            <div class="widget-title"> <span class="icon"> <i class="icon-group"></i> </span>
                                 <h5>Assign groups</h5>
                             </div>
 

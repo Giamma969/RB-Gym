@@ -21,7 +21,7 @@
     <div class="row-fluid">
       <div class="span12">
         <div class="widget-box">
-          <div class="widget-title"> <span class="icon"> <i class="icon-info-sign"></i> </span>
+          <div class="widget-title"> <span class="icon"> <i class="icon icon-star"></i> </span>
             <h5>Add brand</h5>
           </div>
           <div class="widget-content nopadding">
@@ -37,7 +37,7 @@
               <div class="control-group">
                 <label class="control-label">Description</label>
                 <div class="controls">
-                    <textarea style="width:80ch; height:20ch" name="description" id="description"></textarea>
+                    <textarea class="textarea_admin" name="description" id="description"></textarea>
                 </div>
               </div>
 

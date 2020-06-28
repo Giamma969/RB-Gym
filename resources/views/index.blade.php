@@ -214,7 +214,7 @@
         <div class="row">
             <div class="col-lg-12" style="background-color:rgb(235,235,235);">
                 <div class="filter-control">
-                    <h2>Our brands</h2>
+                    <h2>OUR BRANDS</h2>
                 </div>
                 <div class="logo-carousel owl-carousel">
                     @foreach($brands as $brand)
@@ -261,7 +261,7 @@
                         </div>
                         <div class="sb-text">
                             <h6>Free Shipping</h6>
-                            <p>For all order over 99$</p>
+                            <p>For all order over €{{$shippingDetails->free_shipping}}</p>
                         </div>
                     </div>
                 </div>
@@ -282,8 +282,8 @@
                             <img src="{{asset('images/frontend_images/icon-1.png')}}" alt="">
                         </div>
                         <div class="sb-text">
-                            <h6>Secure Payment</h6>
-                            <p>100% secure payment</p>
+                            <h6>Fast delivery</h6>
+                            <p>Delivery in {{$shippingDetails->estimate_delivery_start}}-{{$shippingDetails->estimate_delivery_end}} days </p>
                         </div>
                     </div>
                 </div>

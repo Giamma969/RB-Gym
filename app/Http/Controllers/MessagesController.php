@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 class MessagesController extends Controller
 {
     public function viewMessages(){
-        $messages = DB::table('contact_us')->get();
+        $messages = DB::table('contact_us')->orderBy('id','desc')->get();
         return view('admin.messages.view_messages')->with(compact('messages')); 
     }
 

@@ -108,6 +108,40 @@ class Group extends Model
                 'group_id'=>$group_id,
             ]);
         }
+
+        //brands permissions
+        if(!empty($data['view_brands_permission'])){
+            $service_id = DB::table('services')->where('service_name',$data['view_brands_permission'])->first();
+            $service_id=$service_id->id;
+            DB::table('group_service')->insert([
+                'service_id' => $service_id,
+                'group_id' => $group_id,
+            ]);
+        }
+        if(!empty($data['add_brand_permission'])){
+            $service_id = DB::table('services')->where('service_name',$data['add_brand_permission'])->first();
+            $service_id=$service_id->id;
+            DB::table('group_service')->insert([
+                'service_id'=> $service_id,
+                'group_id'=>$group_id,
+            ]);
+        }
+        if(!empty($data['edit_brand_permission'])){
+            $service_id = DB::table('services')->where('service_name',$data['edit_brand_permission'])->first();
+            $service_id=$service_id->id;
+            DB::table('group_service')->insert([
+                'service_id'=> $service_id,
+                'group_id'=>$group_id,
+            ]);
+        }
+        if(!empty($data['delete_brand_permission'])){
+            $service_id = DB::table('services')->where('service_name',$data['delete_brand_permission'])->first();
+            $service_id=$service_id->id;
+            DB::table('group_service')->insert([
+                'service_id'=> $service_id,
+                'group_id'=>$group_id,
+            ]);
+        }
        
         //coupons permissions
         if(!empty($data['view_coupons_permission'])){
@@ -161,6 +195,24 @@ class Group extends Model
             ]);
         }
 
+        //homepages permissions
+        if(!empty($data['view_homepages_permission'])){
+            $service_id = DB::table('services')->where('service_name',$data['view_homepages_permission'])->first();
+            $service_id=$service_id->id;
+            DB::table('group_service')->insert([
+                'service_id'=> $service_id,
+                'group_id'=>$group_id,
+            ]);
+        }
+        if(!empty($data['customize_homepage_permission'])){
+            $service_id = DB::table('services')->where('service_name',$data['customize_homepage_permission'])->first();
+            $service_id=$service_id->id;
+            DB::table('group_service')->insert([
+                'service_id'=> $service_id,
+                'group_id'=>$group_id,
+            ]);
+        }
+
         //banners permissions
         if(!empty($data['view_banners_permission'])){
             $service_id = DB::table('services')->where('service_name',$data['view_banners_permission'])->first();
@@ -194,6 +246,51 @@ class Group extends Model
                 'group_id'=>$group_id,
             ]);
         }
+
+        //sales permissions
+        if(!empty($data['view_sales_permission'])){
+            $service_id = DB::table('services')->where('service_name',$data['view_sales_permission'])->first();
+            $service_id=$service_id->id;
+            DB::table('group_service')->insert([
+                'service_id'=> $service_id,
+                'group_id'=>$group_id,
+            ]);
+        }
+        if(!empty($data['add_sale_permission'])){
+            $service_id = DB::table('services')->where('service_name',$data['add_sale_permission'])->first();
+            $service_id=$service_id->id;
+            DB::table('group_service')->insert([
+                'service_id'=> $service_id,
+                'group_id'=>$group_id,
+            ]);
+        }
+        if(!empty($data['edit_sale_permission'])){
+            $service_id = DB::table('services')->where('service_name',$data['edit_sale_permission'])->first();
+            $service_id=$service_id->id;
+            DB::table('group_service')->insert([
+                'service_id'=> $service_id,
+                'group_id'=>$group_id,
+            ]);
+        }
+        if(!empty($data['delete_sale_permission'])){
+            $service_id = DB::table('services')->where('service_name',$data['delete_sale_permission'])->first();
+            $service_id=$service_id->id;
+            DB::table('group_service')->insert([
+                'service_id'=> $service_id,
+                'group_id'=>$group_id,
+            ]);
+        }
+
+        if(!empty($data['products_sale_permission'])){
+            $service_id = DB::table('services')->where('service_name',$data['products_sale_permission'])->first();
+            $service_id=$service_id->id;
+            DB::table('group_service')->insert([
+                'service_id'=> $service_id,
+                'group_id'=>$group_id,
+            ]);
+        }
+
+        
 
         //users permissions
         if(!empty($data['view_users_permission'])){
@@ -292,6 +389,100 @@ class Group extends Model
         //services permissions
         if(!empty($data['view_services_permission'])){
             $service_id = DB::table('services')->where('service_name',$data['view_services_permission'])->first();
+            $service_id=$service_id->id;
+            DB::table('group_service')->insert([
+                'service_id'=> $service_id,
+                'group_id'=>$group_id,
+            ]);
+        }
+
+        //shipping charges permissions
+        if(!empty($data['view_shipping_charges_permission'])){
+            $service_id = DB::table('services')->where('service_name',$data['view_shipping_charges_permission'])->first();
+            $service_id=$service_id->id;
+            DB::table('group_service')->insert([
+                'service_id'=> $service_id,
+                'group_id'=>$group_id,
+            ]);
+        }
+
+        if(!empty($data['edit_shipping_charges_permission'])){
+            $service_id = DB::table('services')->where('service_name',$data['edit_shipping_charges_permission'])->first();
+            $service_id=$service_id->id;
+            DB::table('group_service')->insert([
+                'service_id'=> $service_id,
+                'group_id'=>$group_id,
+            ]);
+        }
+
+        //CMS permissions
+        if(!empty($data['view_cms_permission'])){
+            $service_id = DB::table('services')->where('service_name',$data['view_cms_permission'])->first();
+            $service_id=$service_id->id;
+            DB::table('group_service')->insert([
+                'service_id'=> $service_id,
+                'group_id'=>$group_id,
+            ]);
+        }
+
+        if(!empty($data['edit_cms_permission'])){
+            $service_id = DB::table('services')->where('service_name',$data['edit_cms_permission'])->first();
+            $service_id=$service_id->id;
+            DB::table('group_service')->insert([
+                'service_id'=> $service_id,
+                'group_id'=>$group_id,
+            ]);
+        }
+
+        //Messages permissions
+        if(!empty($data['view_messages_permission'])){
+            $service_id = DB::table('services')->where('service_name',$data['view_messages_permission'])->first();
+            $service_id=$service_id->id;
+            DB::table('group_service')->insert([
+                'service_id'=> $service_id,
+                'group_id'=>$group_id,
+            ]);
+        }
+
+        if(!empty($data['edit_message_permission'])){
+            $service_id = DB::table('services')->where('service_name',$data['edit_message_permission'])->first();
+            $service_id=$service_id->id;
+            DB::table('group_service')->insert([
+                'service_id'=> $service_id,
+                'group_id'=>$group_id,
+            ]);
+        }
+
+        //Faqs permissions
+        if(!empty($data['view_faqs_permission'])){
+            $service_id = DB::table('services')->where('service_name',$data['view_faqs_permission'])->first();
+            $service_id=$service_id->id;
+            DB::table('group_service')->insert([
+                'service_id'=> $service_id,
+                'group_id'=>$group_id,
+            ]);
+        }
+
+        if(!empty($data['edit_faq_permission'])){
+            $service_id = DB::table('services')->where('service_name',$data['edit_faq_permission'])->first();
+            $service_id=$service_id->id;
+            DB::table('group_service')->insert([
+                'service_id'=> $service_id,
+                'group_id'=>$group_id,
+            ]);
+        }
+
+        if(!empty($data['add_faq_permission'])){
+            $service_id = DB::table('services')->where('service_name',$data['add_faq_permission'])->first();
+            $service_id=$service_id->id;
+            DB::table('group_service')->insert([
+                'service_id'=> $service_id,
+                'group_id'=>$group_id,
+            ]);
+        }
+
+        if(!empty($data['delete_faq_permission'])){
+            $service_id = DB::table('services')->where('service_name',$data['delete_faq_permission'])->first();
             $service_id=$service_id->id;
             DB::table('group_service')->insert([
                 'service_id'=> $service_id,
@@ -518,6 +709,80 @@ class Group extends Model
             }
         }
 
+
+        //BRANDS PERMISSIONS
+
+        //view brands
+        $service = DB::table('services')->where(['service_name'=> "view_brands"])->first();
+        $service_id=$service->id;
+        $service_check = DB::table('group_service')->where(['group_id'=> $group_id,'service_id'=>$service_id])->exists();
+        if($service_check){
+            if(empty($data['view_brands_permission'])){
+                DB::table('group_service')->where(['group_id'=> $group_id,'service_id'=>$service_id])->delete();
+            }
+        }else{
+            if(!empty($data['view_brands_permission'])){
+                DB::table('group_service')->insert([
+                    'service_id' => $service_id,
+                    'group_id' => $group_id,
+                ]);
+            }
+        }
+
+        //add brand
+        $service = DB::table('services')->where(['service_name'=> "add_brand"])->first();
+        $service_id=$service->id;
+        $service_check = DB::table('group_service')->where(['group_id'=> $group_id,'service_id'=>$service_id])->exists();
+        if($service_check){
+            if(empty($data['add_brand_permission'])){
+                DB::table('group_service')->where(['group_id'=> $group_id,'service_id'=>$service_id])->delete();
+            }
+        }else{
+            if(!empty($data['add_brand_permission'])){
+                DB::table('group_service')->insert([
+                    'service_id' => $service_id,
+                    'group_id' => $group_id,
+                ]);
+            }
+        }
+
+        //edit brand
+        $service = DB::table('services')->where(['service_name'=> "edit_brand"])->first();
+        $service_id=$service->id;
+        $service_check = DB::table('group_service')->where(['group_id'=> $group_id,'service_id'=>$service_id])->exists();
+        if($service_check){
+            if(empty($data['edit_brand_permission'])){
+                DB::table('group_service')->where(['group_id'=> $group_id,'service_id'=>$service_id])->delete();
+            }
+        }else{
+            if(!empty($data['edit_brand_permission'])){
+                DB::table('group_service')->insert([
+                    'service_id' => $service_id,
+                    'group_id' => $group_id,
+                ]);
+            }
+        }
+
+        //delete brand
+        $service = DB::table('services')->where(['service_name'=> "delete_brand"])->first();
+        $service_id=$service->id;
+        $service_check = DB::table('group_service')->where(['group_id'=> $group_id,'service_id'=>$service_id])->exists();
+        if($service_check){
+            if(empty($data['delete_category_permission'])){
+                DB::table('group_service')->where(['group_id'=> $group_id,'service_id'=>$service_id])->delete();
+            }
+        }else{
+            if(!empty($data['delete_brand_permission'])){
+                DB::table('group_service')->insert([
+                    'service_id' => $service_id,
+                    'group_id' => $group_id,
+                ]);
+            }
+        }
+
+
+
+
         //COUPONS PERMISSIONS
 
         //view coupons 
@@ -624,6 +889,41 @@ class Group extends Model
         }
 
 
+        //HOMEPAGES PERMISSIONS
+        //view homepages
+        $service = DB::table('services')->where(['service_name'=> "view_homepages"])->first();
+        $service_id=$service->id;
+        $service_check = DB::table('group_service')->where(['group_id'=> $group_id,'service_id'=>$service_id])->exists();
+        if($service_check){
+            if(empty($data['view_homepages_permission'])){
+                DB::table('group_service')->where(['group_id'=> $group_id,'service_id'=>$service_id])->delete();
+            }
+        }else{
+            if(!empty($data['view_homepages_permission'])){
+                DB::table('group_service')->insert([
+                    'service_id' => $service_id,
+                    'group_id' => $group_id,
+                ]);
+            }
+        }
+
+        //customize homepage
+        $service = DB::table('services')->where(['service_name'=> "customize_homepage"])->first();
+        $service_id=$service->id;
+        $service_check = DB::table('group_service')->where(['group_id'=> $group_id,'service_id'=>$service_id])->exists();
+        if($service_check){
+            if(empty($data['customize_homepage_permission'])){
+                DB::table('group_service')->where(['group_id'=> $group_id,'service_id'=>$service_id])->delete();
+            }
+        }else{
+            if(!empty($data['customize_homepage_permission'])){
+                DB::table('group_service')->insert([
+                    'service_id' => $service_id,
+                    'group_id' => $group_id,
+                ]);
+            }
+        }
+
         //BANNERS PERMISSIONS
 
         //View banners
@@ -687,6 +987,93 @@ class Group extends Model
             }
         }else{
             if(!empty($data['delete_banner_permission'])){
+                DB::table('group_service')->insert([
+                    'service_id' => $service_id,
+                    'group_id' => $group_id,
+                ]);
+            }
+        }
+
+        //Sales PERMISSIONS
+
+        //View sales
+        $service = DB::table('services')->where(['service_name'=> "view_sales"])->first();
+        $service_id=$service->id;
+        $service_check = DB::table('group_service')->where(['group_id'=> $group_id,'service_id'=>$service_id])->exists();
+        if($service_check){
+            if(empty($data['view_sales_permission'])){
+                DB::table('group_service')->where(['group_id'=> $group_id,'service_id'=>$service_id])->delete();
+            }
+        }else{
+            if(!empty($data['view_sales_permission'])){
+                DB::table('group_service')->insert([
+                    'service_id' => $service_id,
+                    'group_id' => $group_id,
+                ]);
+            }
+        }
+
+        //Add sale
+        $service = DB::table('services')->where(['service_name'=> "add_sale"])->first();
+        $service_id=$service->id;
+        $service_check = DB::table('group_service')->where(['group_id'=> $group_id,'service_id'=>$service_id])->exists();
+        if($service_check){
+            if(empty($data['add_sale_permission'])){
+                DB::table('group_service')->where(['group_id'=> $group_id,'service_id'=>$service_id])->delete();
+            }
+        }else{
+            if(!empty($data['add_sale_permission'])){
+                DB::table('group_service')->insert([
+                    'service_id' => $service_id,
+                    'group_id' => $group_id,
+                ]);
+            }
+        }
+
+        //Edit sale
+        $service = DB::table('services')->where(['service_name'=> "edit_sale"])->first();
+        $service_id=$service->id;
+        $service_check = DB::table('group_service')->where(['group_id'=> $group_id,'service_id'=>$service_id])->exists();
+        if($service_check){
+            if(empty($data['edit_sale_permission'])){
+                DB::table('group_service')->where(['group_id'=> $group_id,'service_id'=>$service_id])->delete();
+            }
+        }else{
+            if(!empty($data['edit_sale_permission'])){
+                DB::table('group_service')->insert([
+                    'service_id' => $service_id,
+                    'group_id' => $group_id,
+                ]);
+            }
+        }
+
+        //Delete sale
+        $service = DB::table('services')->where(['service_name'=> "delete_sale"])->first();
+        $service_id=$service->id;
+        $service_check = DB::table('group_service')->where(['group_id'=> $group_id,'service_id'=>$service_id])->exists();
+        if($service_check){
+            if(empty($data['delete_sale_permission'])){
+                DB::table('group_service')->where(['group_id'=> $group_id,'service_id'=>$service_id])->delete();
+            }
+        }else{
+            if(!empty($data['delete_sale_permission'])){
+                DB::table('group_service')->insert([
+                    'service_id' => $service_id,
+                    'group_id' => $group_id,
+                ]);
+            }
+        }
+
+        //Products sale
+        $service = DB::table('services')->where(['service_name'=> "products_sale"])->first();
+        $service_id=$service->id;
+        $service_check = DB::table('group_service')->where(['group_id'=> $group_id,'service_id'=>$service_id])->exists();
+        if($service_check){
+            if(empty($data['products_sale_permission'])){
+                DB::table('group_service')->where(['group_id'=> $group_id,'service_id'=>$service_id])->delete();
+            }
+        }else{
+            if(!empty($data['products_sale_permission'])){
                 DB::table('group_service')->insert([
                     'service_id' => $service_id,
                     'group_id' => $group_id,
@@ -879,6 +1266,180 @@ class Group extends Model
             }
         }else{
             if(!empty($data['view_services_permission'])){
+                DB::table('group_service')->insert([
+                    'service_id' => $service_id,
+                    'group_id' => $group_id,
+                ]);
+            }
+        }
+
+        //Shipping charges PERMISSIONS
+        //View shipping charges
+        $service = DB::table('services')->where(['service_name'=> "view_shipping_charges"])->first();
+        $service_id=$service->id;
+        $service_check = DB::table('group_service')->where(['group_id'=> $group_id,'service_id'=>$service_id])->exists();
+        if($service_check){
+            if(empty($data['view_shipping_charges_permission'])){
+                DB::table('group_service')->where(['group_id'=> $group_id,'service_id'=>$service_id])->delete();
+            }
+        }else{
+            if(!empty($data['view_shipping_charges_permission'])){
+                DB::table('group_service')->insert([
+                    'service_id' => $service_id,
+                    'group_id' => $group_id,
+                ]);
+            }
+        }
+
+        //Edit shipping charges
+        $service = DB::table('services')->where(['service_name'=> "edit_shipping_charges"])->first();
+        $service_id=$service->id;
+        $service_check = DB::table('group_service')->where(['group_id'=> $group_id,'service_id'=>$service_id])->exists();
+        if($service_check){
+            if(empty($data['edit_shipping_charges_permission'])){
+                DB::table('group_service')->where(['group_id'=> $group_id,'service_id'=>$service_id])->delete();
+            }
+        }else{
+            if(!empty($data['edit_shipping_charges_permission'])){
+                DB::table('group_service')->insert([
+                    'service_id' => $service_id,
+                    'group_id' => $group_id,
+                ]);
+            }
+        }
+
+        //CMS PERMISSIONS
+        //View CMS
+        $service = DB::table('services')->where(['service_name'=> "view_cms"])->first();
+        $service_id=$service->id;
+        $service_check = DB::table('group_service')->where(['group_id'=> $group_id,'service_id'=>$service_id])->exists();
+        if($service_check){
+            if(empty($data['view_cms_permission'])){
+                DB::table('group_service')->where(['group_id'=> $group_id,'service_id'=>$service_id])->delete();
+            }
+        }else{
+            if(!empty($data['view_cms_permission'])){
+                DB::table('group_service')->insert([
+                    'service_id' => $service_id,
+                    'group_id' => $group_id,
+                ]);
+            }
+        }
+
+        //Edit CMS
+        $service = DB::table('services')->where(['service_name'=> "edit_cms"])->first();
+        $service_id=$service->id;
+        $service_check = DB::table('group_service')->where(['group_id'=> $group_id,'service_id'=>$service_id])->exists();
+        if($service_check){
+            if(empty($data['edit_cms_permission'])){
+                DB::table('group_service')->where(['group_id'=> $group_id,'service_id'=>$service_id])->delete();
+            }
+        }else{
+            if(!empty($data['edit_cms_permission'])){
+                DB::table('group_service')->insert([
+                    'service_id' => $service_id,
+                    'group_id' => $group_id,
+                ]);
+            }
+        }
+
+        //MESSAGES PERMISSIONS
+        //View messages
+        $service = DB::table('services')->where(['service_name'=> "view_messages"])->first();
+        $service_id=$service->id;
+        $service_check = DB::table('group_service')->where(['group_id'=> $group_id,'service_id'=>$service_id])->exists();
+        if($service_check){
+            if(empty($data['view_messages_permission'])){
+                DB::table('group_service')->where(['group_id'=> $group_id,'service_id'=>$service_id])->delete();
+            }
+        }else{
+            if(!empty($data['view_messages_permission'])){
+                DB::table('group_service')->insert([
+                    'service_id' => $service_id,
+                    'group_id' => $group_id,
+                ]);
+            }
+        }
+
+        //Edit message
+        $service = DB::table('services')->where(['service_name'=> "edit_message"])->first();
+        $service_id=$service->id;
+        $service_check = DB::table('group_service')->where(['group_id'=> $group_id,'service_id'=>$service_id])->exists();
+        if($service_check){
+            if(empty($data['edit_message_permission'])){
+                DB::table('group_service')->where(['group_id'=> $group_id,'service_id'=>$service_id])->delete();
+            }
+        }else{
+            if(!empty($data['edit_message_permission'])){
+                DB::table('group_service')->insert([
+                    'service_id' => $service_id,
+                    'group_id' => $group_id,
+                ]);
+            }
+        }
+
+        //FAQS PERMISSIONS
+        //View faqs
+        $service = DB::table('services')->where(['service_name'=> "view_faqs"])->first();
+        $service_id=$service->id;
+        $service_check = DB::table('group_service')->where(['group_id'=> $group_id,'service_id'=>$service_id])->exists();
+        if($service_check){
+            if(empty($data['view_faqs_permission'])){
+                DB::table('group_service')->where(['group_id'=> $group_id,'service_id'=>$service_id])->delete();
+            }
+        }else{
+            if(!empty($data['view_faqs_permission'])){
+                DB::table('group_service')->insert([
+                    'service_id' => $service_id,
+                    'group_id' => $group_id,
+                ]);
+            }
+        }
+
+        //add faq
+        $service = DB::table('services')->where(['service_name'=> "add_faq"])->first();
+        $service_id=$service->id;
+        $service_check = DB::table('group_service')->where(['group_id'=> $group_id,'service_id'=>$service_id])->exists();
+        if($service_check){
+            if(empty($data['add_faq_permission'])){
+                DB::table('group_service')->where(['group_id'=> $group_id,'service_id'=>$service_id])->delete();
+            }
+        }else{
+            if(!empty($data['add_faq_permission'])){
+                DB::table('group_service')->insert([
+                    'service_id' => $service_id,
+                    'group_id' => $group_id,
+                ]);
+            }
+        }
+
+        //edit faq
+        $service = DB::table('services')->where(['service_name'=> "edit_faq"])->first();
+        $service_id=$service->id;
+        $service_check = DB::table('group_service')->where(['group_id'=> $group_id,'service_id'=>$service_id])->exists();
+        if($service_check){
+            if(empty($data['edit_faq_permission'])){
+                DB::table('group_service')->where(['group_id'=> $group_id,'service_id'=>$service_id])->delete();
+            }
+        }else{
+            if(!empty($data['edit_faq_permission'])){
+                DB::table('group_service')->insert([
+                    'service_id' => $service_id,
+                    'group_id' => $group_id,
+                ]);
+            }
+        }
+
+        //Delete faq
+        $service = DB::table('services')->where(['service_name'=> "delete_faq"])->first();
+        $service_id=$service->id;
+        $service_check = DB::table('group_service')->where(['group_id'=> $group_id,'service_id'=>$service_id])->exists();
+        if($service_check){
+            if(empty($data['delete_faq_permission'])){
+                DB::table('group_service')->where(['group_id'=> $group_id,'service_id'=>$service_id])->delete();
+            }
+        }else{
+            if(!empty($data['delete_faq_permission'])){
                 DB::table('group_service')->insert([
                     'service_id' => $service_id,
                     'group_id' => $group_id,

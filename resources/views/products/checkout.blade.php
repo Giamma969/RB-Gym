@@ -41,7 +41,7 @@
             <input value="{{ $bill_address->pincode }}" id="billing_pincode" name="billing_pincode" class="form-control" type="hidden"/>
             <input value="{{ $bill_address->mobile }}" id="billing_mobile" name="billing_mobile" class="form-control" type="hidden"/>
             <div class="row">
-                <div class="col-lg-6">
+                <div class="col-lg-5" style="margin-left:28%;">
                     <!-- <div class="checkout-content">
                         <a href="#" class="content-btn">Click Here To Login</a>
                     </div> -->
@@ -92,7 +92,7 @@
                                 </label>
                             </div>
                         </div>
-                        <div class="order-btn" style="margin-top:15px;">
+                        <div class="order-btn" style="margin-top:15px; margin-left:15px;">
                             <button type="submit" class="site-btn place-btn">Order review</button>
                         </div>
                     </div>

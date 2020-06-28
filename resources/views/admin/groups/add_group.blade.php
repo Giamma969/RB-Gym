@@ -23,7 +23,7 @@
             <div class="span12">
                 <div class="widget-box">
                     <div class="widget-title" style="border-top:1px solid #CDCDCD; border-bottom:0px;"> 
-                        <span class="icon"> <i class="icon-info-sign"></i> </span>
+                        <span class="icon"> <i class="icon-group"></i> </span>
                         <h5>Add group</h5>
                     </div>
                     <div class="widget-content nopadding">
@@ -77,21 +77,6 @@
                                 </div>
                             </div>
 
-                           <!-- <div style="clear:left;">
-                                <div class="control-group" style="float:left;">
-                                    <label class="control-label">Category description</label>
-                                    <div class="controls">
-                                        <input type="checkbox" name="category_description_permission" id="category_description_permission">
-                                    </div>
-                                </div>
-
-                                <div class="control-group" style="float:left;">
-                                    <label class="control-label">Enable/Disable categories</label>
-                                    <div class="controls">
-                                        <input type="checkbox" name="enable_disable_categories" id="enable_disable_categories">
-                                    </div>
-                                </div>
-                            </div> -->
                             
                             <!-- Products permissions -->
                             <div class="widget-title" style="clear:left; border-top:1px solid #CDCDCD; border-bottom:0px;"> 
@@ -133,6 +118,42 @@
                                         <input type="checkbox" name="manage_alternative_images" id="manage_alternative_images" value="alternative_images">
                                     </div>
                                 </div>
+                            </div>
+
+                            <!-- Brands permissions -->
+                            <div class="widget-title" style="clear:left; border-top:1px solid #CDCDCD; border-bottom:0px;"> 
+                                <h5>Brands permissions</h5>        
+                            </div>
+                        
+                            <div style="clear:left;">
+                                <div class="control-group" style="float:left;">
+                                    <label class="control-label">View brands</label>
+                                    <div class="controls">
+                                        <input type="checkbox" name="view_brands_permission" id="view_brands_permission" value="view_brands">
+                                    </div>
+                                </div>
+
+                                <div class="control-group" style="float:left;">
+                                    <label class="control-label">Add brand</label>
+                                    <div class="controls">
+                                        <input type="checkbox" name="add_brand_permission" id="add_brand_permission" value="add_brand">
+                                    </div>
+                                </div>
+
+                                <div class="control-group" style="float:left;">
+                                    <label class="control-label">Edit brand</label>
+                                    <div class="controls">
+                                        <input type="checkbox" name="edit_brand_permission" id="edit_brand_permission" value="edit_brand">
+                                    </div>
+                                </div>
+
+                                <div class="control-group" style="float:left;">
+                                    <label class="control-label">Delete brand</label>
+                                    <div class="controls">
+                                        <input type="checkbox" name="delete_brand_permission" id="delete_brand_permission" value="delete_brand">
+                                    </div>
+                                </div>
+
                             </div>
 
                             <!-- Coupons permissions -->
@@ -192,6 +213,27 @@
                                 </div>
                             </div>
 
+                            <!-- Homepages permissions -->
+                            <div class="widget-title" style="clear:left; border-top:1px solid #CDCDCD; border-bottom:0px;"> 
+                                <h5>Homepages permissions</h5>        
+                            </div>
+                        
+                            <div style="clear:left;">
+                                <div class="control-group" style="float:left;">
+                                    <label class="control-label">View homepages</label>
+                                    <div class="controls">
+                                        <input type="checkbox" name="view_homepages_permission" id="view_homepages_permission" value="view_homepages">
+                                    </div>
+                                </div>
+
+                                <div class="control-group" style="float:left;">
+                                    <label class="control-label">Customize homepage</label>
+                                    <div class="controls">
+                                        <input type="checkbox" name="customize_homepage_permission" id="customize_homepage_permission" value="customize_homepage">
+                                    </div>
+                                </div>
+                            </div>
+
                             <!-- Banners permissions -->
                             <div class="widget-title" style="clear:left; border-top:1px solid #CDCDCD; border-bottom:0px;"> 
                                 <h5>Banners permissions</h5>        
@@ -226,6 +268,48 @@
                                     </div>
                                 </div>
 
+                            </div>
+
+                            <!-- Sales permissions -->
+                            <div class="widget-title" style="clear:left; border-top:1px solid #CDCDCD; border-bottom:0px;"> 
+                                <h5>Sales permissions</h5>
+                            </div>
+                            
+                            <div style="clear:left;">
+                                <div class="control-group" style="float:left;">
+                                    <label class="control-label">View sales</label>
+                                    <div class="controls">
+                                        <input type="checkbox" name="view_sales_permission" id="view_sales_permission" value="view_sales">
+                                    </div>
+                                </div>
+
+                                <div class="control-group" style="float:left;">
+                                    <label class="control-label">Add sale</label>
+                                    <div class="controls">
+                                        <input type="checkbox" name="add_sale_permission" id="add_sale_permission" value="add_sale">
+                                    </div>
+                                </div>
+
+                                <div class="control-group" style="float:left;">
+                                    <label class="control-label">Edit sale</label>
+                                    <div class="controls">
+                                        <input type="checkbox" name="edit_sale_permission" id="edit_sale_permission" value="edit_sale">
+                                    </div>
+                                </div>
+
+                                <div class="control-group" style="float:left;">
+                                    <label class="control-label">Delete sale</label>
+                                    <div class="controls">
+                                        <input type="checkbox" name="delete_sale_permission" id="delete_sale_permission" value="delete_sale">
+                                    </div>
+                                </div>
+
+                                <div class="control-group" style="clear:left;">
+                                    <label class="control-label">Products in sale</label>
+                                    <div class="controls">
+                                        <input type="checkbox" name="products_sale_permission" id="products_sale_permission" value="products_sale">
+                                    </div>
+                                </div>
                             </div>
 
                         
@@ -347,6 +431,105 @@
                             </div>
 
 
+                            <!-- Shipping charges permissions -->
+                            <div class="widget-title" style="clear:left; border-top:1px solid #CDCDCD; border-bottom:0px;"> 
+                                <h5>Shipping charges permissions
+                                </h5>        
+                            </div>
+
+                            <div style="clear:left;">
+                                <div class="control-group" style="float:left;">
+                                    <label class="control-label">View shipping charges</label>
+                                    <div class="controls">
+                                        <input type="checkbox" name="view_shipping_charges_permission" id="view_shipping_charges_permission" value="view_shipping_charges">
+                                    </div>
+                                </div>
+
+                                <div class="control-group" style="float:left;">
+                                    <label class="control-label">Edit shipping charges</label>
+                                    <div class="controls">
+                                        <input type="checkbox" name="edit_shipping_charges_permission" id="edit_shipping_charges_permission" value="edit_shipping_charges">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- CMS permissions -->
+                            <div class="widget-title" style="clear:left; border-top:1px solid #CDCDCD; border-bottom:0px;"> 
+                                <h5>CMS permissions</h5>        
+                            </div>
+
+                            <div style="clear:left;">
+                                <div class="control-group" style="float:left;">
+                                    <label class="control-label">View CMS</label>
+                                    <div class="controls">
+                                        <input type="checkbox" name="view_cms_permission" id="view_cms_permission" value="view_cms">
+                                    </div>
+                                </div>
+
+                                <div class="control-group" style="float:left;">
+                                    <label class="control-label">Edit CMS</label>
+                                    <div class="controls">
+                                        <input type="checkbox" name="edit_cms_permission" id="edit_cms_permission" value="edit_cms">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Messages permissions -->
+                            <div class="widget-title" style="clear:left; border-top:1px solid #CDCDCD; border-bottom:0px;"> 
+                                <h5>Messages permissions</h5>        
+                            </div>
+
+                            <div style="clear:left;">
+                                <div class="control-group" style="float:left;">
+                                    <label class="control-label">View Messages</label>
+                                    <div class="controls">
+                                        <input type="checkbox" name="view_messages_permission" id="view_messages_permission" value="view_messages">
+                                    </div>
+                                </div>
+
+                                <div class="control-group" style="float:left;">
+                                    <label class="control-label">Edit message</label>
+                                    <div class="controls">
+                                        <input type="checkbox" name="edit_message_permission" id="edit_message_permission" value="edit_message">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Faqs permissions -->
+                            <div class="widget-title" style="clear:left; border-top:1px solid #CDCDCD; border-bottom:0px;"> 
+                                <h5>Faqs permissions
+                                </h5>        
+                            </div>
+                        
+                            <div style="clear:left;">
+                                <div class="control-group" style="float:left;">
+                                    <label class="control-label">View faqs</label>
+                                    <div class="controls">
+                                        <input type="checkbox" name="view_faqs_permission" id="view_faqs_permission" value="view_faqs">
+                                    </div>
+                                </div>
+                           
+                                <div class="control-group" style="float:left;">
+                                    <label class="control-label">Add faq</label>
+                                    <div class="controls">
+                                        <input type="checkbox" name="add_faq_permission" id="add_faq_permission" value="add_faq">
+                                    </div>
+                                </div>
+                           
+                                <div class="control-group" style="float:left;">
+                                    <label class="control-label">Edit faq</label>
+                                    <div class="controls">
+                                        <input type="checkbox" name="edit_faq_permission" id="edit_faq_permission" value="edit_faq">
+                                    </div>
+                                </div>
+                            
+                                <div class="control-group" style="float:left;">
+                                    <label class="control-label">Delete faq</label>
+                                    <div class="controls">
+                                        <input type="checkbox" name="delete_faq_permission" id="delete_faq_permission" value="delete_faq">
+                                    </div>
+                                </div>
+                            </div>
 
                             <div class="form-actions" style="clear:left;">
                                 <input type="submit" value="Add group" class="btn btn-success">

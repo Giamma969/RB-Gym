@@ -21,37 +21,39 @@
     <div class="row-fluid">
       <div class="span12">
         <div class="widget-box">
-          <div class="widget-title"> <span class="icon"> <i class="icon-info-sign"></i> </span>
+          <div class="widget-title"> <span class="icon"> <i class="icon-picture"></i> </span>
             <h5>Add banner</h5>
           </div>
           <div class="widget-content nopadding">
             <form enctype="multipart/form-data" class="form-horizontal" method="post" action="{{url('/admin/add-banner')}}" name="add_banner" id="add_banner" novalidate="novalidate"> {{csrf_field()}}
               
-                <div class="control-group">
-                    <label class="control-label">Banner image</label>
-                    <div class="controls">
-                    <input type="file" name="image" id="image">
-                    </div>
-                </div>
-
               <div class="control-group">
                 <label class="control-label">Title</label>
                 <div class="controls">
-                  <input type="text" name="title" id="title">
+                  <input type="text" name="title" id="title" style="width:500px;">
+                </div>
+              </div>
+
+              <div class="control-group">
+                <label class="control-label">Link</label>
+                <div class="controls">
+                  <input type="text" name="link" id="link" style="width:500px;">
                 </div>
               </div>
 
               <div class="control-group">
                 <label class="control-label">Description</label>
                 <div class="controls">
-                  <input type="text" name="description" id="description">
+                  <textarea class="textarea_banner" name="description" id="description"> </textarea>
                 </div>
               </div>
               
+              
+
               <div class="control-group">
-                <label class="control-label">Link</label>
+                <label class="control-label">Banner image</label>
                 <div class="controls">
-                  <input type="text" name="link" id="link">
+                <input type="file" name="image" id="image">
                 </div>
               </div>
               

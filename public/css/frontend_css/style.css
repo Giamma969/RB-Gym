@@ -4430,13 +4430,17 @@ ol {
 }
 
 .button_search_listing{
-	height:99%!important; 
+	height:100%!important; 
 	padding:10px 15px 10px 15px; 
 	background-color:rgb(165,12,39); 
 	color:white; 
 	border: 3px solid rgb(165,12,39); 
-	margin-top:-2px; 
-	border-bottom: 4px solid rgb(165,12,39)!important;
+	/* margin-top:2px;  */
+	border-bottom: 24px solid rgb(165,12,39)!important;
+	/* border-top: 0px solid rgb(165,12,39)!important; */
+	cursor: pointer;
+	float:right;
+	/* position: relative !important; */
 }
 
 .forget-pass:hover, .or-login:hover{

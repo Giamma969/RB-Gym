@@ -21,7 +21,7 @@
     <div class="row-fluid">
       <div class="span12">
         <div class="widget-box">
-          <div class="widget-title"> <span class="icon"> <i class="icon-info-sign"></i> </span>
+          <div class="widget-title"> <span class="icon"> <i class="icon-home"></i> </span>
             <h5>Customize homepage</h5>
           </div>
           <div class="widget-content nopadding">
@@ -30,7 +30,7 @@
               <div class="control-group">
                 <label class="control-label">First grid</label>
                 <div class="controls">
-                  <select name="first_grid">
+                  <select name="first_grid" style="width:25.5%;">
                     <option value="0">Select a category</option>
                     @foreach($categories as $category)
                       <option value="{{ $category->id }}" @if($category->id == $homepageDetails->first_grid) selected @endif> {{ $category->name }} </option>
@@ -53,7 +53,7 @@
               <div class="control-group">
                 <label class="control-label">Second grid</label>
                 <div class="controls">
-                  <select name="second_grid">
+                  <select name="second_grid" style="width:25.5%;">
                     <option value="0">Select a category</option>
                     @foreach($categories as $category)
                       <option value="{{ $category->id }}" @if($category->id == $homepageDetails->second_grid) selected @endif> {{ $category->name }} </option>
@@ -76,7 +76,7 @@
               <div class="control-group">
                 <label class="control-label">Third grid</label>
                 <div class="controls">
-                  <select name="third_grid">
+                  <select name="third_grid" style="width:25.5%;">
                     <option value="0">Select a category</option>
                     @foreach($categories as $category)
                       <option value="{{ $category->id }}" @if($category->id == $homepageDetails->third_grid) selected @endif> {{ $category->name }} </option>
@@ -99,7 +99,7 @@
               <div class="control-group">
                 <label class="control-label">First slider</label>
                 <div class="controls">
-                  <select name="first_slider">
+                  <select name="first_slider" style="width:25.5%;">
                     <option value="0">Select a category</option>
                     @foreach($categories as $category)
                       <option value="{{ $category->id }}" @if($category->id == $homepageDetails->first_slider) selected @endif> {{ $category->name }} </option>
@@ -119,10 +119,11 @@
                 </div>
               </div>
 
+              
               <div class="control-group">
                 <label class="control-label">Second slider</label>
                 <div class="controls">
-                  <select name="second_slider">
+                  <select name="second_slider" style="width:25.5%;">
                     <option value="0">Select a category</option>
                     @foreach($categories as $category)
                       <option value="{{ $category->id }}" @if($category->id == $homepageDetails->second_slider) selected @endif> {{ $category->name }} </option>
@@ -152,6 +153,9 @@
                   @endif
                 </div>
               </div>
+              
+
+              
 
               
 

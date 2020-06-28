@@ -37,7 +37,7 @@
               <div class="control-group">
                 <label class="control-label">Category level</label>
                 <div class="controls">
-                  <select name="parent_id" style="width: 220px;">
+                  <select name="parent_id"  class="select_admin">
                     <option value="0">Main category</option>
                     @foreach($levels as $val)
                       <option value="{{ $val->id }}"> {{ $val->name }} </option>

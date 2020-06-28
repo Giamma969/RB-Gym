@@ -48,7 +48,7 @@
                             <div class="control-group">
                                 <label class="control-label">Amount</label>
                                 <div class="controls">
-                                <input type="number" name="amount" min="0" id="amount" >
+                                <input type="number" name="amount" min="0" id="amount" class="height_width_form">
                                 </div>
                             </div>
 

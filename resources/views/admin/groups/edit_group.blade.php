@@ -23,7 +23,7 @@
             <div class="span12">
                 <div class="widget-box">
                     <div class="widget-title" style="border-top:1px solid #CDCDCD; border-bottom:0px;"> 
-                        <span class="icon"> <i class="icon-info-sign"></i> </span>
+                        <span class="icon"> <i class="icon-group"></i> </span>
                         <h5>Edit group</h5>
                     </div>
                     <div class="widget-content nopadding">
@@ -77,21 +77,7 @@
                                 </div>
                             </div>
 
-                           <!-- <div style="clear:left;">
-                                <div class="control-group" style="float:left;">
-                                    <label class="control-label">Category description</label>
-                                    <div class="controls">
-                                        <input type="checkbox" name="category_description_permission" id="category_description_permission">
-                                    </div>
-                                </div>
-
-                                <div class="control-group" style="float:left;">
-                                    <label class="control-label">Enable/Disable categories</label>
-                                    <div class="controls">
-                                        <input type="checkbox" name="enable_disable_categories" id="enable_disable_categories">
-                                    </div>
-                                </div>
-                            </div> -->
+                           
                             
                             <!-- Products permissions -->
                             <div class="widget-title" style="clear:left; border-top:1px solid #CDCDCD; border-bottom:0px;"> 
@@ -135,42 +121,41 @@
                                 </div>
                             </div>
 
-                            <!--<div style="clear:left;">
+                            <!-- Brands permissions -->
+                            <div class="widget-title" style="clear:left; border-top:1px solid #CDCDCD; border-bottom:0px;"> 
+                                <h5>Brands permissions</h5>        
+                            </div>
+                        
+                            <div style="clear:left;">
                                 <div class="control-group" style="float:left;">
-                                    <label class="control-label">Product main image</label>
+                                    <label class="control-label">View brands</label>
                                     <div class="controls">
-                                        <input type="checkbox" name="product_main_image" id="product_main_image">
+                                        <input type="checkbox" name="view_brands_permission" id="view_brands_permission" value="view_brands" @if(in_array("view_brands", $groupDetails, true)) checked @endif>
                                     </div>
                                 </div>
 
                                 <div class="control-group" style="float:left;">
-                                    <label class="control-label">Product description</label>
+                                    <label class="control-label">Add brand</label>
                                     <div class="controls">
-                                        <input type="checkbox" name="product_description_permission" id="product_description_permission">
+                                        <input type="checkbox" name="add_brand_permission" id="add_brand_permission" value="add_brand" @if(in_array("add_brand", $groupDetails, true)) checked @endif>
                                     </div>
                                 </div>
 
                                 <div class="control-group" style="float:left;">
-                                    <label class="control-label">Product price</label>
+                                    <label class="control-label">Edit brand</label>
                                     <div class="controls">
-                                        <input type="checkbox" name="product_price_permission" id="product_price_permission">
+                                        <input type="checkbox" name="edit_brand_permission" id="edit_brand_permission" value="edit_brand" @if(in_array("edit_brand", $groupDetails, true)) checked @endif>
                                     </div>
                                 </div>
 
                                 <div class="control-group" style="float:left;">
-                                    <label class="control-label">Product stock</label>
+                                    <label class="control-label">Delete brand</label>
                                     <div class="controls">
-                                        <input type="checkbox" name="product_stock_permission" id="product_stock_permission">
+                                        <input type="checkbox" name="delete_brand_permission" id="delete_brand_permission" value="delete_brand" @if(in_array("delete_brand", $groupDetails, true)) checked @endif>
                                     </div>
                                 </div>
 
-                                <div class="control-group" style="clear:left;">
-                                    <label class="control-label">Enable/Disable product</label>
-                                    <div class="controls">
-                                        <input type="checkbox" name="enable_disable_product" id="enable_disable_product">
-                                    </div>
-                                </div>
-                            </div> -->
+                            </div>
 
                             <!-- Coupons permissions -->
                             <div class="widget-title" style="clear:left; border-top:1px solid #CDCDCD; border-bottom:0px;"> 
@@ -229,6 +214,27 @@
                                 </div>
                             </div>
 
+                            <!-- Homepages permissions -->
+                            <div class="widget-title" style="clear:left; border-top:1px solid #CDCDCD; border-bottom:0px;"> 
+                                <h5>Homepages permissions</h5>        
+                            </div>
+                        
+                            <div style="clear:left;">
+                                <div class="control-group" style="float:left;">
+                                    <label class="control-label">View homepages</label>
+                                    <div class="controls">
+                                        <input type="checkbox" name="view_homepages_permission" id="view_homepages_permission" value="view_homepages" @if(in_array("view_homepages", $groupDetails, true)) checked @endif>
+                                    </div>
+                                </div>
+
+                                <div class="control-group" style="float:left;">
+                                    <label class="control-label">Customize homepage</label>
+                                    <div class="controls">
+                                        <input type="checkbox" name="customize_homepage_permission" id="customize_homepage_permission" value="customize_homepage" @if(in_array("customize_homepage", $groupDetails, true)) checked @endif>
+                                    </div>
+                                </div>
+                            </div>
+
                             <!-- Banners permissions -->
                             <div class="widget-title" style="clear:left; border-top:1px solid #CDCDCD; border-bottom:0px;"> 
                                 <h5>Banners permissions</h5>        
@@ -262,7 +268,48 @@
                                         <input type="checkbox" name="delete_banner_permission" id="delete_banner_permission" value="delete_banner" @if(in_array("delete_banner", $groupDetails, true)) checked @endif>
                                     </div>
                                 </div>
+                            </div>
 
+                            <!-- Sales permissions -->
+                            <div class="widget-title" style="clear:left; border-top:1px solid #CDCDCD; border-bottom:0px;"> 
+                                <h5>Sales permissions</h5>
+                            </div>
+                            
+                            <div style="clear:left;">
+                                <div class="control-group" style="float:left;">
+                                    <label class="control-label">View sales</label>
+                                    <div class="controls">
+                                        <input type="checkbox" name="view_sales_permission" id="view_sales_permission" value="view_sales" @if(in_array("view_sales", $groupDetails, true)) checked @endif>
+                                    </div>
+                                </div>
+
+                                <div class="control-group" style="float:left;">
+                                    <label class="control-label">Add sale</label>
+                                    <div class="controls">
+                                        <input type="checkbox" name="add_sale_permission" id="add_sale_permission" value="add_sale" @if(in_array("add_sale", $groupDetails, true)) checked @endif>
+                                    </div>
+                                </div>
+
+                                <div class="control-group" style="float:left;">
+                                    <label class="control-label">Edit sale</label>
+                                    <div class="controls">
+                                        <input type="checkbox" name="edit_sale_permission" id="edit_sale_permission" value="edit_sale" @if(in_array("edit_sale", $groupDetails, true)) checked @endif>
+                                    </div>
+                                </div>
+
+                                <div class="control-group" style="float:left;">
+                                    <label class="control-label">Delete sale</label>
+                                    <div class="controls">
+                                        <input type="checkbox" name="delete_sale_permission" id="delete_sale_permission" value="delete_sale" @if(in_array("delete_sale", $groupDetails, true)) checked @endif>
+                                    </div>
+                                </div>
+
+                                <div class="control-group" style="clear:left;">
+                                    <label class="control-label">Products in sale</label>
+                                    <div class="controls">
+                                        <input type="checkbox" name="products_sale_permission" id="products_sale_permission" value="products_sale" @if(in_array("products_sale", $groupDetails, true)) checked @endif>
+                                    </div>
+                                </div>
                             </div>
 
                         
@@ -378,6 +425,106 @@
                                     <label class="control-label">View services</label>
                                     <div class="controls">
                                         <input type="checkbox" name="view_services_permission" id="view_services_permission" value="view_services" @if(in_array("view_services", $groupDetails, true)) checked @endif>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Shipping charges permissions -->
+                            <div class="widget-title" style="clear:left; border-top:1px solid #CDCDCD; border-bottom:0px;"> 
+                                <h5>Shipping charges permissions
+                                </h5>        
+                            </div>
+
+                            <div style="clear:left;">
+                                <div class="control-group" style="float:left;">
+                                    <label class="control-label">View shipping charges</label>
+                                    <div class="controls">
+                                        <input type="checkbox" name="view_shipping_charges_permission" id="view_shipping_charges_permission" value="view_shipping_charges" @if(in_array("view_shipping_charges", $groupDetails, true)) checked @endif>
+                                    </div>
+                                </div>
+
+                                <div class="control-group" style="float:left;">
+                                    <label class="control-label">Edit shipping charges</label>
+                                    <div class="controls">
+                                        <input type="checkbox" name="edit_shipping_charges_permission" id="edit_shipping_charges_permission" value="edit_shipping_charges" @if(in_array("edit_shipping_charges", $groupDetails, true)) checked @endif>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- CMS permissions -->
+                            <div class="widget-title" style="clear:left; border-top:1px solid #CDCDCD; border-bottom:0px;"> 
+                                <h5>CMS permissions</h5>        
+                            </div>
+
+                            <div style="clear:left;">
+                                <div class="control-group" style="float:left;">
+                                    <label class="control-label">View CMS</label>
+                                    <div class="controls">
+                                        <input type="checkbox" name="view_cms_permission" id="view_cms_permission" value="view_cms" @if(in_array("view_cms", $groupDetails, true)) checked @endif>
+                                    </div>
+                                </div>
+
+                                <div class="control-group" style="float:left;">
+                                    <label class="control-label">Edit CMS</label>
+                                    <div class="controls">
+                                        <input type="checkbox" name="edit_cms_permission" id="edit_cms_permission" value="edit_cms" @if(in_array("edit_cms", $groupDetails, true)) checked @endif>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Messages permissions -->
+                            <div class="widget-title" style="clear:left; border-top:1px solid #CDCDCD; border-bottom:0px;"> 
+                                <h5>Messages permissions</h5>        
+                            </div>
+
+                            <div style="clear:left;">
+                                <div class="control-group" style="float:left;">
+                                    <label class="control-label">View Messages</label>
+                                    <div class="controls">
+                                        <input type="checkbox" name="view_messages_permission" id="view_messages_permission" value="view_messages" @if(in_array("view_messages", $groupDetails, true)) checked @endif>
+                                    </div>
+                                </div>
+
+                                <div class="control-group" style="float:left;">
+                                    <label class="control-label">Edit message</label>
+                                    <div class="controls">
+                                        <input type="checkbox" name="edit_message_permission" id="edit_message_permission" value="edit_message" @if(in_array("edit_message", $groupDetails, true)) checked @endif>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Faqs permissions -->
+                            <div class="widget-title" style="clear:left; border-top:1px solid #CDCDCD; border-bottom:0px;"> 
+                                <h5>Faqs permissions
+                                </h5>        
+                            </div>
+                        
+                            <div style="clear:left;">
+                                <div class="control-group" style="float:left;">
+                                    <label class="control-label">View faqs</label>
+                                    <div class="controls">
+                                        <input type="checkbox" name="view_faqs_permission" id="view_faqs_permission" value="view_faqs" @if(in_array("view_faqs", $groupDetails, true)) checked @endif>
+                                    </div>
+                                </div>
+                           
+                                <div class="control-group" style="float:left;">
+                                    <label class="control-label">Add faq</label>
+                                    <div class="controls">
+                                        <input type="checkbox" name="add_faq_permission" id="add_faq_permission" value="add_faq" @if(in_array("add_faq", $groupDetails, true)) checked @endif>
+                                    </div>
+                                </div>
+                           
+                                <div class="control-group" style="float:left;">
+                                    <label class="control-label">Edit faq</label>
+                                    <div class="controls">
+                                        <input type="checkbox" name="edit_faq_permission" id="edit_faq_permission" value="edit_faq" @if(in_array("edit_faq", $groupDetails, true)) checked @endif>
+                                    </div>
+                                </div>
+                            
+                                <div class="control-group" style="float:left;">
+                                    <label class="control-label">Delete faq</label>
+                                    <div class="controls">
+                                        <input type="checkbox" name="delete_faq_permission" id="delete_faq_permission" value="delete_faq" @if(in_array("delete_faq", $groupDetails, true)) checked @endif>
                                     </div>
                                 </div>
                             </div>

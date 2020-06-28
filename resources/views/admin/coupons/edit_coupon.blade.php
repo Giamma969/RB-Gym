@@ -21,7 +21,7 @@
     <div class="row-fluid">
       <div class="span12">
         <div class="widget-box">
-          <div class="widget-title"> <span class="icon"> <i class="icon-info-sign"></i> </span>
+          <div class="widget-title"> <span class="icon"> <i class="icon-gift"></i> </span>
             <h5>Edit coupon</h5>
           </div>
           <div class="widget-content nopadding">
@@ -38,14 +38,14 @@
               <div class="control-group">
                 <label class="control-label">Amount</label>
                 <div class="controls">
-                  <input value="{{ $couponDetails->amount }}" type="number" name="amount" min="0" id="amount">
+                  <input class="expiry_date" value="{{ $couponDetails->amount }}" type="number" name="amount" min="0" id="amount">
                 </div>
               </div>
 
               <div class="control-group">
                 <label class="control-label">Expiry date</label>
                 <div class="controls">
-                  <input value="{{ $couponDetails->expiry_date }}"type="text" name="expiry_date" id="expiry_date" autocomplete="off" data-provide="datepicker" data-date-format="yyyy/mm/dd" required>
+                  <input class="expiry_date" value="{{ $couponDetails->expiry_date }}"type="text" name="expiry_date" id="expiry_date" autocomplete="off" data-provide="datepicker" data-date-format="yyyy/mm/dd" required>
                 </div>
               </div>
 

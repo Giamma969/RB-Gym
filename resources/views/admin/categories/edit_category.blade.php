@@ -38,7 +38,7 @@
               <div class="control-group">
                 <label class="control-label">Category level</label>
                 <div class="controls">
-                  <select name="parent_id">
+                  <select class="select_admin" name="parent_id">
                     <option value="0">Main category</option>
                     @foreach($levels as $val)
                       <option value="{{ $val->id }}" @if($val->id == $categoryDetails->parent_id) selected @endif > {{ $val->name }} </option>

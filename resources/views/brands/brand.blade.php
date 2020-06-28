@@ -8,7 +8,7 @@
             <div class="col-lg-12">
                 <div class="breadcrumb-text product-more">
                     <a href="{{asset('/')}}"><i class="fa fa-home"></i> Home</a>
-                    <span>{{$brandDetails->name}}</span>
+                    @if(!empty($brandDetails->name))<span>{{$brandDetails->name}}</span>@endif
                 </div>
             </div>
         </div>
@@ -39,7 +39,7 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <div style="text-align:center;">
-                            <img class="product-big-img" src="{{asset('images/backend_images/brands/medium/'.$brandDetails->logo) }}" width="250px" alt="">
+                            @if(!empty($brandDetails->logo))<img class="product-big-img" src="{{asset('images/backend_images/brands/medium/'.$brandDetails->logo) }}" width="250px" alt="">@endif
                         </div>
                     </div>  
                 </div>
@@ -50,8 +50,11 @@
                                 <div class="product-content">
                                     <div class="row">
                                         <div class="col-lg-12">
-                                            <h5>About {{$brandDetails->name}}</h5>
-                                            <p style="white-space:pre-wrap;">{{$brandDetails->description}}</p>
+                                            @if(empty($brandDetails->name) && empty($brandDetails->logo) && empty($brandDetails->description))<p>This brand  does not exists.</p> @endif
+
+                                            @if(!empty($brandDetails->name))<h5>About {{$brandDetails->name}}</h5>@endif
+
+                                            @if(!empty($brandDetails->description))<p style="white-space:pre-wrap;">{{$brandDetails->description}}</p>@endif
                                         </div>
                                         <div class="col-lg-5">
                                             <img src="img/product-single/tab-desc.jpg" alt="">

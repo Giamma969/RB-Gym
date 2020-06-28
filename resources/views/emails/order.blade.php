@@ -119,7 +119,9 @@
                 </table>
             </tr></td>
             <tr><td>&nbsp;</td></tr>
-            <tr><td>For any enquiries, you can cantact us at <a href="mailto:info@rb-gym.com">info@rb-gym.com</a></td></tr>
+            @if(!empty($cmsDetails->email))
+                <tr><td>For any enquiries, you can cantact us at <a href="mailto:info@rb-gym.com">{{$cmsDetails->email}}</a></td></tr>
+            @endif
             <tr><td>&nbsp;</td></tr>
             <tr><td>Regard,<br>RB-Gym Team</td></tr>
             <tr><td>&nbsp;</td></tr>

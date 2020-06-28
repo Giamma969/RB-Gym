@@ -21,7 +21,7 @@
     <div class="row-fluid">
       <div class="span12">
         <div class="widget-box">
-          <div class="widget-title"> <span class="icon"> <i class="icon-info-sign"></i> </span>
+          <div class="widget-title"> <span class="icon"> <i class="icon-bullhorn"></i> </span>
             <h5>Edit CMS</h5>
           </div>
           <div class="widget-content nopadding">
@@ -30,21 +30,21 @@
               <div class="control-group">
                 <label class="control-label">Address</label>
                 <div class="controls">
-                  <input type="text" name="address" id="address" value="{{$cmsDetails->address}}">
+                  <input type="text" name="address" id="address" value="{{$cmsDetails->address}}" style="width:40%;">
                 </div>
               </div>
 
               <div class="control-group">
                 <label class="control-label">Email</label>
                 <div class="controls">
-                  <input type="text" name="email" id="email" value="{{$cmsDetails->email}}">
+                  <input type="text" name="email" id="email" value="{{$cmsDetails->email}}" style="width:25%;">
                 </div>
               </div>
 
               <div class="control-group">
                 <label class="control-label">Phone</label>
                 <div class="controls">
-                  <input type="text" name="phone" id="phone" value="{{$cmsDetails->phone}}">
+                  <input type="text" name="phone" id="phone" value="{{$cmsDetails->phone}}" style="width:13%;">
                 </div>
               </div>
 
@@ -62,61 +62,61 @@
               <div class="control-group">
                 <label class="control-label">Facebook</label>
                 <div class="controls">
-                  <input type="text" name="facebook" id="facebook" value="{{$cmsDetails->facebook}}">
+                  <input type="text" name="facebook" id="facebook" value="{{$cmsDetails->facebook}}" class="paragraph_cms">
                 </div>
               </div>
               <div class="control-group">
                 <label class="control-label">Twitter</label>
                 <div class="controls">
-                  <input type="text" name="twitter" id="twitter" value="{{$cmsDetails->twitter}}">
+                  <input type="text" name="twitter" id="twitter" value="{{$cmsDetails->twitter}}" class="paragraph_cms">
                 </div>
               </div>
               <div class="control-group">
                 <label class="control-label">Instagram</label>
                 <div class="controls">
-                  <input type="text" name="instagram" id="instagram" value="{{$cmsDetails->instagram}}">
+                  <input type="text" name="instagram" id="instagram" value="{{$cmsDetails->instagram}}" class="paragraph_cms">
                 </div>
               </div>
 
               <div class="control-group">
                 <label class="control-label">Title first section Privacy</label>
                 <div class="controls">
-                  <input type="text" name="title_first_section_privacy" id="title_first_section_privacy" value="{{$cmsDetails->title_first_section_privacy}}">
+                  <input type="text" name="title_first_section_privacy" id="title_first_section_privacy" value="{{$cmsDetails->title_first_section_privacy}}" class="paragraph_cms">
                 </div>
               </div>
               
               <div class="control-group">
                 <label class="control-label">First section Privacy</label>
                 <div class="controls">
-                  <textarea name="first_section_privacy" id="first_section_privacy">{{$cmsDetails->first_section_privacy}}</textarea>
+                  <textarea name="first_section_privacy" id="first_section_privacy" class="textarea_admin">{{$cmsDetails->first_section_privacy}}</textarea>
                 </div>
               </div>
 
               <div class="control-group">
                 <label class="control-label">Title second section Privacy</label>
                 <div class="controls">
-                  <input type="text" name="title_second_section_privacy" id="title_second_section_privacy" value="{{$cmsDetails->title_second_section_privacy}}">
+                  <input type="text" name="title_second_section_privacy" id="title_second_section_privacy" value="{{$cmsDetails->title_second_section_privacy}}" class="paragraph_cms">
                 </div>
               </div>
               
               <div class="control-group">
                 <label class="control-label">Second section Privacy</label>
                 <div class="controls">
-                  <textarea name="second_section_privacy" id="second_section_privacy">{{$cmsDetails->second_section_privacy}}</textarea>
+                  <textarea name="second_section_privacy" id="second_section_privacy" class="textarea_admin">{{$cmsDetails->second_section_privacy}}</textarea>
                 </div>
               </div>
 
                <div class="control-group">
                 <label class="control-label">Title third section Privacy</label>
                 <div class="controls">
-                  <input type="text" name="title_third_section_privacy" id="title_third_section_privacy" value="{{$cmsDetails->title_third_section_privacy}}">
+                  <input type="text" name="title_third_section_privacy" id="title_third_section_privacy" value="{{$cmsDetails->title_third_section_privacy}}" class="paragraph_cms">
                 </div>
               </div>
               
               <div class="control-group">
                 <label class="control-label">Third section Privacy</label>
                 <div class="controls">
-                  <textarea name="third_section_privacy" id="third_section_privacy">{{$cmsDetails->third_section_privacy}}</textarea>
+                  <textarea name="third_section_privacy" id="third_section_privacy" class="textarea_admin">{{$cmsDetails->third_section_privacy}}</textarea>
                 </div>
               </div>
 
@@ -125,42 +125,42 @@
             <div class="control-group">
                 <label class="control-label">Title first section About Us</label>
                 <div class="controls">
-                  <input type="text" name="title_first_section_about_us" id="title_first_section_about_us" value="{{$cmsDetails->title_first_section_about_us}}">
+                  <input type="text" name="title_first_section_about_us" id="title_first_section_about_us" value="{{$cmsDetails->title_first_section_about_us}}" class="paragraph_cms">
                 </div>
               </div>
 
               <div class="control-group">
                 <label class="control-label">First section About Us</label>
                 <div class="controls">
-                  <textarea name="first_section_about_us" id="first_section_about_us">{{$cmsDetails->first_section_about_us}}</textarea>
+                  <textarea name="first_section_about_us" id="first_section_about_us" class="textarea_admin">{{$cmsDetails->first_section_about_us}}</textarea>
                 </div>
               </div>
 
               <div class="control-group">
                 <label class="control-label">Title second section About Us</label>
                 <div class="controls">
-                  <input type="text" name="title_second_section_about_us" id="title_second_section_about_us" value="{{$cmsDetails->title_second_section_about_us}}">
+                  <input type="text" name="title_second_section_about_us" id="title_second_section_about_us" value="{{$cmsDetails->title_second_section_about_us}}" class="paragraph_cms">
                 </div>
               </div>
               
               <div class="control-group">
                 <label class="control-label">Second section About Us</label>
                 <div class="controls">
-                  <textarea name="second_section_about_us" id="second_section_about_us">{{$cmsDetails->second_section_about_us}}</textarea>
+                  <textarea name="second_section_about_us" id="second_section_about_us" class="textarea_admin">{{$cmsDetails->second_section_about_us}}</textarea>
                 </div>
               </div>
 
                <div class="control-group">
                 <label class="control-label">Title third section About Us</label>
                 <div class="controls">
-                  <input type="text" name="title_third_section_about_us" id="title_third_section_about_us" value="{{$cmsDetails->title_third_section_about_us}}">
+                  <input type="text" name="title_third_section_about_us" id="title_third_section_about_us" value="{{$cmsDetails->title_third_section_about_us}}" class="paragraph_cms">
                 </div>
               </div>
               
               <div class="control-group">
                 <label class="control-label">Third section About Us</label>
                 <div class="controls">
-                  <textarea name="third_section_about_us" id="third_section_about_us">{{$cmsDetails->third_section_about_us}}</textarea>
+                  <textarea name="third_section_about_us" id="third_section_about_us" class="textarea_admin">{{$cmsDetails->third_section_about_us}}</textarea>
                 </div>
               </div>
 

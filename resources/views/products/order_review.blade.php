@@ -86,7 +86,7 @@
                             <!-- <input id="shipping_mobile" name="shipping_mobile" value="{{ $shippingDetails->mobile}}" type="text"  required readonly> -->
                         </div>
                         <div class="proceed-checkout" sty>
-                            <a href="{{ url('checkout') }}" class="proceed-btn">Change address</a>
+                            <a href="{{ url('checkout') }}" class="proceed-btn" style="margin-left:15px;">Change address</a>
                         </div>
                         
                     </div>
@@ -109,36 +109,54 @@
                                 
                                 @endforeach
                                 <li class="fw-normal">Subtotal<span>€{{$total_amount}}</span></li>
-                                <li class="fw-normal">Shipping cost<span>€0</span></li>
+                                <li class="fw-normal">Shipping cost
+                                    <?php   
+                                            $free_shipping = 0;
+                                            if($total_amount >= $shippingCharges->free_shipping){
+                                                $free_shipping = 1;
+                                                Session::forget('shipping_charges');
+                                            }else{
+                                                Session::put('shipping_charges',$shippingCharges->price);
+                                            }
+                                    ?>
+                                    @if($free_shipping == 1)
+                                        <span>Free</span>
+                                    @else
+                                        <span>{{$shippingCharges->price}}</span>
+                                    @endif
+                                </li>
                                 <li class="fw-normal">Discount amount<span>
                                     @if($countProduct > 0)
                                         @if (!empty(Session::get('coupon_amount')))
-                                            € {{ Session::get('coupon_amount') }}
+                                            €{{ Session::get('coupon_amount') }}
                                         @else
-                                            € 0
+                                            €0
                                         @endif
                                     @endif</span>
                                 </li>
                                 <li class="total-price">Total 
                                     <span>
-                                        <?php $grand_total = $total_amount; 
+                                        <?php 
+                                            $grand_total = $total_amount;
+                                            
                                             if($total_amount==0 && Session::get('coupon_amount' ) > 0) { ?>
-                                                € 0
-                                            <?php } else { $grand_total = $total_amount - Session::get('coupon_amount'); ?>
-                                                € {{ $grand_total  }} <?php }?>
+                                                €0
+                                            <?php } else { $grand_total = $total_amount - Session::get('coupon_amount');
+                                            if($free_shipping == 0) $grand_total += $shippingCharges->price ?>
+                                                €{{ $grand_total  }} <?php }?>
                                     </span>
                                 </li>
                             </ul>
                             <!-- <form  action="{{ url('/place-order')}}" method="post">{{ csrf_field() }} -->
                                 <input type="hidden" name="grand_total" value="{{ $grand_total }}">
                                 <div class="payment-check">
-                                    <div class="pc-item">
+                                    <!-- <div class="pc-item">
                                         <label for="Credit-debit-card">
                                             Credit/Debit card
                                             <input type="radio" name="payment_method" id="Credit-debit-card"  value="Credit-debit-card">
                                             <span class="checkmark"></span>
                                         </label>
-                                    </div>
+                                    </div> -->
                                     <div class="pc-item">
                                         <label for="COD">
                                             Cash on delivery

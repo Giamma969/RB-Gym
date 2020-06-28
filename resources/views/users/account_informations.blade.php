@@ -34,7 +34,7 @@
             <div class="col-lg-3 col-md-6 col-sm-8 order-2 order-lg-1 produts-sidebar-filter">
 				@include('layouts.frontLayout.front_sidebar')
 			</div>
-            <div class="col-lg-9 order-1 order-lg-2">
+            <div class="col-lg-5 order-1 order-lg-2" style="margin-left:5%;">
                 <form id="accountForm" class="checkout-form" name="accountForm" action="{{ url('/account-informations') }}" method="post"> {{ csrf_field() }}
                     <h4>Update account (Billing address)</h4>
                     <div class="row">
@@ -46,7 +46,7 @@
                             <label for="surname">Last Name<span>*</span></label>
                             <input  value="{{ $userDetails->surname }}" id="surname" name="surname" type="text" readonly>
                         </div>
-                        <div class="col-lg-6">
+                        <div class="col-lg-12">
                             <label for="email">Email<span>*</span></label>
                             <input value="{{ $userDetails->email }}" id="email" name="email" type="email" readonly/>
                         </div>

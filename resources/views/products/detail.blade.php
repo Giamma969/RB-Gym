@@ -64,7 +64,7 @@
                             </div>
                             <div class="product-thumbs">
                                 <div class="product-thumbs-track ps-slider owl-carousel">
-                                    <div class="pt active" data-imgbigurl="{{asset('images/backend_images/products/medium/'.$productDetails->image) }}">
+                                    <div class="pt active" data-imgbigurl="{{asset('images/backend_images/products/large/'.$productDetails->image) }}">
                                         <img src="{{asset('images/backend_images/products/medium/'.$productDetails->image) }}" alt="">
                                     </div>
                                     @foreach($productAltImages as $altimage)

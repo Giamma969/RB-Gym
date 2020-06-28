@@ -315,7 +315,7 @@ $().ready(function(){
 });
 
 function selectPaymentMethod(){
-	if($('#Credit-debit-card').is(':checked') || $('#COD').is(':checked') ){
+	if($('#COD').is(':checked') ){
 
 	}else{
 		alert("Please select payment method!");

@@ -211,7 +211,7 @@ class ProductsController extends Controller
     }
     //admin
     public function viewProducts(Request $request){
-        $products= Product::get();
+        $products= Product::orderBy('id','desc')->get();
         
         $products=json_decode(json_encode($products));
         foreach($products as $key=> $val){
@@ -223,7 +223,7 @@ class ProductsController extends Controller
     //admin
     public function deleteProduct($id=null){
         //unlink image
-        $this->deleteProductImage($id);
+        //$this->deleteProductImage($id);
         //unlink all alternative images
         $this->deleteAllAltImage($id);
         Product::where(['id'=>$id])->delete();
@@ -839,7 +839,6 @@ class ProductsController extends Controller
         return redirect('cart')->with('flash_message_success','Product removed from the cart!');
     }
 
-
     public function updateCartQuantity($id = null, $quantity = null){
 
         // Session::forget('coupon_amount');
@@ -1020,23 +1019,12 @@ class ProductsController extends Controller
         $shippingDetails = Address::where(['user_id'=>$user_id,'is_shipping'=>1])->first();
         $cartDetails=DB::table('cart')->where(['user_id'=>$user_id])->first();
         $cart_id=$cartDetails->id;
-        // $userCart = DB::table('products_carts')->where(['cart_id'=>$cart_id])
-        //     ->join('products', 'products.id', '=', 'products_carts.product_id')
-        //     ->select('products.*','products_carts.cart_id','products_carts.product_quantity')
-        //     ->get();
-        $countProduct = DB::table('products_carts')->where(['cart_id'=>$cart_id])->count();
-
-
-       /* $userCart = DB::table('cart')->where(['user_id'=>$user_id])->get();
-        foreach($userCart as $key => $product){
-            $productDetails = Product::where('id',$product->product_id)->first();
-            $userCart[$key]->image = $productDetails->image;
-        }*/
         
-        //$countProduct = DB::table('cart')->where(['user_id'=>$user_id])->count();
+        $countProduct = DB::table('products_carts')->where(['cart_id'=>$cart_id])->count();
         $userCart = Cart::getProductsCart();
         $cmsDetails = DB::table('cms')->where('id',1)->first();
-        return view('products.order_review')->with(compact('userDetails','shippingDetails','userCart','countProduct','userCart','cmsDetails'));
+        $shippingCharges = DB::table('shipping_charges')->where('id',1)->first();
+        return view('products.order_review')->with(compact('userDetails','shippingDetails','userCart','countProduct','userCart','cmsDetails','shippingCharges'));
     }
 
     public function placeOrder(Request $request){
@@ -1089,6 +1077,11 @@ class ProductsController extends Controller
                 $coupon_code=Session::get('coupon_code');
                 $couponDetails = Coupon::where('coupon_code',$coupon_code)->first();
             }
+
+            if(empty(Session::get('shipping_charges')))
+                $shipping_charges = 0;
+            else
+                $shipping_charges = Session::get('shipping_charges');
                 
                 
             
@@ -1103,6 +1096,7 @@ class ProductsController extends Controller
             }else{
                 $order->coupon_id=$couponDetails->id;
             }
+            $order->shipping_charges=$shipping_charges; 
             $order->order_status="New"; 
             $order->payment_method=$data['payment_method']; 
             $order->grand_total=$data['grand_total']; 
@@ -1113,6 +1107,9 @@ class ProductsController extends Controller
             
             // echo'<pre>'; print_r($cartProducts); die;
             foreach($cartProducts as $pro){
+                $proDetails = DB::table('products')->where('id',$pro->product_id)->first();
+                $catDetails = DB::table('categories')->where('id',$proDetails->category_id)->first();
+
                 $cartPro = new OrdersProduct;
                 $cartPro->order_id=$order_id;
                 $cartPro->product_id=$pro->product_id;
@@ -1124,6 +1121,27 @@ class ProductsController extends Controller
                     $product_price = DB::table('products')->where(['id'=>$pro->product_id])->first();
                 }
                 $cartPro->product_price = $product_price->price;
+                $cartPro->product_name = $proDetails->product_name;
+                $cartPro->product_code = $proDetails->product_code;
+                $cartPro->product_color = $proDetails->product_color;
+                $cartPro->product_height = $proDetails->height;
+                $cartPro->product_width  = $proDetails->width;
+                $cartPro->product_depth = $proDetails->depth;
+                $cartPro->product_weight = $proDetails->weight;
+                $cartPro->product_max_load = $proDetails->maximum_load_supported;
+                $cartPro->product_material = $proDetails->material;
+                $cartPro->product_brand = $proDetails->brand;
+                $cartPro->product_description = $proDetails->description;
+                $cartPro->product_image = $proDetails->image;
+                $cartPro->category_id = $catDetails->id;
+                $cartPro->category_name = $catDetails->name;
+
+
+                $couponAmount = 0;
+                if(!empty(Session::get('coupon_amount')))
+                    $couponAmount = Session::get('coupon_amount');
+                
+                $cartPro->coupon_amount = $couponAmount;
                 $cartPro->save();
             }
 
@@ -1151,6 +1169,7 @@ class ProductsController extends Controller
     
                 $coupon_id = $orderDetails->coupon_id;
                 $couponDetails= Coupon::find($coupon_id);
+                $cmsDetails = DB::table('cms')->where('id',1)->first();
                 
                 $user_email=Auth::user()->email;
                 $messageData = [
@@ -1161,7 +1180,8 @@ class ProductsController extends Controller
                     'productDetails' => $productDetails, 
                     'shippingDetails' => $shippingDetails,
                     'billingDetails' =>  $billingDetails,
-                    'couponDetails' => $couponDetails     
+                    'couponDetails' => $couponDetails,
+                    'cmsDetails' =>  $cmsDetails    
                 ];
                 
                 Mail::send('emails.order', $messageData, function($message) use ($user_email){
@@ -1170,9 +1190,6 @@ class ProductsController extends Controller
 
                 //COD - redirect user to thanks page after saving order
                 return redirect('/thanks');
-            }else{
-                //Credit-Debit card - redirect user to payment page after saving order
-                return redirect('/payment');
             }
         }
         
@@ -1203,71 +1220,8 @@ class ProductsController extends Controller
 
         $userCart = Cart::getProductsCart();
         $cmsDetails = DB::table('cms')->where('id',1)->first();
-        return view('orders.thanks')->with(compact('userCart','cmsDetails'));
-    }
-
-    public function thanksPayment(){
-        $user_id=Auth::user()->id;
-
-        //empty cart
-        $cartDetails=DB::table('cart')->where(['user_id'=>$user_id])->first();
-        $cart_id=$cartDetails->id;
-        //update products stock
-        Product::updateStock($cart_id);
-
-        DB::table('products_carts')->where('cart_id',$cart_id)->delete();
-        
-        //mark coupon like used --> toglierli anche dalla sessione
-        $coupon_code = Session::get('coupon_code');
-        Coupon::where('coupon_code',$coupon_code)->update(['used'=> 1]);
-
-        //send confirm order email
-        $orderDetails = Order::find(\DB::table('orders')->max('id'));
-        $order_id = $orderDetails->id;
-        $user_email=Auth::user()->email;
-        $shippingDetails = Address::where(['user_id'=>$user_id,'is_shipping'=>1])->first();
-        $productDetails = DB::table('orders_products')->where(['order_id'=>$order_id])
-            ->join('products', 'products.id', '=', 'orders_products.product_id')
-            ->select('products.*','orders_products.product_quantity','orders_products.product_price')
-            ->get();
-
-        // foreach($productDetails as $product){
-        //     if($product->in_sale == 1){
-        //         $new_price = DB::table('products_sales')->where('product_id',$product->id)->first();
-        //         $new_price = $new_price->price;
-        //         $product->new_price = $new_price;
-        //     }
-        // }
-
-        $coupon_id = $orderDetails->coupon_id;
-        $couponDetails= Coupon::find($coupon_id);
-        $billingDetails = Address::where(['user_id'=>$user_id,'is_billing'=>1])->first();
-
-        $messageData = [
-            'email' => $user_email,
-            'name' =>$shippingDetails->user_name,
-            'order_id' =>$order_id,
-            'orderDetails' =>$orderDetails,
-            'productDetails' => $productDetails, 
-            'shippingDetails' => $shippingDetails,
-            'billingDetails' =>  $billingDetails,
-            'couponDetails' => $couponDetails     
-        ];
-        
-        Mail::send('emails.order', $messageData, function($message) use ($user_email){
-            $message->to($user_email)->subject('Order placed - RB-Gym');
-        });
-
-        $userCart = Cart::getProductsCart();
-        $cmsDetails = DB::table('cms')->where('id',1)->first();
-            
-        return view('orders.thanks_payment')->with(compact('order_id','userCart','cmsDetails'));
-    }
-
-    public function payment(){
-        $userCart = Cart::getProductsCart();
-        $cmsDetails = DB::table('cms')->where('id',1)->first();
-        return view('orders.payment')->with(compact('userCart','cmsDetails'));
+        $orderDetails = DB::table('orders')->where('user_id',$user_id)->orderBy('id', 'desc')->first();
+        return view('orders.thanks')->with(compact('userCart','cmsDetails','orderDetails'));
     }
 
     public function userOrders(){
@@ -1276,7 +1230,21 @@ class ProductsController extends Controller
         $userCart = Cart::getProductsCart();
         $cmsDetails = DB::table('cms')->where('id',1)->first();
         $categories = Category::with('categories')->where(['parent_id'=>0,'status'=>1])->get();
+        // $orderDetails = DB::table('orders')->where('orders.user_id',$user_id)->join('orders_products','orders.id','=','orders_products.order_id')->orderBy('orders.id','DESC')->get();
+        // echo'<pre>'; print_r($orders); die;
         return view('orders.user_orders')->with(compact('orders','userCart','categories','cmsDetails'));
+    }
+
+    public function productOrdered(Request $request){
+        if($request->isMethod('post')){
+            $data=$request->all();
+            // echo'<pre>'; print_r($data); die;
+            $productDetails = DB::table('orders_products')->where(['product_id'=>$data['product_id'], 'order_id'=>$data['order_id']])->first();
+            $userCart = Cart::getProductsCart();
+            $cmsDetails = DB::table('cms')->where('id',1)->first();
+            $categories = Category::with('categories')->where(['parent_id'=>0,'status'=>1])->get();
+            return view('orders.detail_product_ordered')->with(compact('userCart','categories','cmsDetails','productDetails'));
+        }
     }
 
     //da eliminare se si lascia così my orders
@@ -1296,7 +1264,6 @@ class ProductsController extends Controller
     }
 
     public function addReview(Request $request){
-        //$productDetails=DB::table('products')->where('id',$product_id)->first();
         if($request->isMethod('post')){
             $data=$request->all();
             $user_id=Auth::user()->id;
@@ -1323,7 +1290,6 @@ class ProductsController extends Controller
                 'user_id'=>$user_id,
                 'product_id'=>$data['product_id1']
             ]);
-            //Session::flash('success', 'Review successfully entered');
             return redirect()->back()->with('flash_message_success','Review entered successfully!');     
         }
 
@@ -1480,6 +1446,7 @@ class ProductsController extends Controller
             ->join('users','users.id','=','reviews.user_id')
             ->join('products','products.id','=','reviews.product_id')
             ->select('reviews.*','users.email','products.product_name')
+            ->orderBy('id','desc')
             ->get();
         
        // echo '<pre>'; print_r($reviewsDetails); die;

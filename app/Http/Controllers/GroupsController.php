@@ -32,6 +32,7 @@ class GroupsController extends Controller
 
     public function viewGroups(){
         $Details = Group::getAllGroupsWithServices();
+        // echo'<pre>'; print_r($Details); die;
         return view('admin.groups.view_groups')->with(compact('Details'));
     }
 
